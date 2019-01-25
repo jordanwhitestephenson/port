@@ -1,3 +1,7 @@
-module.exports = {
-    mongoURI: 'mongodb://jordan:smokinvapor14@ds115263.mlab.com:15263/gtm-support-db'
+
+
+if (process.env.NODE_ENV === 'production') {
+    module.exports = require('./keys_prod')
+} else {
+    module.exports = require('./keys_dev')
 }
