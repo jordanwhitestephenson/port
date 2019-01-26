@@ -3,6 +3,11 @@
   "version": "1.0.0",
   "description": "Template Builder V3",
   "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "https://git.heroku.com/secure-coast-78839.git"
+  },
+  
   "scripts": {
     "client-install": "npm install --prefix client",
     "start": "node server.js",
