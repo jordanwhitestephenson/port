@@ -94,6 +94,25 @@ const ProfileSchema = new Schema({
       }
     }
   ],
+  projects: [
+    {
+      title: {
+        type: String,
+        required: true
+      },
+      openingParagraph: {
+        type: String,
+        required: true
+      },
+      description: {
+        type: String,
+      },
+      modules: {}
+
+      
+      
+    }
+  ],
   social: {
     youtube: {
       type: String

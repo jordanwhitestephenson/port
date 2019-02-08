@@ -18,14 +18,16 @@ import Login from './components/auth/Login';
 import Dashboard from './components/dashboard/Dashboard';
 import CreateProfile from './components/create-profile/CreateProfile';
 import EditProfile from './components/edit-profile/EditProfile';
-import AddExperience from './components/add-credentials/AddExperience';
-import AddEducation from './components/add-credentials/AddEducation';
+import AddProject from './components/add-credentials/AddProject';
+import AddModule  from './components/add-credentials/AddModule';
+
 import Profiles from './components/profiles/Profiles';
 import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
 import NotFound from './components/not-found/NotFound';
-
+import EditProject from './components/edit-project/EditProject'
+import PreviewProject from './components/preview-project/PreviewProject'
 import './App.css';
 
 // Check for token
@@ -79,20 +81,43 @@ class App extends Component {
                   component={EditProfile}
                 />
               </Switch>
+
               <Switch>
                 <PrivateRoute
                   exact
-                  path="/add-experience"
-                  component={AddExperience}
+                  path="/edit-project"
+                  component={EditProject}
+                  project = {this.props}
                 />
               </Switch>
+
+
               <Switch>
                 <PrivateRoute
                   exact
-                  path="/add-education"
-                  component={AddEducation}
+                  path="/preview-project"
+                  component={PreviewProject}
                 />
               </Switch>
+
+
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-module"
+                  component={AddModule}
+                  projectName = {this.props}
+                />
+              </Switch>
+
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/add-project"
+                  component={AddProject}
+                />
+              </Switch>
+  
               <Switch>
                 <PrivateRoute exact path="/feed" component={Posts} />
               </Switch>
