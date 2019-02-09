@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
 const passport = require('passport');
-
+const ObjectID = require('mongodb').ObjectID;
 // Load Validation
 const validateProfileInput = require('../../validation/profile');
 const validateExperienceInput = require('../../validation/experience');
@@ -218,49 +218,34 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 			projectID: req.params.project_id
 		};
 	}
-
 	Profile.findOne({ user: req.user.id }).then(profile => {
 		const projectID = req.params.project_id;
 		if (profile) {
 			var obj = {};
 			const sectionType = req.body.location;
 			obj[sectionType] = ModuleData;
+			console.log(profile);
+
 			Profile.update(
 				{ projects: { $elemMatch: { _id: projectID, modules: { $elemMatch: { location: sectionType } } } } },
-				{
-					$addToSet: {
-						['projects.$.modules']: ModuleData
-					}
-				},
-				{ upsert: true }
+				// { $pull: { modules: { $elemMatch: { location: sectionType } } } } ,
+				
+				{ "$push": { ['projects.$.modules'] :  ModuleData  } },
+				{ upsert: false, returnNewDocument: true }
 			)
-				.then(function(project) {
-					if (project === null) {
-						Profile.update(
-							{ projects: { $elemMatch: { _id: projectID } } },
-							{
-								$addToSet: {
-									['projects.$.modules']: ModuleData
-								}
-							},
-							{ upsert: true }
-						)
-							.then(function(project) {
-								console.log('this is project end', project);
-							})
-							.catch(err => console.log(err, 'from null project'));
-					}
-				})
+				.then(result => console.log('*********RESULT', result))
 				.catch(err =>
 					Profile.update(
-						{ projects: { $elemMatch: { _id: projectID } } },
 						{
-							$addToSet: {
-								['projects.$.modules']: { ModuleData: { $each: [ModuleData.headline] } }
+							projects: {
+								$elemMatch: { _id: projectID }
 							}
 						},
+						{ "$push": { ['projects.$.modules'] :  ModuleData  } },
+						// { $push: { "projects.modules" :  ModuleData  } },
+						// { $push: { ['projects.$.modules']: ModuleData } },
 						{ upsert: true }
-					)
+					).catch(err => console.log(err))
 				);
 
 			// .then(profile.save())
