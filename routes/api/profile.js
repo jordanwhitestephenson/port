@@ -218,6 +218,7 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 			projectID: req.params.project_id
 		};
 	}
+
 	Profile.findOne({ user: req.user.id }).then(profile => {
 		const projectID = req.params.project_id;
 		if (profile) {
@@ -226,27 +227,39 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 			obj[sectionType] = ModuleData;
 			console.log(profile);
 
-			Profile.update(
-				{ projects: { $elemMatch: { _id: projectID, modules: { $elemMatch: { location: sectionType } } } } },
-				// { $pull: { modules: { $elemMatch: { location: sectionType } } } } ,
-				
-				{ "$push": { ['projects.$.modules'] :  ModuleData  } },
-				{ upsert: false, returnNewDocument: true }
-			)
-				.then(result => console.log('*********RESULT', result))
-				.catch(err =>
-					Profile.update(
-						{
-							projects: {
-								$elemMatch: { _id: projectID }
-							}
-						},
-						{ "$push": { ['projects.$.modules'] :  ModuleData  } },
-						// { $push: { "projects.modules" :  ModuleData  } },
-						// { $push: { ['projects.$.modules']: ModuleData } },
-						{ upsert: true }
-					).catch(err => console.log(err))
-				);
+			// **IF MODULE ARRAY IS EMPTY**
+
+			//**FIND OUT IF SECTION IS ALREADY IN MODULES ARRAY */
+			// Profile.update(
+			// 	{ projects: { $elemMatch: { _id: projectID,  modules: { $elemMatch: { location: sectionType } }} } },
+			// 	{ $set: { [`projects.$.modules.${inputName}`]: ModuleData } },
+
+			// ).then(result => console.log(result, '*****RESULT*****'))
+
+			// **IF SECTION IS ALREAY N MODULE**
+
+			Profile.find({ projects: { $elemMatch: { _id: projectID } } }).then(function(result) {
+				var filteredArray;
+				result.forEach(function(u) {
+					u.projects.map(
+						e => (filteredArray = e.modules.filter(location => location.location !== ModuleData.location))
+					);
+					return filteredArray;
+				});
+
+				console.log(filteredArray, '*****FILTERS');
+				Profile.update(
+					{ projects: { $elemMatch: { _id: projectID } } },
+					{ $set: { ['projects.$.modules']: filteredArray } }
+				)
+					.then(result =>
+						Profile.update(
+							{ projects: { $elemMatch: { _id: projectID } } },
+							{ $push: { ['projects.$.modules']: ModuleData } }
+						).catch(err => console.log(err))
+					)
+					.catch(err => console.log(err));
+			});
 
 			// .then(profile.save())
 			// .then(profile => res.json(profile))
