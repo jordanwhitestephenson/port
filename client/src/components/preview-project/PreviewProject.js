@@ -6,7 +6,7 @@ import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
-import { editProject, getCurrentProfile } from '../../actions/profileActions';
+import {  getCurrentProfile } from '../../actions/profileActions';
 import isEmpty from '../../validation/is-Empty';
 
 class PreviewProject extends Component {
@@ -67,7 +67,7 @@ class PreviewProject extends Component {
 
     };
     console.log(projectData)
-    this.props.editProject(projectData, this.props.history, this.state.hash);
+    // this.props.editProject(projectData, this.props.history, this.state.hash);
   }
 
   onChange(e) {
@@ -138,7 +138,6 @@ class PreviewProject extends Component {
 }
 
 PreviewProject.propTypes = {
-  editProject: PropTypes.func.isRequired,
   getCurrentProfile: PropTypes.func.isRequired,
   profile: PropTypes.object.isRequired,
   errors: PropTypes.object.isRequired
@@ -149,6 +148,6 @@ const mapStateToProps = state => ({
   errors: state.errors
 });
 
-export default connect(mapStateToProps, { editProject, getCurrentProfile })(
+export default connect(mapStateToProps, {  getCurrentProfile })(
   withRouter(PreviewProject)
 );

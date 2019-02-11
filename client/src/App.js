@@ -87,7 +87,6 @@ class App extends Component {
                   exact
                   path="/edit-project"
                   component={EditProject}
-                  project = {this.props}
                 />
               </Switch>
 

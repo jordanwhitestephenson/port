@@ -98,56 +98,21 @@ export const addProject = (expData, history) => dispatch => {
 
 
 
-// Delete Experience
-export const deleteExperience = id => dispatch => {
-  axios
-    .delete(`/api/profile/experience/${id}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
-
-// Delete Education
-export const deleteEducation = id => dispatch => {
-  axios
-    .delete(`/api/profile/education/${id}`)
-    .then(res =>
-      dispatch({
-        type: GET_PROFILE,
-        payload: res.data
-      })
-    )
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
-};
 
 
 // Edit Project
-export const editProject = (projectData, history, id) => dispatch => {
-  axios
-    .put(`/api/profile/updateProject/${id}`, projectData)
-    .then(res => history.push('/dashboard'))
-    .catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
-    );
+// export const editProject = (projectData, history, id) => dispatch => {
+//   axios
+//     .put(`/api/profile/updateProject/${id}`, projectData)
+//     .then(res => history.push('/dashboard'))
+//     .catch(err =>
+//       dispatch({
+//         type: GET_ERRORS,
+//         payload: err.response.data
+//       })
+//     );
   
-};
+// };
 
 
 
@@ -222,14 +187,15 @@ export const addingModuleOne = (expData, history) => dispatch => {
 };
 
 
-export const getCurrentProject = (projectID, history) => dispatch => {
+export const getCurrentProject = (projectID) => dispatch => {
   axios
     .get(`/api/profile/project/${projectID}`)
     .then(res =>
       dispatch({
         type: GET_PROJECT,
-        payload: res.data.projects.filter(id => id._id === projectID)
+        payload: res.data[0]
       })
+
     )
     .catch(err =>
       dispatch({

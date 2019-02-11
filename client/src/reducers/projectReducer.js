@@ -1,29 +1,19 @@
-import { ADD_MODULE, GET_PROJECT, PROJECT_LOADING } from '../actions/types';
+import {GET_PROJECT } from '../actions/types';
 
 const initialState = {
-	title: null,
-	modules: null,
-	loading: false
+	project: null
 };
 
 export default function(state = initialState, action) {
 	switch (action.type) {
-		case PROJECT_LOADING:
-			return {
-				...state,
-				loading: true
-			};
+
 		case GET_PROJECT:
+			console.log('GET PROJECT')
 			return {
 				...state,
-				loading: true
+				project: action.payload,
 			};
-		case ADD_MODULE:
-			return {
-				...state,
-				profile: action.payload,
-				loading: false
-			};
+
 
 		default:
 			return state;

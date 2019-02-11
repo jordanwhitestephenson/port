@@ -4,14 +4,13 @@ import {
 	PROFILE_LOADING,
 	CLEAR_CURRENT_PROFILE,
 	ADD_MODULE,
-	GET_PROJECT
+
 } from '../actions/types';
 
 const initialState = {
 	profile: null,
 	profiles: null,
 	loading: false,
-	project: null
 };
 
 export default function(state = initialState, action) {
@@ -27,11 +26,7 @@ export default function(state = initialState, action) {
 				profile: action.payload,
 				loading: false
 			};
-		case GET_PROJECT:
-			return {
-				...state,
-				project: action.payload[0]
-			};
+
 		case GET_PROFILES:
 			return {
 				...state,

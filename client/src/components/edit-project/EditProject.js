@@ -4,10 +4,9 @@ import { Link, withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import IconButton from '@material-ui/core/IconButton';
 import Grid from '@material-ui/core/Grid';
-
 import EditProjectView from './view_container/EditProjectView';
 
-import { editProject, getCurrentProject, getCurrentProfile } from '../../actions/profileActions';
+import { getCurrentProject, getCurrentProfile } from '../../actions/profileActions';
 import isEmpty from '../../validation/is-Empty';
 
 const styles = theme => ({
@@ -32,8 +31,7 @@ class EditProject extends Component {
 			errors: {},
 			project: '',
 			hash: this.props.location.hash.slice(1)
-    };
-
+		};
 	}
 
 	componentDidMount(props) {
@@ -41,45 +39,40 @@ class EditProject extends Component {
 		this.props.getCurrentProject(this.state.hash);
 	}
 
-
 	componentWillReceiveProps(nextProps) {
-		if (nextProps.profile.profile && nextProps.profile.project) {
-
+		if (nextProps.profile.profile) {
 			this.setState({
-				project: nextProps.profile.project.modules,
+				project: nextProps.project
 			});
+			
 		}
 	}
 
-	onSubmit(e) {
-		e.preventDefault();
+	// onSubmit(e) {
+	// 	e.preventDefault();
 
-		const projectData = {
-			title: this.state.title,
-			openingParagraph: this.state.openingParagraph,
-			description: this.state.description,
-			status: this.state.status
-		};
+	// 	const projectData = {
+	// 		title: this.state.title,
+	// 		openingParagraph: this.state.openingParagraph,
+	// 		description: this.state.description,
+	// 		status: this.state.status
+	// 	};
 
-		this.props.editProject(projectData, this.props.history, this.state.hash);
-	}
-
-
+	// 	this.props.editProject(projectData, this.props.history, this.state.hash);
+	// }
 
 	render() {
 		return this.state.project ? (
-      <div>
-        <EditProjectView project = {this.state.project}/>
+			<div>
+				<EditProjectView project={this.state.project} />
 			</div>
 		) : (
 			<div> loading </div>
 		);
-
 	}
 }
 
 EditProject.propTypes = {
-	editProject: PropTypes.func.isRequired,
 	getCurrentProfile: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
@@ -87,10 +80,11 @@ EditProject.propTypes = {
 
 const mapStateToProps = state => ({
 	profile: state.profile,
+	project: state.project.project,
 	errors: state.errors
 });
 
 export default connect(
 	mapStateToProps,
-	{ editProject, getCurrentProject, getCurrentProfile }
+	{ getCurrentProject, getCurrentProfile }
 )(withRouter(EditProject));

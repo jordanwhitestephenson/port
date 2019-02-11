@@ -7,9 +7,11 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
+import Section1 from './edit_templates/Section1';
 const styles = theme => ({
 	root: {
-		width: '100%'
+		width: '100%',
+		flexDirection: 'column'
 	},
 	heading: {
 		fontSize: theme.typography.pxToRem(15),
@@ -23,99 +25,34 @@ const styles = theme => ({
 });
 
 class EditProjectView extends React.Component {
-	state = {
-		expanded: null,
-		section: '',
-		name: '',
-		project: this.props.project.Section1
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			expanded: null,
+			section: '',
+			name: '',
+			project: this.props.project
+		};
+	}
 
 	handleChange = panel => (event, expanded) => {
 		this.setState({
 			expanded: expanded ? panel : false
 		});
 	};
-	handleFieldChange = i => e => {
-		// let values = [...Object.keys(this.state.project)];
-		// values[i] = e.target.value;
-		// this.setState({ values });
-		// console.log(this.state.project);
-	};
-
 	render() {
 		const { classes } = this.props;
 		const { expanded } = this.state;
-
-		const fieldName = Object.keys(this.state.project);
-        const fieldValues = Object.entries(this.state.project)
-        var cloneA = JSON.parse(JSON.stringify(fieldName))
-        console.log(this.props)
-   
+		var Section1Info = this.state.project.modules.filter(module => module.location === 'Section1');
 
 		return (
 			<div className={classes.root}>
 				<ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography className={classes.heading}>Section 1</Typography>
-						<Typography className={classes.secondaryHeading}>I am an expansion panel</Typography>
+						<Typography className={classes.heading}>{Section1Info.location}</Typography>
+						<Typography className={classes.secondaryHeading}>{Section1Info.type}</Typography>
 					</ExpansionPanelSummary>
-					<ExpansionPanelDetails>
-						{cloneA.map((key, index) => (
-							<TextField
-								key={index}
-								id="outlined-uncontrolled"
-								fullWidth
-								label={key}
-								className={classes.textField}
-								margin="normal"
-								variant="outlined"
-								onChange={this.handleFieldChange(key)}
-								placeholder = {key}
-								InputLabelProps={{
-									shrink: true
-								}}
-							/>
-						))}
-
-						<Typography />
-					</ExpansionPanelDetails>
-				</ExpansionPanel>
-				<ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleChange('panel2')}>
-					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography className={classes.heading}>Users</Typography>
-						<Typography className={classes.secondaryHeading}>You are currently not an owner</Typography>
-					</ExpansionPanelSummary>
-					<ExpansionPanelDetails>
-						<Typography>
-							Donec placerat, lectus sed mattis semper, neque lectus feugiat lectus, varius pulvinar diam
-							eros in elit. Pellentesque convallis laoreet laoreet.
-						</Typography>
-					</ExpansionPanelDetails>
-				</ExpansionPanel>
-				<ExpansionPanel expanded={expanded === 'panel3'} onChange={this.handleChange('panel3')}>
-					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography className={classes.heading}>Advanced settings</Typography>
-						<Typography className={classes.secondaryHeading}>
-							Filtering has been entirely disabled for whole web server
-						</Typography>
-					</ExpansionPanelSummary>
-					<ExpansionPanelDetails>
-						<Typography>
-							Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
-							vitae egestas augue. Duis vel est augue.
-						</Typography>
-					</ExpansionPanelDetails>
-				</ExpansionPanel>
-				<ExpansionPanel expanded={expanded === 'panel4'} onChange={this.handleChange('panel4')}>
-					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography className={classes.heading}>Personal data</Typography>
-					</ExpansionPanelSummary>
-					<ExpansionPanelDetails>
-						<Typography>
-							Nunc vitae orci ultricies, auctor nunc in, volutpat nisl. Integer sit amet egestas eros,
-							vitae egestas augue. Duis vel est augue.
-						</Typography>
-					</ExpansionPanelDetails>
+					<Section1 info={Section1Info} />
 				</ExpansionPanel>
 			</div>
 		);

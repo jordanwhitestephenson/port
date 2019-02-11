@@ -178,7 +178,6 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), (re
 
 		// Add to exp array
 		profile.experience.unshift(newExp);
-
 		profile.save().then(profile => res.json(profile));
 	});
 });
@@ -187,7 +186,6 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), (re
 // /api/profile/projects/module
 // @route   POST MODULES
 
-// outer.post('/experience', passport.authenticate('jwt', { session: false }), (req, res) => {
 router.post('/project/:project_id', passport.authenticate('jwt', { session: false }), (req, res) => {
 	console.log(req.body);
 	var ModuleData = '';
@@ -224,19 +222,6 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 		if (profile) {
 			var obj = {};
 			const sectionType = req.body.location;
-			obj[sectionType] = ModuleData;
-			console.log(profile);
-
-			// **IF MODULE ARRAY IS EMPTY**
-
-			//**FIND OUT IF SECTION IS ALREADY IN MODULES ARRAY */
-			// Profile.update(
-			// 	{ projects: { $elemMatch: { _id: projectID,  modules: { $elemMatch: { location: sectionType } }} } },
-			// 	{ $set: { [`projects.$.modules.${inputName}`]: ModuleData } },
-
-			// ).then(result => console.log(result, '*****RESULT*****'))
-
-			// **IF SECTION IS ALREAY N MODULE**
 
 			Profile.find({ projects: { $elemMatch: { _id: projectID } } }).then(function(result) {
 				var filteredArray;
@@ -246,8 +231,6 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 					);
 					return filteredArray;
 				});
-
-				console.log(filteredArray, '*****FILTERS');
 				Profile.update(
 					{ projects: { $elemMatch: { _id: projectID } } },
 					{ $set: { ['projects.$.modules']: filteredArray } }
@@ -259,51 +242,18 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 						).catch(err => console.log(err))
 					)
 					.catch(err => console.log(err));
-			});
-
-			// .then(profile.save())
-			// .then(profile => res.json(profile))
-			// .catch(err => console.log(err));
+			})
+			.then(profile.save())
+			.then(profile => res.json(profile))
+			.catch(err => console.log(err));
 		}
 	});
 });
-//***THIS IS A SUCCESS** */
 
-// @route   DELETE api/profile/experience/:exp_id5%5C227%5C342%5C371%5C367%5C201%5C206
-// @desc    Delete experience from profile
-// @access  Private
-router.delete('/experience/:exp_id', passport.authenticate('jwt', { session: false }), (req, res) => {
-	Profile.findOne({ user: req.user.id })
-		.then(profile => {
-			// Get remove index
-			const removeIndex = profile.experience.map(item => item.id).indexOf(req.params.exp_id);
 
-			// Splice out of array
-			profile.experience.splice(removeIndex, 1);
 
-			// Save
-			profile.save().then(profile => res.json(profile));
-		})
-		.catch(err => res.status(404).json(err));
-});
 
-// @route   DELETE api/profile/education/:edu_id
-// @desc    Delete education from profile
-// @access  Private
-router.delete('/education/:edu_id', passport.authenticate('jwt', { session: false }), (req, res) => {
-	Profile.findOne({ user: req.user.id })
-		.then(profile => {
-			// Get remove index
-			const removeIndex = profile.education.map(item => item.id).indexOf(req.params.edu_id);
 
-			// Splice out of array
-			profile.education.splice(removeIndex, 1);
-
-			// Save
-			profile.save().then(profile => res.json(profile));
-		})
-		.catch(err => res.status(404).json(err));
-});
 
 router.post('/project', passport.authenticate('jwt', { session: false }), (req, res) => {
 	const { errors, isValid } = validateProjectInput(req.body);
@@ -338,7 +288,10 @@ router.get('/project/:projectID', passport.authenticate('jwt', { session: false 
 		if (profile) {
 			// Update
 			Profile.findOne({ projects: { $elemMatch: { _id: projectID } } })
-				.then(project => res.json(project))
+				.then(function (project) {
+					var fillteredProject = project.projects.filter(project => project._id == projectID)
+					return res.json(fillteredProject)
+				})
 				.catch(err => console.log(err));
 		}
 	});
