@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import TextField from '@material-ui/core/TextField';
 import Section1 from './edit_templates/Section1';
+
 const styles = theme => ({
 	root: {
 		width: '100%',
@@ -35,24 +36,36 @@ class EditProjectView extends React.Component {
 		};
 	}
 
+
 	handleChange = panel => (event, expanded) => {
 		this.setState({
 			expanded: expanded ? panel : false
 		});
 	};
 	render() {
+
 		const { classes } = this.props;
+		const projectID = this.props.project._id
 		const { expanded } = this.state;
 		var Section1Info = this.state.project.modules.filter(module => module.location === 'Section1');
+		var Section2Info = this.state.project.modules.filter(module => module.location === 'Section2');
+
 
 		return (
 			<div className={classes.root}>
 				<ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
-						<Typography className={classes.heading}>{Section1Info.location}</Typography>
-						<Typography className={classes.secondaryHeading}>{Section1Info.type}</Typography>
+						<Typography className={classes.heading}>{Section1Info[0].location}</Typography>
+						<Typography className={classes.secondaryHeading}>{Section1Info[0].type}</Typography>
 					</ExpansionPanelSummary>
-					<Section1 info={Section1Info} />
+					<Section1 info={Section1Info} projectID={projectID} moduleType={Section1Info[0].type}/>
+				</ExpansionPanel>
+				<ExpansionPanel expanded={expanded === 'panel2'} onChange={this.handleChange('panel2')}>
+					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+						<Typography className={classes.heading}>{Section2Info[0].location}</Typography>
+						<Typography className={classes.secondaryHeading}>{Section2Info[0].type}</Typography>
+					</ExpansionPanelSummary>
+					{/* <Section2 info={Section2Info} projectID={projectID} moduleType={Section2Info[0].type}/> */}
 				</ExpansionPanel>
 			</div>
 		);

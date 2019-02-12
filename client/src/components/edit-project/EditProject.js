@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import {withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import IconButton from '@material-ui/core/IconButton';
-import Grid from '@material-ui/core/Grid';
 import EditProjectView from './view_container/EditProjectView';
-
 import { getCurrentProject, getCurrentProfile } from '../../actions/profileActions';
-import isEmpty from '../../validation/is-Empty';
+
 
 const styles = theme => ({
 	root: {
@@ -48,18 +45,6 @@ class EditProject extends Component {
 		}
 	}
 
-	// onSubmit(e) {
-	// 	e.preventDefault();
-
-	// 	const projectData = {
-	// 		title: this.state.title,
-	// 		openingParagraph: this.state.openingParagraph,
-	// 		description: this.state.description,
-	// 		status: this.state.status
-	// 	};
-
-	// 	this.props.editProject(projectData, this.props.history, this.state.hash);
-	// }
 
 	render() {
 		return this.state.project ? (

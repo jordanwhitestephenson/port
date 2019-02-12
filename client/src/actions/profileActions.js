@@ -8,7 +8,8 @@ import {
   GET_ERRORS,
   SET_CURRENT_USER, 
   ADD_MODULE,
-  GET_PROJECT
+  GET_PROJECT,
+  UPDATE_SECTION_ONE
 } from './types';
 
 // Get current profile
@@ -100,19 +101,23 @@ export const addProject = (expData, history) => dispatch => {
 
 
 
-// Edit Project
-// export const editProject = (projectData, history, id) => dispatch => {
-//   axios
-//     .put(`/api/profile/updateProject/${id}`, projectData)
-//     .then(res => history.push('/dashboard'))
-//     .catch(err =>
-//       dispatch({
-//         type: GET_ERRORS,
-//         payload: err.response.data
-//       })
-//     );
-  
-// };
+export const updateSectionOne = (data, id) => dispatch => {
+  console.log(data, '*****UPDATESECTION ACTION', id, '****ID<')
+  axios
+    .post(`api/profile/updateProject/${id}`, data)
+    .then(res =>
+      dispatch({
+        type: UPDATE_SECTION_ONE,
+        payload: res.data
+      })
+    )
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: null
+      })
+    );
+};
 
 
 

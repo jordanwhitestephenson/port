@@ -14,6 +14,7 @@ export const DELETE_POST = 'DELETE_POST';
 export const GET_PROJECT = 'GET_PROJECT';
 export const PROJECT_LOADING = 'PROJECT_LOADING';
 export const ADD_MODULE = 'PROJECT_LOADING';
+export const UPDATE_SECTION_ONE = 'UPDATE_SECTION_ONE'
 
 
 

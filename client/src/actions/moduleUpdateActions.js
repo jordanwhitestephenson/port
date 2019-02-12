@@ -7,7 +7,8 @@ import {
   GET_POSTS,
   GET_POST,
   POST_LOADING,
-  DELETE_POST
+  DELETE_POST,
+  UPDATE_SECTION_ONE
 } from './types';
 
 // Add Post
@@ -29,6 +30,7 @@ export const addPost = postData => dispatch => {
     );
 };
 
+// Get Posts
 
 
 

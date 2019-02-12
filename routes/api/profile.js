@@ -298,32 +298,62 @@ router.get('/project/:projectID', passport.authenticate('jwt', { session: false 
 });
 
 //UPDATE PROJECT
-router.put('/updateProject/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+router.post('/updateProject/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
 	const newProject = {};
+	console.log(req.body.location)
 	const projectID = req.params.id;
-	if (req.body.description) newProject.description = req.body.description;
-	if (req.body.openingParagraph) newProject.openingParagraph = req.body.openingParagraph;
-	if (req.body.title) newProject.title = req.body.title;
+	var ModuleData = '';
+	if (req.body.type === 'ProductGrid') {
+		ModuleData = {
+			headline: req.body.headline,
+			paragraphText: req.body.paragraphText,
+			location: req.body.location,
+			type: req.body.type,
+			button: req.body.button,
+			imageSets: req.body.imageSets,
+			main_image: req.body.main_image
+		};
+	}
+	if (req.body.type === 'Jumbotron') {
+		ModuleData = {
+			headline: req.body.headline,
+			paragraphText: req.body.paragraphText,
+			main_image_SRC: req.body.main_image.SRC,
+			main_image_link: req.body.main_image.link,
+			location: req.body.location,
+			type: req.body.type,
+			button: req.body.button,
+			buttonInfo: {
+				text: req.body.buttonInfo.text,
+				link: req.body.buttonInfo.link
+			},
+			layout: req.body.layout,
+			backgroundColor: req.body.backgroundColor,
+			projectID: req.params.project_id
+		};
+	}
 
-	Profile.findOne({ user: req.user.id }).then(profile => {
-		if (profile) {
-			// Update
-			Profile.update(
-				{ projects: { $elemMatch: { _id: projectID } } },
-				{
-					$set: {
-						'projects.$.title': newProject.title,
-						'projects.$.openingParagraph': newProject.openingParagraph,
-						'projects.$.description': newProject.description
-					}
-				},
-				{ new: true }
+	Profile.find({ projects: { $elemMatch: { _id: projectID } } }).then(function(result) {
+		var filteredArray;
+		result.forEach(function(u) {
+			u.projects.map(
+				e => (filteredArray = e.modules.filter(location => location.location !== ModuleData.location))
+			);
+			console.log(filteredArray, 'FILTERS***ARE')
+			return filteredArray;
+		});
+		Profile.update(
+			{ projects: { $elemMatch: { _id: projectID } } },
+			{ $set: { ['projects.$.modules']: filteredArray } }
+		)
+			.then(result =>
+				Profile.update(
+					{ projects: { $elemMatch: { _id: projectID } } },
+					{ $push: { ['projects.$.modules']: ModuleData } }
+				).catch(err => console.log(err))
 			)
-				.then(profile.save())
-				.then(profile => res.json(profile))
-				.catch(err => console.log(err));
-		}
-	});
+			.catch(err => console.log(err));
+	})
 });
 
 //GET PREVIEW OF PROJECT

@@ -1,27 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import ExpansionPanel from '@material-ui/core/ExpansionPanel';
+import { connect } from 'react-redux';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
-import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
-import Typography from '@material-ui/core/Typography';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import TextField from '@material-ui/core/TextField';
-const styles = theme => ({
-	root: {
-		width: '100%',
-		flexDirection: 'column'
-	},
-	heading: {
-		fontSize: theme.typography.pxToRem(15),
-		flexBasis: '33.33%',
-		flexShrink: 0
-	},
-	secondaryHeading: {
-		fontSize: theme.typography.pxToRem(15),
-		color: theme.palette.text.secondary
-	}
-});
+import JumboTronForm from '../../../common/modules/JumboTronForm';
+import { withRouter } from 'react-router-dom';
+import { updateSectionOne } from '../../../../actions/profileActions'
+
 
 class Section1Edit extends React.Component {
 	constructor(props) {
@@ -30,18 +14,16 @@ class Section1Edit extends React.Component {
             expanded: null,
             section: '',
             name: '',
-            moduleInfo: this.props.info,
-
+						moduleInfo: this.props.info[0],
+						section1Info: '',
+						Section1 : ''
         }
-
-        // this.handleFieldChange = this.handleFieldChange.bind(this)
 	};
 
     handleFieldChange = name => event => {
-
         const { Section1 } = this.state
-        console.log(event.target.value)
-		this.setState({
+
+				this.setState({
 			[Section1[name]]: event.target.value
         });
         
@@ -50,51 +32,46 @@ class Section1Edit extends React.Component {
         this.setState({
           expanded: expanded ? panel : false,
         });
-      };
-	render() {
-		const { classes } = this.props;
-        const { expanded } = this.state;
-        const {Section1, Section2}  = this.state
-        var infoObject = this.state.moduleInfo[0]
-		// var entries = infoObject.entries()
-		// console.log(entries)
-   
+		};
 	
+	sendModuleToProject = dataFromChild => {
+			this.setState({ section1Info: dataFromChild });
+			const projectID = this.props.projectID;
+			this.props.updateSectionOne(dataFromChild, projectID);
+		};
+	
+	
+	render() {
+		console.log(this.state.moduleInfo, 'moduleInfoSection1')
 		return (
-			<div className={classes.root} >
-						<ExpansionPanelDetails style = {{ flexDirection: 'column'}}>
-							{
-								// <TextField
-									
-								// 	id="outlined-uncontrolled"
-								// 	fullWidth
-								// 	label={item[0]}
-								// 	className={classes.textField}
-								// 	margin="normal"
-								// 	variant="outlined"
-								// 	value={[item]}
-								// 	onChange={this.handleFieldChange(`${[item[0]]}`)}
-								// 	placeholder={item[1]}
-								// 	InputLabelProps={{
-								// 		shrink: true
-								// 	}}
-                                // />
-								<ul>
-								{infoObject.map((value, index) => {
-								  return <li key={index}>{value}</li>
-								})}
-							  </ul>
-							}
-						</ExpansionPanelDetails>
-					
-			
-			</div>
+				<ExpansionPanelDetails style={{ flexDirection: 'column' }}>
+				{this.props.moduleType === 'Jumbotron' ?
+					<JumboTronForm callbackfromparent={this.sendModuleToProject}
+						paragraphText={this.state.moduleInfo.paragraphText}
+						location={this.state.moduleInfo.location}
+						main_image_SRC={this.state.moduleInfo.main_image_SRC}
+						main_image_link={this.state.moduleInfo.main_image_link}
+						headline = {this.state.moduleInfo.headline}
+					/> : null}
+				</ExpansionPanelDetails>
 		);
 	}
 }
 
 Section1Edit.propTypes = {
-	classes: PropTypes.object.isRequired
+	classes: PropTypes.object.isRequired,
+	paragraphText: PropTypes.string.isRequired,
+	location: PropTypes.string.isRequired,
 };
 
-export default withStyles(styles)(Section1Edit);
+
+const mapStateToProps = state => ({
+	Section1: state.section1,
+});
+
+
+export default connect(
+	mapStateToProps,
+	{ updateSectionOne }
+)(withRouter(Section1Edit));
+

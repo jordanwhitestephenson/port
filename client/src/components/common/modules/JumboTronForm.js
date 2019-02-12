@@ -57,18 +57,17 @@ class JumboTronForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			headline: 'H1- (42PT) EXTRABOLD',
-			paragraphText:
-				'Body copy 18pt/20pt Proxima Nova Regular. Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut abore et dolore.',
+			headline: this.props.headline,
+			paragraphText: this.props.paragraphText,
 			location: this.props.location,
-			button: '',
-			buttonText: 'cta 20pt extrabold',
-			buttonLink: '',
-			layout: '',
+			button: this.props.button,
+			buttonText: this.props.buttonText,
+			buttonLink: this.props.buttonLink,
+			layout: this.props.layout,
 			backgroundColor: '',
 			errors: '',
-			main_image_SRC: '',
-			main_image_link: '',
+			main_image_SRC: this.props.main_image_SRC,
+			main_image_link: this.props.main_image_link,
 			main_image_alt: '',
 			updateButton: 'ADD MODULE'
 		};
@@ -84,7 +83,7 @@ class JumboTronForm extends React.Component {
 			headline: this.state.headline,
 			paragraphText: this.state.paragraphText,
 			type: 'Jumbotron',
-			location: this.props.location,
+			location: this.state.location,
 			button: this.state.button,
 			buttonInfo: {
 				text: this.state.buttonText,
@@ -99,6 +98,7 @@ class JumboTronForm extends React.Component {
 			}
 		};
 		this.props.callbackfromparent(moduleData);
+		console.log(moduleData)
 		this.setState({
 			updateButton: 'UPDATE MODULE'
 		});
@@ -125,7 +125,7 @@ class JumboTronForm extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-
+		console.log(this.props, 'THIS IS JUMBO TRON')
 		return (
 			<div className={classes.formContainer}>
 				<form className={classes.container} onSubmit={this.onSubmit}>
@@ -188,6 +188,20 @@ class JumboTronForm extends React.Component {
 									shrink: true
 								}}
 							/>
+							<TextField
+							id="outlined-full-width"
+							label="Image Link"
+							value={this.state.main_image_link}
+							style={{ margin: 8 }}
+							onChange = {this.handleChange('main_image_link')}
+							placeholder="main_image_link"
+							fullWidth
+							margin="normal"
+							variant="outlined"
+							InputLabelProps={{
+								shrink: true
+							}}
+						/>
 						</Grid>
 					</Grid>
 					<Grid item xs={12}>
@@ -276,20 +290,7 @@ class JumboTronForm extends React.Component {
 							) : null}
 						</FormControl>
 
-						<TextField
-							id="outlined-full-width"
-							label="Label"
-							value={this.state.label}
-							style={{ margin: 8 }}
-							placeholder="Placeholder"
-							helperText="Full width!"
-							fullWidth
-							margin="normal"
-							variant="outlined"
-							InputLabelProps={{
-								shrink: true
-							}}
-						/>
+
 					</section>
 					<div />
 					<div style={{ width: '100%' }} />
@@ -303,5 +304,7 @@ JumboTronForm.propTypes = {
 	classes: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 };
+
+
 
 export default withStyles(styles)(JumboTronForm);
