@@ -11,6 +11,11 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import JumboTronPreview from './preview_templates/JumboTronPreview';
 import ProductGridPreview from './preview_templates/ProductGridPreview';
+import ReactDOM from "react-dom";
+import { renderToString } from 'react-dom/server'
+import ReactDOMServer from 'react-dom/server';
+import TextField from '@material-ui/core/TextField';
+import { timingSafeEqual } from 'crypto';
 
 const styles = {
 	appBar: {
@@ -28,20 +33,28 @@ function Transition(props) {
 class FullScreenDialog extends React.Component {
 	state = {
 		open: false,
-		modulePreview: this.props.modulePreview
+		modulePreview: this.props.modulePreview,
+		HTML: ''
 	};
 	componentWillReceiveProps(nextProps) {
 		this.setState({
-			modulePreview: nextProps
+			modulePreview: nextProps,
+			
 		});
 	}
-
+	// const node = ReactDOM.findDOMNode(this);
+	handleHTML = () => {
+		var HTML = ReactDOMServer.renderToString(<JumboTronPreview modulePreview={this.state.modulePreview} />)
+		this.setState({
+			HTML: HTML,
+		});
+	}
 	handleClickOpen = () => {
 		this.setState({
 			open: true,
 			modulePreview: this.props.modulePreview
 		});
-		console.log(this.state.modulePreview);
+
 	};
 
 	handleClose = () => {
@@ -51,6 +64,8 @@ class FullScreenDialog extends React.Component {
 	render() {
 		const { classes } = this.props;
 		const module = this.state.modulePreview;
+	
+	
 
 		return (
 			<div>
@@ -74,7 +89,9 @@ class FullScreenDialog extends React.Component {
 								<ProductGridPreview modulePreview={this.state.modulePreview} />
 							) : null}
 						</div>
+	
 					</List>
+			
 				</Dialog>
 			</div>
 		);
@@ -86,3 +103,10 @@ FullScreenDialog.propTypes = {
 };
 
 export default withStyles(styles)(FullScreenDialog);
+					// {/* <TextField
+					// 		value={this.state.HTML}
+					// 		multiLine={true}
+					// 		rows={2}
+					
+					// 	/>
+					// 	<button onClick = {this.handleHTML}>HTML</button> */}

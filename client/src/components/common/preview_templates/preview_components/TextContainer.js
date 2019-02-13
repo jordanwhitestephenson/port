@@ -12,7 +12,7 @@ export class TextContainer extends Component {
     render() {
         const module = this.state.modulePreview;
 		return (
-				<Grid item direction = "column" justify = "center" alignItems = "center" xs = {12} className="TEXT_CONTAINER">
+				<Grid item direction = "column" justify = "center" alignItems = "center" xs = {12} className="TEXT_CONTAINER cs_container-crocs">
 					<h2 className = "cx-heavy-brand-font text-center">{module.headline}</h2>
 					<p className="cx-brand-font text-center">{module.paragraphText}</p>
 					{module.button == 'true' ? (

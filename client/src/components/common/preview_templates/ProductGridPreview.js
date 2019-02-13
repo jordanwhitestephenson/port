@@ -16,15 +16,16 @@ class ProductGridPreview extends Component {
 	state = {
 		modulePreview: this.props.modulePreview
     };
- 
+	
 	render() {
 		const module = this.state.modulePreview;
+		console.log(module, '******this is the props I need to send*****')
 
 		return (
 			<div style={{ maxWidth: '980px', margin: 'auto' }}>
 				{module.layout === 'Left' ? (
 					<Grid container  spacing={24}   moduleName={module.type}>
-                        <Grid item xs={12} style={styles.flexbox} sm={6}>
+             <Grid item xs={12} style={styles.flexbox} sm={6}>
 							<ProductContainer modulePreview={this.state.modulePreview} />
 						</Grid>
 						<Grid style={styles.flexbox} item xs={12} sm={6}>

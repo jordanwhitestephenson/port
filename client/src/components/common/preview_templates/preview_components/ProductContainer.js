@@ -20,7 +20,7 @@ export class ProductContainer extends Component {
 		var image3_replaced = '';
 		var image4_replaced = '';
 		const module = this.state.modulePreview;
-
+		console.log('from product contrainer')
 
 		if (
 			module.imageSets.image1.SRC.includes('?$staticlink$') ||

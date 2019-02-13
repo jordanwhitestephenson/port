@@ -10,6 +10,7 @@ import SelectListGroup from './SelectListGroup';
 import ListModules from './ListModules';
 import { addModule } from '../../actions/profileActions';
 
+import PreviewAllModules from '../common/preview_templates/PreviewAllModules'
 function TabContainer({ children, dir }) {
 	return (
 		<Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
@@ -32,7 +33,8 @@ const styles = theme => ({
 class FullWidthTabs extends React.Component {
 	state = {
 		value: 0,
-		projectID: this.props.projectID
+		projectID: this.props.projectID,
+		all_modules: []
 	};
 
 
@@ -43,6 +45,14 @@ class FullWidthTabs extends React.Component {
 	handleChangeIndex = index => {
 		this.setState({ value: index });
 	};
+	addModuleInfoToContainer = (childInfo) => {
+		var filteredSectionArray = this.state.all_modules.filter(section => section.location !== childInfo.location)
+		var joined = filteredSectionArray.concat(childInfo)
+		this.setState({
+			all_modules: joined
+		})
+		console.log(this.state.all_modules)
+	}
 
 	render() {
 		const { classes, theme } = this.props;
@@ -61,6 +71,7 @@ class FullWidthTabs extends React.Component {
 						<Tab label="Section  Three" />
 						<Tab label="Section  Four" />
 						<Tab label="Section  5 " />
+						<Tab label="PREVIEW" />
 					</Tabs>
 				</AppBar>
 				<SwipeableViews
@@ -69,10 +80,10 @@ class FullWidthTabs extends React.Component {
 					onChangeIndex={this.handleChangeIndex}
 				>
 					<TabContainer dir={theme.direction}>
-						<ListModules projectID = {this.state.projectID} addModuleToProject ={this.props.addModuleToProject}  location={'Section1'} />
+						<ListModules projectID={this.state.projectID} addModuleToProject={this.props.addModuleToProject} addModuleInfoToContainer={this.addModuleInfoToContainer} location={'Section1'} />
 					</TabContainer>
 					<TabContainer dir={theme.direction}>
-						<ListModules projectID = {this.state.projectID} addModuleToProject ={this.props.addModuleToProject} location={'Section2'} />
+						<ListModules projectID = {this.state.projectID} addModuleToProject ={this.props.addModuleToProject}  addModuleInfoToContainer={this.addModuleInfoToContainer}location={'Section2'} />
 					</TabContainer>
 					<TabContainer dir={theme.direction}>
 						<ListModules projectID = {this.state.projectID} addModuleToProject ={this.props.addModuleToProject} location={'Section3'} />
@@ -82,6 +93,11 @@ class FullWidthTabs extends React.Component {
 					</TabContainer>
 					<TabContainer dir={theme.direction}>
 						<ListModules projectID = {this.state.projectID} addModuleToProject ={this.props.addModuleToProject} location={'Section5'} />
+					</TabContainer>
+					<TabContainer dir={theme.direction}>
+						
+						<PreviewAllModules moduleArray={this.state.all_modules} />
+						
 					</TabContainer>
 				</SwipeableViews>
 			</div>

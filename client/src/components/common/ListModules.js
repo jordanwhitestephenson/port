@@ -21,6 +21,7 @@ import FullScreenDialog from './DialogBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
 
+
 const styles = theme => ({
 	root: {
 		width: '100%',
@@ -50,7 +51,9 @@ class ListModules extends React.Component {
 	sendModuleToProject = dataFromChild => {
 		this.setState({ listDataFromChild: dataFromChild });
 		const projectID = this.props.projectID;
+		console.log(this.props, 'in List Modules')
 		this.props.addModuleToProject(dataFromChild, projectID);
+		this.props.addModuleInfoToContainer(dataFromChild)
 	};
 	onUndo() {
 		this.setState({

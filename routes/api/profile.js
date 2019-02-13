@@ -7,7 +7,6 @@ const ObjectID = require('mongodb').ObjectID;
 const validateProfileInput = require('../../validation/profile');
 const validateExperienceInput = require('../../validation/experience');
 const validateProjectInput = require('../../validation/project');
-
 // Load Profile Model
 const Profile = require('../../models/Profile');
 // Load User Model
@@ -17,6 +16,7 @@ const User = require('../../models/User');
 // @desc    Tests profile route
 // @access  Public
 router.get('/test', (req, res) => res.json({ msg: 'Profile Works' }));
+
 
 // @route   GET api/profile
 // @desc    Get current users profile
