@@ -17,6 +17,7 @@ import { connect } from 'react-redux';
 import IconButton from '@material-ui/core/IconButton';
 import { withRouter } from 'react-router-dom';
 import { deleteProject } from '../../actions/profileActions'
+import PostMalone from '../common/icons/PostClog.jpg'
 
 
 const styles = {
@@ -38,12 +39,12 @@ class ImgMediaCard extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			title: '',
+			title: this.props.state,
 			heading: '',
 			openingParagraph: '',
 			description: '',
 			errors: {},
-			icon: ''
+			icon: this.props.icon
 
 		};
 
@@ -53,14 +54,17 @@ class ImgMediaCard extends Component {
 
 	onDeleteClick(e) {
 		e.preventDefault();
-		this.props.deleteProject(this.props.id)
+		this.props.deleteProject(this.props.id, this.props.history)
+		this.props.onDeleteClick(this.props.id)
+		console.log(this.props, 'IN IMAGECARD')
 	}
 	render() {
-
+		var photo = ''
+		if (this.props.icon === "Post Malone") {
+			photo =  PostMalone 
+		}
 		const { classes } = this.props;
-
-
-		
+	
 	return (
 		<Card className={classes.card}>
 			<CardActionArea>
@@ -69,12 +73,12 @@ class ImgMediaCard extends Component {
 					alt="Contemplative Reptile"
 					className={classes.media}
 					height="140"
-					image="/static/images/cards/contemplative-reptile.jpg"
+					image={photo}
 					title="Contemplative Reptile"
 				/>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="h2">
-						{this.props.icon}
+						{this.state.title}
 					</Typography>
 					<Typography component="p">{this.props.description}</Typography>
 				</CardContent>

@@ -104,6 +104,9 @@ const ProfileSchema = new Schema({
         type: String,
         required: true
       },
+      icon: {
+        type: String,
+      },
       description: {
         type: String,
       },

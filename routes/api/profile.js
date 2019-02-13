@@ -350,6 +350,7 @@ router.get('/preview-project/:id', passport.authenticate('jwt', { session: false
 	if (req.body.description) newProject.description = req.body.description;
 	if (req.body.openingParagraph) newProject.openingParagraph = req.body.openingParagraph;
 	if (req.body.title) newProject.title = req.body.title;
+	if (req.body.icon) newProject.icon = req.body.icon;
 
 	Profile.findOne({ user: req.user.id }).then(profile => {
 		if (profile) {
@@ -359,6 +360,7 @@ router.get('/preview-project/:id', passport.authenticate('jwt', { session: false
 				{
 					$set: {
 						'projects.$.title': newProject.title,
+						'projects.$.icon': newProject.icon,
 						'projects.$.openingParagraph': newProject.openingParagraph,
 						'projects.$.description': newProject.description
 					}
@@ -383,7 +385,7 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
 
 
 
-//GET PREVIEW OF PROJECT
+// DELETE PROJECT
 router.delete('/project/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
 	// const { errors, isValid } = validateProjectInput(req.body);
 	const newProject = {};

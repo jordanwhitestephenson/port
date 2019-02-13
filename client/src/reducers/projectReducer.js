@@ -19,7 +19,7 @@ export default function (state = initialState, action) {
 				project: action.payload,
 			};
 		case DELETE_PROJECT:
-			console.log('DELETE PROJECT', console.log(action.payload))
+			console.log('DELETE PROJECT')
 			return {
 				...state,
 				project: action.payload,

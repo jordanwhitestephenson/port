@@ -41,7 +41,6 @@ class AddProject extends Component {
 			description: this.state.description,
 			icon:  this.state.icon
 		};
-	
 		this.props.addProject(projectData, this.props.history);
 	}
 

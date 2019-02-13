@@ -126,7 +126,7 @@ export const updateSectionOne = (data, id) => dispatch => {
 
 
 // Delete Education
-export const deleteProject = id => dispatch =>{
+export const deleteProject = (id, history) => dispatch =>{
   console.log('DELETE!')
   axios
     .delete(`/api/profile/project/${id}`)
@@ -134,7 +134,7 @@ export const deleteProject = id => dispatch =>{
       dispatch({
         type: DELETE_PROJECT,
         payload: res.data
-      })
+      }) 
     )
     .catch(err =>
       dispatch({

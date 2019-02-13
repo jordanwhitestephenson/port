@@ -3,12 +3,33 @@ import ImageMediaCard from './ImgMediaCard';
 import Grid from '@material-ui/core/Grid';
 
 class Project extends Component {
-
+	constructor(props) {
+		super(props);
+	
+		this.state = {
+			project: this.props.project,
+			deleteProject: ''
+		 
+		};
+		this.updateProject = this.updateProject.bind(this)
+	}
+	
+	updateProject(id) {
+		var projectState = this.state.project
+		console.log(id, 'ID SENT')
+		var newProject = projectState.filter(project => project._id !== id)
+		console.log(newProject, 'NEW PROJECT')
+	 	this.setState({
+	 		project: newProject
+	 	})
+	 }
 
 	render() {
-		console.log('this is from PRoject.js', this.props.project)
-		const project = this.props.project.map(project => (
-			<ImageMediaCard id={project._id} onDeleteClick={this.onDeleteClick}title={project.title} icon={project.icon}description={project.description} />
+
+		console.log(this.props)
+
+		const project = this.state.project.map(project => (
+			<ImageMediaCard id={project._id} onDeleteClick={this.updateProject}title={project.title} icon={project.icon}description={project.description} />
 		));
 		return (
 			<div>
