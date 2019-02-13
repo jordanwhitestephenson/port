@@ -76,64 +76,30 @@ class PreviewProject extends Component {
 
   render() {
     const { errors } = this.state;
-
-  
-
-
-
-    return (
-      <div className="create-profile">
-        <div className="container">
-          <div className="row">
-            <div className="col-md-8 m-auto">
-              <Link to="/dashboard" className="btn btn-light">
-                Go Back
-              </Link>
-              <h1 className="display-4 text-center">Preview Project</h1>
-              <small className="d-block pb-3">* = required fields</small>
-              <form onSubmit={this.onSubmit}>
-								<TextFieldGroup
-									placeholder="Project Title"
-									name="title"
-									value={this.state.title}
-									onChange={this.onChange}
-									error={errors.title}
-								/>
-								<TextFieldGroup
-									placeholder="Heading"
-									name="heading"
-									value={this.state.heading}
-									onChange={this.onChange}
-									error={errors.heading}
-								/>
-
-								<TextAreaFieldGroup
-									placeholder="Description"
-									name="description"
-									value={this.state.description}
-									onChange={this.onChange}
-									error={errors.description}
-									info="Tell us about your project"
-								/>
-								<TextAreaFieldGroup
-									placeholder="Opening Paragraph"
-									name="openingParagraph"
-									value={this.state.openingParagraph}
-									onChange={this.onChange}
-									error={errors.openingParagraph}
-									
-								/>
-                <input
-                  type="submit"
-                  value="Submit"
-                  className="btn btn-success btn-block mt-4"
-                />
-              </form>
-            </div>
-          </div>
+    if (this.props.profile.profile) {
+      const project = this.props.profile.profile.projects.map(project => project.modules)[0]
+      console.log(project)
+      return (
+        <div className="preview_project">
+          TO DO
         </div>
-      </div>
-    );
+      )
+    }
+      
+    
+    
+    else {
+      return (
+        <div className="preview_project">
+         Profile loading..
+        </div>
+     ) 
+    }
+
+
+
+
+
   }
 }
 

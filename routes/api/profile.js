@@ -394,15 +394,16 @@ router.delete('/project/:id', passport.authenticate('jwt', { session: false }), 
 	Profile.findOne({ user: req.user.id }).then(profile => {
 		if (profile) {
 			// Update
+			
 			Profile.update(
-				{  },
+				{ projects: { $elemMatch: { _id: projectID } }  },
 				{
 					$pull: {
 						'projects': { '_id' : projectID },
 					}
 				},
 			)
-				.then(profile.save())
+				.then(profile.save()).catch(err => console.log(err))
 				.then(profile => res.json(profile))
 				.catch(err => console.log(err));
 		}

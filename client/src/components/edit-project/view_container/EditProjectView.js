@@ -50,11 +50,11 @@ class EditProjectView extends React.Component {
 		var Section1Info = this.state.project.modules.filter(module => module.location === 'Section1');
 		var Section2Info = this.state.project.modules.filter(module => module.location === 'Section2');
 	
-		console.log(Section1Info[0].location)
+	
 		return (
 			<div className={classes.root}>
 				{this.props.project.modules.length === 0 ? <div>You have no modules added to this project, please go back and build your project!</div>
-					: this.props.project.modules.length < 5 ? <div>Your project isn't complete, please add more modules</div>
+					: this.props.project.modules.length < 2 ? <div>Your project isn't complete, please add more modules</div>
 					:
 					
 					

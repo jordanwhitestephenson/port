@@ -30,7 +30,7 @@ export class PreviewAllModules extends Component {
 
       const ProductGridProps = this.props.moduleArray.filter(type => type.type === "ProductGrid")[0]
       const JumboTronProps =  this.props.moduleArray.filter(type => type.type === "Jumbotron")[0]
-      console.log(this.props.moduleArray)
+
       return <div>
              {this.props.moduleArray.map(module =>
             (module.location === "Section1" && module.type === "Jumbotron" ? <JumbotronPreview modulePreview={JumboTronProps} /> : module.location === "Section1" && module.type === "ProductGrid" ? <ProductGridPreview modulePreview={ProductGridProps} /> : null)
