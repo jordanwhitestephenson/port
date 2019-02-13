@@ -49,10 +49,17 @@ class EditProjectView extends React.Component {
 		const { expanded } = this.state;
 		var Section1Info = this.state.project.modules.filter(module => module.location === 'Section1');
 		var Section2Info = this.state.project.modules.filter(module => module.location === 'Section2');
-
-
+	
+		console.log(Section1Info[0].location)
 		return (
 			<div className={classes.root}>
+				{this.props.project.modules.length === 0 ? <div>You have no modules added to this project, please go back and build your project!</div>
+					: this.props.project.modules.length < 5 ? <div>Your project isn't complete, please add more modules</div>
+					:
+					
+					
+				<div>	
+						
 				<ExpansionPanel expanded={expanded === 'panel1'} onChange={this.handleChange('panel1')}>
 					<ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
 						<Typography className={classes.heading}>{Section1Info[0].location}</Typography>
@@ -66,8 +73,11 @@ class EditProjectView extends React.Component {
 						<Typography className={classes.secondaryHeading}>{Section2Info[0].type}</Typography>
 					</ExpansionPanelSummary>
 					{/* <Section2 info={Section2Info} projectID={projectID} moduleType={Section2Info[0].type}/> */}
-				</ExpansionPanel>
+					</ExpansionPanel>
+					</div>
+				}
 			</div>
+			
 		);
 	}
 }

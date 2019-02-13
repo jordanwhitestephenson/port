@@ -18,6 +18,8 @@ import IconButton from '@material-ui/core/IconButton';
 import { withRouter } from 'react-router-dom';
 import { deleteProject } from '../../actions/profileActions'
 import PostMalone from '../common/icons/PostClog.jpg'
+import DrewBarrymore from '../common/icons/DrewBarryMoreCrocs.png'
+import JohnCen from '../common/icons/PostClog.jpg'
 
 
 const styles = {
@@ -63,6 +65,9 @@ class ImgMediaCard extends Component {
 		if (this.props.icon === "Post Malone") {
 			photo =  PostMalone 
 		}
+		if (this.props.icon === "Drew Barrymore") {
+			photo =  DrewBarrymore 
+		}
 		const { classes } = this.props;
 	
 	return (
@@ -78,7 +83,7 @@ class ImgMediaCard extends Component {
 				/>
 				<CardContent>
 					<Typography gutterBottom variant="h5" component="h2">
-						{this.state.title}
+						{this.props.title}
 					</Typography>
 					<Typography component="p">{this.props.description}</Typography>
 				</CardContent>
