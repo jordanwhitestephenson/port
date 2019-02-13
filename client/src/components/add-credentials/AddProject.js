@@ -5,6 +5,7 @@ import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { addProject } from '../../actions/profileActions';
+import SelectListGroup from '../common/SelectListGroup';
 
 class AddProject extends Component {
 	constructor(props) {
@@ -15,6 +16,7 @@ class AddProject extends Component {
 			openingParagraph: '',
 			description: '',
 			errors: {},
+			icon: ''
 
 		};
 
@@ -36,9 +38,10 @@ class AddProject extends Component {
 			title: this.state.title,
 			heading: this.state.heading,
 			openingParagraph: this.state.openingParagraph,
-			description: this.state.description
+			description: this.state.description,
+			icon:  this.state.icon
 		};
-
+	
 		this.props.addProject(projectData, this.props.history);
 	}
 
@@ -55,7 +58,12 @@ class AddProject extends Component {
 
 	render() {
 		const { errors } = this.state;
-
+		const options = [
+			{ label: '* Select Icon for Project', value: 0 },
+			{ label: 'Drew Barrymore', value: 'Drew Barrymore' },
+			{ label: 'Post Malone', value: 'Post Malone' },
+			{ label: 'John Cena', value: 'John Cena' },
+		  ];
 		return (
 			<div className="add-project">
 				<div className="container">
@@ -82,35 +90,23 @@ class AddProject extends Component {
 									onChange={this.onChange}
 									error={errors.heading}
 								/>
-								<div className="form-check mb-4">
-									<input
-										type="checkbox"
-										className="form-check-input"
-										name="current"
-										value={this.state.current}
-										checked={this.state.current}
-										onChange={this.onCheck}
-										id="current"
-									/>
-									<label htmlFor="current" className="form-check-label">
-										Current Job
-									</label>
-								</div>
 								<TextAreaFieldGroup
-									placeholder="Description"
-									name="description"
-									value={this.state.description}
-									onChange={this.onChange}
-									error={errors.description}
 									info="Tell us about your project"
-								/>
-								<TextAreaFieldGroup
-									placeholder="Opening Paragraph"
+									placeholder= "Description"
 									name="openingParagraph"
 									value={this.state.openingParagraph}
 									onChange={this.onChange}
 									error={errors.openingParagraph}	
 								/>
+									<SelectListGroup
+									placeholder="Status"
+									name="icon"
+									value={this.state.icon}
+									onChange={this.onChange}
+									options={options}
+									error={errors.status}
+									info="Select an Icon for your project"
+									/>
 								<input type="submit" value="Submit" className="btn btn-success btn-block mt-4" />
 							</form>
 						</div>

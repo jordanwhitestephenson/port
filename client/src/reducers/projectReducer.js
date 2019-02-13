@@ -1,7 +1,8 @@
 import {
 	GET_PROJECT,
 	UPDATE_SECTION_ONE,
-	ALL_MODULES
+	ALL_MODULES,
+	DELETE_PROJECT
 } from '../actions/types';
 
 const initialState = {
@@ -13,6 +14,12 @@ export default function (state = initialState, action) {
 
 		case GET_PROJECT:
 			console.log('GET PROJECT')
+			return {
+				...state,
+				project: action.payload,
+			};
+		case DELETE_PROJECT:
+			console.log('DELETE PROJECT', console.log(action.payload))
 			return {
 				...state,
 				project: action.payload,

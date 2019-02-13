@@ -5,6 +5,7 @@ import {
 	CLEAR_CURRENT_PROFILE,
 	ADD_MODULE,
 
+
 } from '../actions/types';
 
 const initialState = {
@@ -44,6 +45,7 @@ export default function(state = initialState, action) {
 				profile: action.payload,
 				loading: false
 			};
+
 
 		default:
 			return state;

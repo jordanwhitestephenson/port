@@ -6,13 +6,20 @@ export class ImageContainer extends Component {
 	static propTypes = {
 		prop: PropTypes
 	};
-	state = {
-		modulePreview: this.props.modulePreview
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			modulePreview: this.props.modulePreview
+
+		}
+	}
+
 	render() {
-		const module = this.props.modulePreview;
+		const module = this.state.modulePreview;
+		console.log('*****IMAGE CONTAINER STATE', this.state.modulePreview, '*****IMAGE PROPS', this.props.modulePreview)
+		//****STOPPED AT THIS PROBLEM ::: logged this and it was undefined! */ this.props.modulePreview.main_image
 		var main_image_replaced = this.state.modulePreview.main_image.SRC;
-		console.log('*****IMAGE CONTAINER', main_image_replaced)
+		
 		if (module.main_image.SRC.includes('?$staticlink$')) {
 			let main_image_SRC = module.main_image.SRC;
 

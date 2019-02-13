@@ -23,7 +23,7 @@ router.get('/test', (req, res) => res.json({ msg: 'Profile Works' }));
 // @access  Private
 router.get('/', passport.authenticate('jwt', { session: false }), (req, res) => {
 	const errors = {};
-
+console.log(req.body, '***************GET')
 	Profile.findOne({ user: req.user.id })
 		.populate('user', ['name', 'avatar'])
 		.then(profile => {
@@ -111,24 +111,8 @@ router.post('/', passport.authenticate('jwt', { session: false }), (req, res) =>
 	const profileFields = {};
 	profileFields.user = req.user.id;
 	if (req.body.handle) profileFields.handle = req.body.handle;
-	if (req.body.company) profileFields.company = req.body.company;
-	if (req.body.website) profileFields.website = req.body.website;
-	if (req.body.location) profileFields.location = req.body.location;
-	if (req.body.bio) profileFields.bio = req.body.bio;
 	if (req.body.status) profileFields.status = req.body.status;
-	if (req.body.githubusername) profileFields.githubusername = req.body.githubusername;
-	// Skills - Spilt into array
-	if (typeof req.body.skills !== 'undefined') {
-		profileFields.skills = req.body.skills.split(',');
-	}
 
-	// Social
-	profileFields.social = {};
-	if (req.body.youtube) profileFields.social.youtube = req.body.youtube;
-	if (req.body.twitter) profileFields.social.twitter = req.body.twitter;
-	if (req.body.facebook) profileFields.social.facebook = req.body.facebook;
-	if (req.body.linkedin) profileFields.social.linkedin = req.body.linkedin;
-	if (req.body.instagram) profileFields.social.instagram = req.body.instagram;
 
 	Profile.findOne({ user: req.user.id }).then(profile => {
 		if (profile) {
@@ -257,7 +241,7 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 
 router.post('/project', passport.authenticate('jwt', { session: false }), (req, res) => {
 	const { errors, isValid } = validateProjectInput(req.body);
-
+	console.log(req.body, 'FROM POST PROJECT IN ROUTER')
 	// Check Validation
 	if (!isValid) {
 		// Return any errors with 400 status
@@ -268,6 +252,7 @@ router.post('/project', passport.authenticate('jwt', { session: false }), (req, 
 		const newProject = {
 			title: req.body.title,
 			heading: req.body.heading,
+			icon: req.body.icon,
 			openingParagraph: req.body.openingParagraph,
 			description: req.body.description,
 			modules: []
@@ -395,5 +380,34 @@ router.delete('/', passport.authenticate('jwt', { session: false }), (req, res) 
 		User.findOneAndRemove({ _id: req.user.id }).then(() => res.json({ success: true }));
 	});
 });
+
+
+
+//GET PREVIEW OF PROJECT
+router.delete('/project/:id', passport.authenticate('jwt', { session: false }), (req, res) => {
+	// const { errors, isValid } = validateProjectInput(req.body);
+	const newProject = {};
+	const projectID = req.params.id;
+	// newProject.user = req.user.id;
+	Profile.findOne({ user: req.user.id }).then(profile => {
+		if (profile) {
+			// Update
+			Profile.update(
+				{  },
+				{
+					$pull: {
+						'projects': { '_id' : projectID },
+					}
+				},
+			)
+				.then(profile.save())
+				.then(profile => res.json(profile))
+				.catch(err => console.log(err));
+		}
+	});
+});
+
+
+
 
 module.exports = router;

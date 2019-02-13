@@ -9,7 +9,8 @@ import {
   SET_CURRENT_USER, 
   ADD_MODULE,
   GET_PROJECT,
-  UPDATE_SECTION_ONE
+  UPDATE_SECTION_ONE,
+  DELETE_PROJECT
 } from './types';
 
 // Get current profile
@@ -52,6 +53,7 @@ export const getProfileByHandle = handle => dispatch => {
 
 // Create Profile
 export const createProfile = (profileData, history) => dispatch => {
+  console.log(profileData)
   axios
     .post('/api/profile', profileData)
     .then(res => history.push('/dashboard'))
@@ -86,6 +88,7 @@ export const addModule = (moduledata, projectID, history) => dispatch => {
 
 // Add experience
 export const addProject = (expData, history) => dispatch => {
+  console.log(expData)
   axios
     .post('/api/profile/project', expData)
     .then(res => history.push('/dashboard'))
@@ -123,12 +126,13 @@ export const updateSectionOne = (data, id) => dispatch => {
 
 
 // Delete Education
-export const deleteProject = id => dispatch => {
+export const deleteProject = id => dispatch =>{
+  console.log('DELETE!')
   axios
     .delete(`/api/profile/project/${id}`)
     .then(res =>
       dispatch({
-        type: GET_PROFILE,
+        type: DELETE_PROJECT,
         payload: res.data
       })
     )
@@ -137,6 +141,7 @@ export const deleteProject = id => dispatch => {
         type: GET_ERRORS,
         payload: err.response.data
       })
+
     );
 };
 
