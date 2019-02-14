@@ -12,7 +12,6 @@ class JumboTronPreview extends Component {
 
 	render() {
 		const module = this.state.modulePreview;
-		console.log(module)
 		return (
 			<div className="jumboTron" style={{ maxWidth: '980px', margin: 'auto' }}>		
 				{module.layout === 'Left' ? (
@@ -21,7 +20,7 @@ class JumboTronPreview extends Component {
 						spacing={24}
 						className="module_container"
 						moduleName={module.type}
-						style={{ backgroundColor: `${module.backgroundColor}` }}
+						style={{ background: `${module.backgroundColor}` }}
 					>
 						<Grid item xs={12} sm={6} style ={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
 							<ImageContainer modulePreview={this.state.modulePreview} />
@@ -30,13 +29,13 @@ class JumboTronPreview extends Component {
 							<TextContainer modulePreview={this.state.modulePreview} />
 						</Grid>
 					</Grid>
-				) : (
+				) : module.layout === "Right" ? (
 					<Grid
 						container
 						spacing={24}
 						className="module_container"
 						moduleName={module.type}
-						style={{ backgroundColor: `${module.backgroundColor}` }}
+						style={{ background: `${module.backgroundColor}` }}
 					>
 						<Grid item xs={12} sm={6} style ={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
 							<TextContainer modulePreview={this.state.modulePreview} />
@@ -45,8 +44,18 @@ class JumboTronPreview extends Component {
 							<ImageContainer modulePreview={this.state.modulePreview} />
 						</Grid>
 					</Grid>
-					)}
-	
+					) : 
+					<Grid
+						container
+						spacing={24}
+						className="module_container"
+						moduleName={module.type}
+						style={{ background: `${module.backgroundColor}` }}>
+						<Grid item xs={12} style ={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
+							<TextContainer modulePreview={this.state.modulePreview} />
+						</Grid>
+					</Grid>	
+					}
 			</div>
 		);
 	}

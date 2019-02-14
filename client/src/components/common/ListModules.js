@@ -20,6 +20,7 @@ import ExpandMore from '@material-ui/icons/ExpandMore';
 import FullScreenDialog from './DialogBox';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
+import Gallery from '../common/modules/Gallery'
 
 
 const styles = theme => ({
@@ -51,7 +52,6 @@ class ListModules extends React.Component {
 	sendModuleToProject = dataFromChild => {
 		this.setState({ listDataFromChild: dataFromChild });
 		const projectID = this.props.projectID;
-		console.log(this.props, 'in List Modules')
 		this.props.addModuleToProject(dataFromChild, projectID);
 		this.props.addModuleInfoToContainer(dataFromChild)
 	};
@@ -176,6 +176,9 @@ class ListModules extends React.Component {
 					) : null}
 					{this.state.selectedIndex === 2 ? (
 						<ProductGrid  location={this.props.location} callbackfromparent={this.sendModuleToProject}/> 
+					) : null}
+					{this.state.selectedIndex === 3 ? (
+						<Gallery location={this.props.location} callbackfromparent={this.sendModuleToProject} />
 					) : null}
 				</div>
 			</div>

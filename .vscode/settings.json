@@ -1,18 +1,5 @@
 {
     "editor.formatOnType": true,
-    "prettier.eslintIntegration": true,
-    "prettier.jsxBracketSameLine": true,
-    "prettier.alignObjectProperties": true,
-    "prettier.flattenTernaries": true,
-    "prettier.breakProperty": true,
-    "prettier.breakBeforeElse": true,
-    "prettier.noSpaceEmptyFn": true,
-    "prettier.stylelintIntegration": true,
-    "less.lint.duplicateProperties": "warning",
-    "eslint.autoFixOnSave": true,
-    "prettier.spaceBeforeFunctionParen": true,
-    "files.autoSave": "afterDelay",
-    "editor.wordWrap": "on",
-    "editor.formatOnSave": true
-    
+
+
 }

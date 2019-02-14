@@ -171,7 +171,7 @@ router.post('/experience', passport.authenticate('jwt', { session: false }), (re
 // @route   POST MODULES
 
 router.post('/project/:project_id', passport.authenticate('jwt', { session: false }), (req, res) => {
-	console.log(req.body);
+	console.log(req.body, "****FROM ROUTER ADDING MODULE TO PROJECT");
 	var ModuleData = '';
 	if (req.body.type === 'ProductGrid') {
 		ModuleData = {
@@ -179,13 +179,22 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 			paragraphText: req.body.paragraphText,
 			location: req.body.location,
 			type: req.body.type,
+			layout: req.body.layout,
 			button: req.body.button,
 			imageSets: req.body.imageSets,
-			main_image: req.body.main_image
+			main_image: req.body.main_image,
+			headlineSize: req.body.headlineSize
 		};
 	}
 	if (req.body.type === 'Jumbotron') {
+		console.log('JUMBOTRON', req.body)
 		ModuleData = {
+			main_image: {
+			SRC: req.body.main_image.SRC,
+			link: req.body.main_image.link,
+			alt: req.body.main_image.alt,
+			title: req.body.main_image.title
+			},
 			headline: req.body.headline,
 			paragraphText: req.body.paragraphText,
 			location: req.body.location,
@@ -197,6 +206,7 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 			},
 			layout: req.body.layout,
 			backgroundColor: req.body.backgroundColor,
+			textColor: req.body.textColor,
 			projectID: req.params.project_id
 		};
 	}

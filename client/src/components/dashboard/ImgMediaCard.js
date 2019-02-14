@@ -62,6 +62,7 @@ class ImgMediaCard extends Component {
 	}
 	render() {
 		var photo = ''
+		console.log(this.props, 'in IMgMEDiaCard')
 		if (this.props.icon === "Post Malone") {
 			photo =  PostMalone 
 		}

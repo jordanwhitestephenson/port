@@ -11,11 +11,7 @@ import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
 import JumboTronPreview from './preview_templates/JumboTronPreview';
 import ProductGridPreview from './preview_templates/ProductGridPreview';
-import ReactDOM from "react-dom";
-import { renderToString } from 'react-dom/server'
 import ReactDOMServer from 'react-dom/server';
-import TextField from '@material-ui/core/TextField';
-import { timingSafeEqual } from 'crypto';
 
 const styles = {
 	appBar: {

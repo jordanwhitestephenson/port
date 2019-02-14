@@ -1,119 +1,112 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { Link, withRouter } from 'react-router-dom';
+import React, {Component} from 'react';
+import {connect} from 'react-redux';
+import {Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
 import TextFieldGroup from '../common/TextFieldGroup';
 import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
 import InputGroup from '../common/InputGroup';
 import SelectListGroup from '../common/SelectListGroup';
-import {  getCurrentProfile } from '../../actions/profileActions';
+import {getCurrentProfile, getCurrentProject} from '../../actions/profileActions';
 import isEmpty from '../../validation/is-Empty';
+import { timingSafeEqual } from 'crypto';
+import PreviewProjectVIEW from '../preview-project/PreviewProjectVIEW'
 
 class PreviewProject extends Component {
-  constructor(props) {
-    super(props);
+	constructor(props) {
+		super(props);
 
-    this.state = {
-      title: '',
-      openingParagraph: '',
-      heading: '',
-      description: '',
-      errors: {},
-      hash : this.props.location.hash.slice(1)
-    };
+		this.state = {
+			title: '',
+			openingParagraph: '',
+			heading: '',
+			description: '',
+			errors: {},
+			hash: this.props.location.hash.slice(1),
+			project: ''
+		};
 
-    this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
-  }
+		// 
+	}
 
-  componentDidMount() {
-    this.props.getCurrentProfile();  
-  }
+	componentDidMount() {
+		this.props.getCurrentProfile();
+		this.props.getCurrentProject(this.props.location.hash.slice(1));
+	}
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.errors) {
-      this.setState({ errors: nextProps.errors });
-    }
+	componentWillReceiveProps(nextProps) {
+		if (nextProps.errors) {
+			this.setState({errors: nextProps.errors});
+		}
+		if (nextProps.project.project) {
+			this.setState({
+				project: nextProps.project
+			})
+		}
 
-
-    if (nextProps.profile.profile) {
-      var mapped = nextProps.profile.profile.projects.filter(hash => hash._id === this.state.hash)[0]
-      mapped.title = !isEmpty(mapped.title) ? mapped.title : '';
-      mapped.openingParagraph = !isEmpty(mapped.openingParagraph) ? mapped.openingParagraph : '';
-      mapped.description = !isEmpty(mapped.description) ? mapped.description : '';
-      mapped.heading = !isEmpty(mapped.heading)
-        ? mapped.heading
-        : '';
- 
-      // Set component fields state
-      this.setState({
-        title: mapped.title,
-        openingParagraph: mapped.openingParagraph,
-        description: mapped.description,
-        heading: mapped.heading,
-      });
-
-    }
-  }
-
-  onSubmit(e) {
-    e.preventDefault();
-   
-    const projectData = {
-      title: this.state.title,
-      openingParagraph: this.state.openingParagraph,
-      description: this.state.description,
-      status: this.state.status,
-
-    };
-    console.log(projectData)
-    // this.props.editProject(projectData, this.props.history, this.state.hash);
-  }
-
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  render() {
-    const { errors } = this.state;
-    if (this.props.profile.profile) {
-      const project = this.props.profile.profile.projects.map(project => project.modules)[0]
-      console.log(project)
-      return (
-        <div className="preview_project">
-          TO DO
-        </div>
-      )
-    }
-      
-    
-    
-    else {
-      return (
-        <div className="preview_project">
-         Profile loading..
-        </div>
-     ) 
-    }
+		if (nextProps.profile.profile) {
+			var mapped = nextProps.profile.profile.projects.filter(hash => hash._id === this.state.hash)[0];
+			mapped.title = !isEmpty(mapped.title) ? mapped.title : '';
+			mapped.openingParagraph = !isEmpty(mapped.openingParagraph) ? mapped.openingParagraph : '';
+			mapped.description = !isEmpty(mapped.description) ? mapped.description : '';
+			mapped.heading = !isEmpty(mapped.heading) ? mapped.heading : '';
+			// Set component fields state
+			this.setState({
+				title: mapped.title,
+				openingParagraph: mapped.openingParagraph,
+				description: mapped.description,
+				heading: mapped.heading
+			});
+		}
+	}
+//*****TO DO, since we need to wait on props, we need to have this component call this.props.GetCurrentProject and then pass the props it retreaves to the props of the PreviewProjectView */
+	
 
 
 
 
+	// renderSection1 = (props) => {
+	// 	if (this.props) {
+	// 		console.log(props, 'RENDER SECTION');
+	// 		console.log(this.props.project, 'RENDER PROps SECTION');
+	// 		var section1 = '';
+	// 		var main_image_replaced = '';
+	// 		var main_image_SRC = section1.main_image.SRC;
+	// 		main_image_SRC =
+	// 			'http://staging-na-crox.demandware.net/on/demandware.static/-/Sites-crocs_us-Library/default/' +
+	// 			main_image_SRC.replace('?$staticlink$', '');
+	// 		main_image_replaced = main_image_SRC;
+	// 		return (
+	// 			<div className="cs_container-crocs">
+	// 				<div className="product_container">
+	// 					{/* <img src={main_image_replaced} alt={section1.main_image.SRC} /> */}
+	// 				</div>
+	// 			</div>
+	// 		);
+	// 	}
+	// };
 
-  }
+	render() {
+		if (this.props.project) {
+			return <PreviewProjectVIEW project={this.state.project}/>;
+		} else {
+			return <div>Loading...</div>;
+		}
+	}
 }
 
 PreviewProject.propTypes = {
-  getCurrentProfile: PropTypes.func.isRequired,
-  profile: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired
+	getCurrentProfile: PropTypes.func.isRequired,
+	profile: PropTypes.object.isRequired,
+	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  profile: state.profile,
-  errors: state.errors
+	profile: state.profile,
+	project: state.project,
+	errors: state.errors
 });
 
-export default connect(mapStateToProps, {  getCurrentProfile })(
-  withRouter(PreviewProject)
-);
+export default connect(
+	mapStateToProps,
+	{getCurrentProfile, getCurrentProject}
+)(withRouter(PreviewProject));
