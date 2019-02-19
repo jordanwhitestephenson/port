@@ -7,10 +7,11 @@ import Example1 from "../icons/GalleryExample_01.jpg";
 import Example2 from "../icons/GalleryExample_03.jpg";
 import Example3 from "../icons/GalleryExample_05.jpg";
 import SimpleDialog from "../SimpleDialog";
-import { addModule } from "../../../actions/profileActions";
+
 import { connect } from "react-redux";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
+import UpdateIcon from "@material-ui/icons/Update";
 
 const styles = (theme) => ({
 	root: {
@@ -90,88 +91,103 @@ const images = [
 	{
 		url: Example1,
 		title: "Left",
-		width: "20%"
+		width: "100%"
 	},
 	{
 		url: Example2,
 		title: "Center",
-		width: "60%"
+		width: "100%"
 	},
 	{
 		url: Example3,
 		title: "Right",
-		width: "20%"
+		width: "100%"
 	}
 ];
 
-class Gallery extends Component {
+class GalleryForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			classes: this.props.classes,
-            hash: this.props.location.hash.slice(1),
-            image1Preview: '',
+			hash: this.props.projectID,
+			image1Preview: "",
 			galleryPhotos: [],
-			errors: ""
+			errors: "",
+			leftDW_Image: "",
+			rightDW_Image: "",
+			centerDW_Image: "",
+            dm_IMAGE_ARRAY: [],
+            refresh: 'Upload',
+            location: this.props.location
 		};
 		this.addGalleryToProject = this.addGalleryToProject.bind(this);
 	}
     retrieveGalleryFormInput = (info) => {
-        
-        var rightDW_Image =
-            "http://staging-na-crox.demandware.net/on/demandware.static/-/Sites-crocs_us-Library/default/" +
-            info.gallery_Right_Img_SRC.replace("?$staticlink$", "");
-        
-
-        var joined = this.state.galleryPhotos.concat(info);
-  
-        console.log(rightDW_Image, 'CHILD PROP')
+       var locationKey = Object.keys(info)[0]
+        var galleryPhotosInfo = this.state.galleryPhotos.concat(info)
+        if (this.state.galleryPhotos.filter(image => Object.keys(image)[0] === locationKey).length > 0) {
+           galleryPhotosInfo = this.state.galleryPhotos.filter(image => Object.keys(image)[0] !== locationKey).concat(info)
+        }
+          
 		this.setState({
-			galleryPhotos: joined
-		});
+			galleryPhotos: galleryPhotosInfo
+        });
+       
     };
-    // 205338_001_Leigh_Wedge_Chelsea_Boot_W_main.png?$staticlink$
-	addGalleryToProject(e) {
-		e.preventDefault();
+
+    addGalleryToProject(e) {
+        e.preventDefault();
 		if (this.state.galleryPhotos.length < 3) {
 			this.setState({
 				error: "Please add all image information, must have 3"
 			});
-        }
-        else {
-            this.props.addModule({ type: "Gallery", imageSets: this.state.galleryPhotos }, this.state.hash)
-            this.setState({
-                error: 'Success!'
-            })
-        }
+        } else {
+            this.props.callbackfromparent(
+                { type: "Gallery", location: this.props.location, imageSets: this.state.galleryPhotos },
+				this.state.hash
+			);
+			this.setState({
+                error: "",
+                refresh: 'Refresh'
+			});
+		}
 	}
 
 	render() {
-		const { classes } = this.props;
+        const { classes } = this.props;
+
 		return (
-			<div className={classes.root}>
-				{images.map((image) => (
-					<ButtonBase
-						focusRipple
-						key={image.title}
-						className={classes.image}
-						focusVisibleClassName={classes.focusVisible}
-						style={{
-							width: image.width
-						}}>
-						<span
-							className={classes.imageSrc}
-							style={{
-								backgroundImage: `url(${image.url})`
-							}}
-						/>
-						<span className={classes.imageBackdrop} />
-						<SimpleDialog
-							galleryImageName={image.title}
-							retrieveGalleryFormInput={this.retrieveGalleryFormInput}
-						/>
-					</ButtonBase>
-				))}
+            <div style = {{ width: "100%"}}>
+                <div className= "flex_box_default_no_wrap">
+				{images.map((image, index) => (
+					<div className="col-xs-12 col-md-3">
+
+			
+							<ButtonBase
+								focusRipple
+								key={image.title}
+								className={classes.image}
+								focusVisibleClassName={classes.focusVisible}
+								style={{
+									width: image.width
+								}}>
+								<span
+									className={classes.imageSrc}
+									style={{
+										backgroundImage: `url(${image.url})`
+									}}
+								/>
+								<span className={classes.imageBackdrop} />
+								<SimpleDialog
+									galleryImageName={image.title}
+									retrieveGalleryFormInput={this.retrieveGalleryFormInput}
+								/>
+							</ButtonBase>
+						
+					</div>
+                ))}
+                </div>
 				<div className="error_container">
 					<p style={{ color: "red" }}>{this.state.error}</p>
 
@@ -180,8 +196,13 @@ class Gallery extends Component {
 						variant="contained"
 						color="default"
 						className={classes.button}>
-						Upload
-						<CloudUploadIcon className={classes.rightIcon} />
+						{this.state.refresh}
+                        {this.state.refresh === "Refresh" ? 
+                            <UpdateIcon className={classes.rightIcon} />
+                        : 
+                            <CloudUploadIcon className={classes.rightIcon} />
+                        }
+						
 					</Button>
 				</div>
 			</div>
@@ -189,16 +210,11 @@ class Gallery extends Component {
 	}
 }
 
-Gallery.propTypes = {
+GalleryForm.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
 	project: state.project
 });
 
-export default withRouter(
-	connect(
-		mapStateToProps,
-		{ addModule }
-	)(withStyles(styles)(Gallery))
-);
+export default withStyles(styles)(GalleryForm)

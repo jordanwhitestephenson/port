@@ -16,7 +16,7 @@ export class ImageContainer extends Component {
 
 	render() {
 		const module = this.state.modulePreview;
-		console.log('*****IMAGE CONTAINER STATE', this.state.modulePreview, '*****IMAGE PROPS', this.props.modulePreview)
+		console.log('*****IMAGE CONTAINER STATE', module)
 		//****STOPPED AT THIS PROBLEM ::: logged this and it was undefined! */ this.props.modulePreview.main_image
 		var main_image_replaced = this.state.modulePreview.main_image.SRC;
 		

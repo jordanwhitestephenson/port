@@ -10,17 +10,17 @@ import CallToAction from '@material-ui/icons/CallToAction';
 import MediaLeft from '@material-ui/icons/FeaturedVideo';
 import MediaRight from '@material-ui/icons/BrandingWatermark';
 import ProductGridThree from '@material-ui/icons/ViewCarousel';
-import ProductGrid from './modules/ProductGrid'
+import ProductGridForm from './modules/ProductGridForm'
 import JumboTron from '@material-ui/icons/PanoramaWideAngle';
 import SquareGrid from '@material-ui/icons/ViewComfy';
 import Divider from '@material-ui/core/Divider';
 import JumboTronForm from '../common/modules/JumboTronForm';
 import Typography from '@material-ui/core/Typography';
 import ExpandMore from '@material-ui/icons/ExpandMore';
-import FullScreenDialog from './DialogBox';
+import ProjectViewDialog from '../common/modules/sub_modules/ProjectViewDialog';
 import DeleteIcon from '@material-ui/icons/Delete';
 import IconButton from '@material-ui/core/IconButton';
-import Gallery from '../common/modules/Gallery'
+import GalleryForm from '../common/modules/GalleryForm'
 
 
 const styles = theme => ({
@@ -50,6 +50,7 @@ class ListModules extends React.Component {
 	};
 
 	sendModuleToProject = dataFromChild => {
+		console.log(dataFromChild, 'DATA SENT FROM GALLERY')
 		this.setState({ listDataFromChild: dataFromChild });
 		const projectID = this.props.projectID;
 		this.props.addModuleToProject(dataFromChild, projectID);
@@ -65,7 +66,6 @@ class ListModules extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-
 		return (
 			<div>
 				<div style={{ display: 'flex' }}>
@@ -168,17 +168,17 @@ class ListModules extends React.Component {
 							<IconButton onClick={this.onUndo} color="default" variant="contained">
 								<DeleteIcon fontSize = "large"/>
 							</IconButton>
-							<FullScreenDialog modulePreview={this.state.listDataFromChild} />
+								<ProjectViewDialog modulePreview={this.state.listDataFromChild} />
 						</div>
 					)}
 					{this.state.selectedIndex === 1 ? (
-						<JumboTronForm location={this.props.location} callbackfromparent={this.sendModuleToProject} />
+						<JumboTronForm location={this.props.location} projectID={this.props.projectID} callbackfromparent={this.sendModuleToProject} />
 					) : null}
 					{this.state.selectedIndex === 2 ? (
-						<ProductGrid  location={this.props.location} callbackfromparent={this.sendModuleToProject}/> 
+						<ProductGridForm location={this.props.location} projectID={this.props.projectID} callbackfromparent={this.sendModuleToProject}/> 
 					) : null}
 					{this.state.selectedIndex === 3 ? (
-						<Gallery location={this.props.location} callbackfromparent={this.sendModuleToProject} />
+						<GalleryForm location={this.props.location} projectID={this.props.projectID} callbackfromparent={this.sendModuleToProject} />
 					) : null}
 				</div>
 			</div>

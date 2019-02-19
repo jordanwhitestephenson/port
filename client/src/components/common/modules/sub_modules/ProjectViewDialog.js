@@ -9,8 +9,9 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Slide from '@material-ui/core/Slide';
-import JumboTronPreview from './preview_templates/JumboTronPreview';
-import ProductGridPreview from './preview_templates/ProductGridPreview';
+import JumboTronPreview from '../../preview_templates/JumboTronPreview';
+import ProductGridPreview from '../../preview_templates/ProductGridPreview';
+import GalleryPreview from '../../preview_templates/GalleryPreview'
 import ReactDOMServer from 'react-dom/server';
 
 const styles = {
@@ -26,7 +27,7 @@ function Transition(props) {
 	return <Slide direction="up" {...props} />;
 }
 
-class FullScreenDialog extends React.Component {
+class ProjectViewDialog extends React.Component {
 	state = {
 		open: false,
 		modulePreview: this.props.modulePreview,
@@ -60,7 +61,8 @@ class FullScreenDialog extends React.Component {
 	render() {
 		const { classes } = this.props;
 		const module = this.state.modulePreview;
-	
+		console.log(module)
+		
 	
 
 		return (
@@ -84,6 +86,9 @@ class FullScreenDialog extends React.Component {
 							{module.type === 'ProductGrid' ? (
 								<ProductGridPreview modulePreview={this.state.modulePreview} />
 							) : null}
+							{module.type === 'Gallery' ? (
+								<GalleryPreview modulePreview={this.state.modulePreview} />
+							) : null}
 						</div>
 	
 					</List>
@@ -94,11 +99,11 @@ class FullScreenDialog extends React.Component {
 	}
 }
 
-FullScreenDialog.propTypes = {
+ProjectViewDialog.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 
-export default withStyles(styles)(FullScreenDialog);
+export default withStyles(styles)(ProjectViewDialog);
 					// {/* <TextField
 					// 		value={this.state.HTML}
 					// 		multiLine={true}
