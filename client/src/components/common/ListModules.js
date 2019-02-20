@@ -64,8 +64,7 @@ class ListModules extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-
-	
+		
 			return (
 				<div>
 					<div style={{ display: "flex" }}>
@@ -166,6 +165,7 @@ class ListModules extends React.Component {
 						)}
 						{this.state.selectedIndex === 1 ? (
 							<JumboTronForm
+								editSection = {this.props.editSection}
 								location={this.props.location}
 								projectID={this.props.projectID}
 								callbackfromparent={this.sendModuleToProject}
@@ -173,6 +173,7 @@ class ListModules extends React.Component {
 						) : null}
 						{this.state.selectedIndex === 2 ? (
 							<ProductGridForm
+								editSection={this.props.editSection}
 								location={this.props.location}
 								projectID={this.props.projectID}
 								callbackfromparent={this.sendModuleToProject}
@@ -180,6 +181,7 @@ class ListModules extends React.Component {
 						) : null}
 						{this.state.selectedIndex === 3 ? (
 							<GalleryForm
+								editSection={this.props.editSection}
 								location={this.props.location}
 								projectID={this.props.projectID}
 								callbackfromparent={this.sendModuleToProject}

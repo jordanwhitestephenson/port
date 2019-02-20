@@ -70,31 +70,36 @@ class AddModule extends Component {
 					</div>
 				</div>
 			);
-		} else {
+		} else if (this.props.project.project) {
 			return (
-				<div>loading...</div>
-				// <div className="add-module">
-				// 	<div className="container">
-				// 		<div className="row">
-				// 			<div className="col-md-12 m-auto">
-				// 				<Link to="/dashboard" className="btn btn-light">
-				// 					Go Back
-				// 				</Link>
-				// 				<h1 className="display-4 text-center">Build Project</h1>
-				// 				<p className="lead text-center">
-				// 					Please select a module to add to your {this.state.title}{" "}
-				// 					project
-				// 				</p>
-				// 				<small className="d-block pb-3">* = required fields</small>
-				// 				<TabContainer
-				// 					projectID={this.state.projectID}
-				// 					addModuleToProject={this.addModuleToProject}
-				// 				/>
-				// 			</div>
-				// 		</div>
-				// 	</div>
-				// </div>
+
+				<div className="add-module">
+					<div className="container">
+						<div className="row">
+							<div className="col-md-12 m-auto">
+								<Link to="/dashboard" className="btn btn-light">
+									Go Back
+								</Link>
+								<h1 className="display-4 text-center">Build Project</h1>
+								<p className="lead text-center">
+									Please select a module to add to your {this.state.title}{" "}
+									project
+								</p>
+								<small className="d-block pb-3">* = required fields</small>
+								<TabContainer
+									projectID={this.state.projectID}
+									addModuleToProject={this.addModuleToProject}
+									editProjectInfo={this.props.project.project}
+									pathname={this.props.location.pathname}
+								/>
+							</div>
+						</div>
+					</div>
+				</div>
 			);
+		}
+		else {
+			return <div>Loading...</div>
 		}
 	}
 }

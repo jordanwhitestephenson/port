@@ -69,8 +69,11 @@ class FullWidthTabs extends React.Component {
 		let Section1Type = ''
 		let Section2Type = ''
 		let Section3Type = ''
+		let Section1 = ''
+		let Section2 = ''
+		let Section3 = ''
+		let Section4 = ''
 		if (this.props.editProjectInfo) {
-			console.log(this.props.editProjectInfo, 'TAB CONTAIENR')
 			var changedType = this.props.editProjectInfo.modules.map((module) => {
 				if (module.type === "Jumbotron") {
 					module.type = 1;
@@ -84,13 +87,13 @@ class FullWidthTabs extends React.Component {
 				return module;
 			});
 
-			const Section1 = changedType.filter(
+			Section1 = changedType.filter(
 				(module) => module.location === "Section1"
 			);
-			const Section2 = changedType.filter(
+			Section2 = changedType.filter(
 				(module) => module.location === "Section2"
 			);
-			const Section3 = changedType.filter(
+			Section3 = changedType.filter(
 				(module) => module.location === "Section3"
 			);
 			Section1Type = Section1[0].type
@@ -105,11 +108,11 @@ class FullWidthTabs extends React.Component {
 						onChange={this.handleChange}
 						indicatorColor="primary"
 						textColor="primary">
-						<Tab label="Sectiodn One" />
-						<Tab label="Sectiodn  Two" />
-						<Tab label="Sectidon  Three" />
-						<Tab label="Sectidon  Four" />
-						<Tab label="Sectdion  5 " />
+						<Tab label="Edit Section One" />
+						<Tab label="Edit Section Two" />
+						<Tab label="Edit Section Three" />
+						<Tab label="Edit Section Four" />
+						<Tab label="Edit Section 5" />
 						<Tab label="PREVdIEW" />
 					</Tabs>
 				</AppBar>
@@ -120,6 +123,7 @@ class FullWidthTabs extends React.Component {
 					<TabContainer dir={theme.direction}>
 						<ListModules
 							selectedIndex={Section1Type}
+							editSection = {Section1[0]}
 							projectID={this.state.projectID}
 							addModuleToProject={this.props.addModuleToProject}
 							addModuleInfoToContainer={this.addModuleInfoToContainer}
@@ -128,6 +132,7 @@ class FullWidthTabs extends React.Component {
 					</TabContainer>
 					<TabContainer dir={theme.direction}>
 						<ListModules
+							editSection = {Section2[0]}
 							selectedIndex={Section2Type}
 							projectID={this.state.projectID}
 							addModuleToProject={this.props.addModuleToProject}
@@ -137,6 +142,7 @@ class FullWidthTabs extends React.Component {
 					</TabContainer>
 					<TabContainer dir={theme.direction}>
 						<ListModules
+							editSection = {Section3[0]}
 							selectedIndex={Section3Type}
 							projectID={this.state.projectID}
 							addModuleToProject={this.props.addModuleToProject}
@@ -146,6 +152,7 @@ class FullWidthTabs extends React.Component {
 					</TabContainer>
 					<TabContainer dir={theme.direction}>
 						<ListModules
+							editSection = {Section4[0]}
 							selectedIndex={this.state.Section4Type}
 							projectID={this.state.projectID}
 							addModuleToProject={this.props.addModuleToProject}
