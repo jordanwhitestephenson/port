@@ -219,7 +219,7 @@ class ProductGridForm extends Component {
 					Product Grid
 				</Typography>
 
-				<div className="flex_box_default box_shadow">
+				<div className="flex_box_default_bare box_shadow">
 					<div className="col-xs-12 col-md-6 padding-0">
 						{images.map((image, index) => (
 							<ButtonBase

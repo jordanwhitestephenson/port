@@ -19,53 +19,123 @@ class ProductGridPreview extends Component {
 
 	render() {
 		const module = this.state.modulePreview;
-		console.log(module, "******this is the props I need to send*****");
-		const objKeys =module.imageSets.map(key =>
-				Object.keys(key).map(image => (
-					key.image
-		)))
-		console.log(objKeys);
+		const key = module.imageSets.map((key) => key);
 
+		console.log(key, "KEY");
+		const ModelInfo = key.filter((photo) => photo.Model);
+		const ProductInfo = key.filter((photo) => !photo.Model);
+		console.log(ModelInfo);
 		return (
 			<div style={{ maxWidth: "980px", margin: "auto" }}>
-				{module.layout === "Left" ? (
-					<section className="left_product_grid cs_container-crocs">
-						{/* <div className="PRODUCTS_CONTAINER">
-							{module.imageSets.map((key) =>
-								Object.keys(key).map((image) => (
-									<a href="">
-										<img src={key.image.SRC} alt="" />
-									</a>
-								)) */}
-							)}
-							<div class="product col-xs-12 col-md-4">
-								<a href="">
-									<img src="" alt="" />
-								</a>
-							</div>
-							<div class="product col-xs-12 col-md-4">
-								<a href="">
-									<img src="" alt="" />
-								</a>
-							</div>
-							<div class="product col-xs-12 col-md-4">
-								<a href="">
-									<img src="" alt="" />
-								</a>
-							</div>
-							<div class="product col-xs-12 col-md-4">
-								<a href="">
-									<img src="" alt="" />
-								</a>
-							</div>
+				{module.layout === "Right" ? (
+					<section className="right_product_grid flex_box_default cs_container-crocs">
+						<div className="PRODUCTS_CONTAINER col-xs-12 col-md-6 flex_box_default">
+							{ProductInfo.map((key) => (
+								<div class="product col-xs-12 col-md-6">
+									{key[Object.keys(key)[0]] !== "Model" ? (
+										<a href={key[Object.keys(key)[0]].Link}>
+											{key[Object.keys(key)[0]].SRC.includes(
+												"?$staticlink$"
+											) ? (
+												<img
+													src={
+														"http://staging-na-crox.demandware.net/on/demandware.static/-/Sites-crocs_us-Library/default/" +
+														key[Object.keys(key)[0]].SRC.replace(
+															"?$staticlink$",
+															""
+														)
+													}
+													alt={[Object.keys(key)[0]].Alt}
+												/>
+											) : (
+												<img src={key[Object.keys(key)[0]].SRC} alt="" />
+											)}
+											<p className="product_description cx-brand-font text-center">
+												{key[Object.keys(key)[0]].Title}
+											</p>
+										</a>
+									) : null}
+								</div>
+							))}
 						</div>
-						<div class="MODULE_CONTAINER">
-							<a href="">
-								<img src="" alt="" title="" />
-							</a>
+						<div class="MODULE_CONTAINER col-xs-12 col-md-6 flex_box_default">
+							{ModelInfo.map((key) => (
+								<div class="model col-xs-12">
+									<a href={key[Object.keys(key)[0]].Link}>
+										{key[Object.keys(key)[0]].SRC.includes("?$staticlink$") ? (
+											<img
+												src={
+													"http://staging-na-crox.demandware.net/on/demandware.static/-/Sites-crocs_us-Library/default/" +
+													key[Object.keys(key)[0]].SRC.replace(
+														"?$staticlink$",
+														""
+													)
+												}
+												alt={[Object.keys(key)[0]].Alt}
+											/>
+										) : (
+											<img src={key[Object.keys(key)[0]].SRC} alt="" />
+										)}
+									</a>
+								</div>
+							))}
 						</div>
 					</section>
-				) : null}
+				) : (
+					<section className="left_product_grid flex_box_default cs_container-crocs">
+							<div class="MODULE_CONTAINER col-xs-12 col-md-6 flex_box_default">
+							{ModelInfo.map((key) => (
+								<div class="model col-xs-12">
+									<a href={key[Object.keys(key)[0]].Link}>
+										{key[Object.keys(key)[0]].SRC.includes("?$staticlink$") ? (
+											<img
+												src={
+													"http://staging-na-crox.demandware.net/on/demandware.static/-/Sites-crocs_us-Library/default/" +
+													key[Object.keys(key)[0]].SRC.replace(
+														"?$staticlink$",
+														""
+													)
+												}
+												alt={[Object.keys(key)[0]].Alt}
+											/>
+										) : (
+											<img src={key[Object.keys(key)[0]].SRC} alt="" />
+										)}
+									</a>
+								</div>
+							))}
+						</div>
+						<div className="PRODUCTS_CONTAINER col-xs-12 col-md-6 flex_box_default">
+							{ProductInfo.map((key) => (
+								<div class="product col-xs-12 col-md-6">
+									{key[Object.keys(key)[0]] !== "Model" ? (
+										<a href={key[Object.keys(key)[0]].Link}>
+											{key[Object.keys(key)[0]].SRC.includes(
+												"?$staticlink$"
+											) ? (
+												<img
+													src={
+														"http://staging-na-crox.demandware.net/on/demandware.static/-/Sites-crocs_us-Library/default/" +
+														key[Object.keys(key)[0]].SRC.replace(
+															"?$staticlink$",
+															""
+														)
+													}
+													alt={[Object.keys(key)[0]].Alt}
+												/>
+											) : (
+												<img src={key[Object.keys(key)[0]].SRC} alt="" />
+											)}
+											<p className="product_description cx-brand-font text-center">
+												{key[Object.keys(key)[0]].Title}
+											</p>
+										</a>
+									) : null}
+								</div>
+							))}
+						</div>
+					</section>
+				)}
 			</div>
 		);
 	}

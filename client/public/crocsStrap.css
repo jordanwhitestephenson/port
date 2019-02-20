@@ -50,9 +50,14 @@
 .flex_box_default {
 	display: flex;
 	flex-wrap: wrap;
-	/* align-items: center;
-	align-content: center;
-	justify-content: center; */
+	align-items: center;
+}
+.product_description {
+	color: #444;
+}
+.flex_box_default_bare {
+	display: flex;
+	flex-wrap: wrap
 }
 
 .module_container_spacing {

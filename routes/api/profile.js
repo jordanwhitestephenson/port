@@ -182,7 +182,6 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 			layout: req.body.layout,
 			button: req.body.button,
 			imageSets: req.body.imageSets,
-			main_image: req.body.main_image,
 			headlineSize: req.body.headlineSize
 		};
 	}
@@ -208,6 +207,13 @@ router.post('/project/:project_id', passport.authenticate('jwt', { session: fals
 			backgroundColor: req.body.backgroundColor,
 			textColor: req.body.textColor,
 			projectID: req.params.project_id
+		};
+	}
+	if (req.body.type === 'Gallery') {
+		ModuleData = {
+			type: req.body.type,
+			location: req.body.location,
+			imageSets: req.body.imageSets
 		};
 	}
 

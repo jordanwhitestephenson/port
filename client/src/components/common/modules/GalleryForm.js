@@ -137,7 +137,8 @@ class GalleryForm extends Component {
     };
 
     addGalleryToProject(e) {
-        e.preventDefault();
+		e.preventDefault();
+		console.log(this.props, 'PROPS FROM GALLERY FORM')
 		if (this.state.galleryPhotos.length < 3) {
 			this.setState({
 				error: "Please add all image information, must have 3"

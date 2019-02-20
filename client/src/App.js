@@ -86,7 +86,7 @@ class App extends Component {
                 <PrivateRoute
                   exact
                   path="/edit-project"
-                  component={EditProject}
+                  component={AddModule}
                 />
               </Switch>
 
