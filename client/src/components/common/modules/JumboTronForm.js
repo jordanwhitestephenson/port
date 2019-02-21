@@ -217,9 +217,14 @@ class JumboTronForm extends React.Component {
                 className={classes.button}
               >
                 {this.state.updateButton === "ADD MODULE" ? (
-                  <AddIcon />
+                  <div>
+                    <AddIcon />
+                  </div>
                 ) : (
-                  <UpdateIcon />
+                    <div>
+                      <UpdateIcon />
+                  </div>
+                  
                 )}
               </IconButton>
 

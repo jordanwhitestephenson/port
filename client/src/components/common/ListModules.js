@@ -64,7 +64,7 @@ class ListModules extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-		
+		console.log('**********PROPS PASSING TO PRODUCTGRIDFORM EDITSECTION', this.props)
 			return (
 				<div>
 					<div style={{ display: "flex" }}>

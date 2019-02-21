@@ -64,7 +64,7 @@ class FullWidthTabs extends React.Component {
 	};
 
 	render() {
-
+		
 		const { classes, theme } = this.props;
 		let Section1Type = ''
 		let Section2Type = ''
@@ -76,13 +76,13 @@ class FullWidthTabs extends React.Component {
 		if (this.props.editProjectInfo) {
 			var changedType = this.props.editProjectInfo.modules.map((module) => {
 				if (module.type === "Jumbotron") {
-					module.type = 1;
+					module.selectedIndex = 1;
 				}
 				if (module.type === "ProductGrid") {
-					module.type = 2;
+					module.selectedIndex= 2;
 				}
 				if (module.type === "Gallery") {
-					module.type = 3;
+					module.selectedIndex = 3;
 				}
 				return module;
 			});
@@ -96,9 +96,10 @@ class FullWidthTabs extends React.Component {
 			Section3 = changedType.filter(
 				(module) => module.location === "Section3"
 			);
-			Section1Type = Section1[0].type
-			Section2Type = Section2[0].type
-			Section3Type = Section3[0].type
+			Section1Type = Section1[0].selectedIndex
+			Section2Type = Section2[0].selectedIndex
+			Section3Type = Section3[0].selectedIndex
+			console.log(Section1 , '********this.props.editProjectInfo TAB CONTAIENR PASSING TO LISTMODULES')
 		}
 		return (
 			<div className={classes.root}>

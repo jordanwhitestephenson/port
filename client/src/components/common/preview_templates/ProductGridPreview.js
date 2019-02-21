@@ -20,11 +20,9 @@ class ProductGridPreview extends Component {
 	render() {
 		const module = this.state.modulePreview;
 		const key = module.imageSets.map((key) => key);
-
-		console.log(key, "KEY");
 		const ModelInfo = key.filter((photo) => photo.Model);
 		const ProductInfo = key.filter((photo) => !photo.Model);
-		console.log(ModelInfo);
+
 		return (
 			<div style={{ maxWidth: "980px", margin: "auto" }}>
 				{module.layout === "Right" ? (

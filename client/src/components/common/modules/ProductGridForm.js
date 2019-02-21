@@ -136,40 +136,95 @@ class ProductGridForm extends Component {
 			main_image_alt: this.props.main_image_alt,
 			main_image_title: this.props.main_image_title,
 			updateButton: "ADD MODULE",
-			productGridPhotos: this.props.editSection.imageSets,
+			imageSets: this.props.editSection.imageSets,
 			errors: ""
 		};
 		this.addGalleryToProject = this.addGalleryToProject.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
-	retrieveGalleryFormInput = (info) => {
-		var locationKey = Object.keys(info);
 
-		var productGridPhotosInfo = this.state.productGridPhotos
-		if (locationKey === "Model") {
+	//********** */WHEN DIALOG IS CLOSED AND INPUTS ARE SENT FROM DIALOG*******//
+	retrieveGalleryFormInput = (info) => {
+		console.log(info, "info");
+		var locationKey = Object.keys(info);
+		// **IF IMAGES ARE ALREADY PRESENT**
+		if (this.props.editSection.imageSets) {
+			var productGridPhotosInfo = this.state.imageSets;
+			if (locationKey === "Model") {
+				this.setState({
+					main_image_link: info.Model.Link,
+					main_image_SRC: info.Model.SRC,
+					main_image_alt: info.Model.Alt,
+					main_image_title: info.Model.Title
+				});
+			} else if (
+				productGridPhotosInfo.filter(
+					(image) => Object.keys(image)[0] === locationKey
+				).length > 0
+			) {
+				productGridPhotosInfo = productGridPhotosInfo
+					.filter((image) => Object.keys(image)[0] !== locationKey)
+					.concat(info);
+			}
 			this.setState({
-				main_image_link: info.Model.Link,
-				main_image_SRC: info.Model.SRC,
-				main_image_alt: info.Model.Alt,
-				main_image_title: info.Model.Title
+				imageSets: productGridPhotosInfo
 			});
-		} else if (
-			this.state.productGridPhotos.filter(
-				(image) => Object.keys(image)[0] === locationKey
-			).length > 0
-		) {
-			productGridPhotosInfo = this.state.productGridPhotos
-				.filter((image) => Object.keys(image)[0] !== locationKey)
-				.concat(info);
+			//IF NO IMAGES (aka editSection.imageSets === null)
+		} else {
+			var productGridPhotosInfo = this.state.imageSets;
+
+			//CHECK FOR DUPLICATIONS
+			if (
+				this.state.imageSets &&
+				this.state.imageSets.filter(
+					(image) => Object.keys(image)[0] === locationKey
+				) > 0
+			) {
+				var imageSetProperty = { ...this.state.productGridPhotos };
+				imageSetProperty.imageSets = [];
+				this.setState({ imageSetProperty });
+			}
+
+			//ADD TO EMPTY IMAGE ARRAY
+			if (!this.state.imageSets) {
+				var emptyArray = [];
+				emptyArray.push(info);
+				this.setState({ imageSets: emptyArray });
+			} else {
+				var stateArray = this.state.imageSets;
+				stateArray.push(info);
+				this.setState({ imageSets: stateArray });
+			}
 		}
-		this.setState({
-			productGridPhotos: productGridPhotosInfo
-		});
 	};
 
+	handleInputChange(e) {
+		//Name is the Product_1/ Product_2
+		const { name, value } = e.target;
+		const type = e.target.id;
+		const productGridPhotosSTATE = this.state.imageSets;
+		const filteredArray = productGridPhotosSTATE.filter(
+			(image) => Object.keys(image)[0] !== name
+		);
+		const productArray = productGridPhotosSTATE.filter(
+			(image) => Object.keys(image)[0] === name
+		);
+		var productObject = productArray[0];
+		let k;
+		for (k in productObject) {
+			productObject[k][type] = value;
+		}
+		const finalResultArray = filteredArray.concat(productObject);
+
+		this.setState({
+			imageSets: finalResultArray
+		});
+	}
+
+	// **********ADD BUTTON EVENT********
 	addGalleryToProject(e) {
 		e.preventDefault();
-		if (this.state.productGridPhotos.length < 4) {
+		if (this.state.imageSets.length < 4) {
 			this.setState({
 				error: "Please add all image information, must have 4"
 			});
@@ -190,7 +245,7 @@ class ProductGridForm extends Component {
 						alt: this.state.main_image_alt,
 						title: this.state.main_image_title
 					},
-					imageSets: this.state.productGridPhotos
+					imageSets: this.state.imageSets
 				},
 				this.state.hash
 			);
@@ -203,35 +258,9 @@ class ProductGridForm extends Component {
 	handleLayout = (event) => {
 		this.setState({ layout: event.target.value });
 	};
-	handleInputChange(e) {
-		//Name is the Product_1/ Product_2
-		const { name, value } = e.target;
-		const type = e.target.id;
-		const productGridPhotos = this.state.productGridPhotos;
-
-		const filteredArray = productGridPhotos.filter(
-			(image) => Object.keys(image)[0] !== name
-		);
-		const productArray = productGridPhotos.filter(
-			(image) => Object.keys(image)[0] === name
-		);
-		var productObject = productArray[0];
-		let k;
-		for (k in productObject) {
-			productObject[k][type] = value;
-		}
-		const finalResultArray = filteredArray.concat(productObject);
-
-		this.setState({
-			productGridPhotos: finalResultArray
-		});
-		console.log(this.state.productGridPhotos, "AFTER SET STATE OF EDIT")
-
-	}
 
 	render() {
 		const { classes } = this.props;
-		console.log(this.state.productGridPhotos)
 		return (
 			<div style={{ width: "100%" }}>
 				<Typography component="h2" variant="display1" gutterBottom>
@@ -259,7 +288,7 @@ class ProductGridForm extends Component {
 								<ProductGridDialog
 									galleryImageName={image.title}
 									retrieveGalleryFormInput={this.retrieveGalleryFormInput}
-									editSection={this.state.productGridPhotos}
+									imageSets={this.state.imageSets}
 									handleInputChange={this.handleInputChange}
 								/>
 							</ButtonBase>
@@ -285,6 +314,8 @@ class ProductGridForm extends Component {
 							<ProductGridDialog
 								galleryImageName={model.title}
 								retrieveGalleryFormInput={this.retrieveGalleryFormInput}
+								imageSets={this.state.imageSets}
+								handleInputChange={this.handleInputChange}
 							/>
 						</ButtonBase>
 					</div>
