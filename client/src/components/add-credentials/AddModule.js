@@ -13,41 +13,41 @@ class AddModule extends Component {
 			projectID: this.props.location.hash.slice(1),
 			current: false,
 			title: this.props.location.search.slice(6),
-			project: ""
+			project: ''
 		};
-		this.onChange = this.onChange.bind(this);
-		this.onCheck = this.onCheck.bind(this);
 	}
 	componentWillMount() {
+		console.log('ADDMODULE componenent MOUNT', this.props)
 		this.props.getCurrentProject(this.state.projectID);
+		// this.setState({ project: this.props.project.project });
 	}
 
 	componentWillReceiveProps(nextProps) {
-		if (nextProps) {
-			this.setState({ project: nextProps.project.project });
+		if (nextProps.project !== this.props.project) {
+			this.setState({ project: nextProps.project});
 		}
-		this.setState({
-			project : nextProps.project.project
-		})
+		
+		//So, my goal is now, that when the form passes, the UI changes to just show the previe button.
+		// console.log(this.props, '<-props', nextProps, '<---NEXT PROPS')
+		// if (nextProps.project !== this.props.project) {
+		
+		// 	this.setState({ project: nextProps.project.project });
+		// }
+		
+		// this.setState({
+		// 	project : nextProps.project.project
+		// })
 	}
 
-	addModuleToProject = (moduleData) => {
-		this.props.addModule(moduleData, this.state.projectID, this.props.history);
-	};
+	// addModuleToProject = (moduleData) => {
+	// 	console.log(moduleData, 'THIS IS MODULEDATA')
+	// 	this.props.addModule(moduleData, this.state.projectID, this.props.history);
+	// };
 
-	onChange(e) {
-		this.setState({ [e.target.name]: e.target.value });
-	}
-
-	onCheck(e) {
-		this.setState({
-			disabled: !this.state.disabled,
-			current: !this.state.current
-		});
-	}
 
 	render() {	
-		if (this.props.location.pathname === "/edit-project" && this.props.project.project) {
+		console.log(this.props, 'ADD MODULE PROPS')
+		if (this.props.location.pathname === "/edit-project" && !this.props.project.loading) {
 			return (
 				<div className="edit-module">
 					<div className="container">
@@ -63,14 +63,13 @@ class AddModule extends Component {
 									projectID={this.state.projectID}
 									pathname= {this.props.location.pathname}
 									editProjectInfo = {this.props.project.project}
-									addModuleToProject={this.addModuleToProject}
 								/>
 							</div>
 						</div>
 					</div>
 				</div>
 			);
-		} else if (this.props.project.project) {
+		} else if (this.props.location.pathname === "/add-module" && !this.props.project.loading) {
 			return (
 
 				<div className="add-module">
@@ -88,7 +87,6 @@ class AddModule extends Component {
 								<small className="d-block pb-3">* = required fields</small>
 								<TabContainer
 									projectID={this.state.projectID}
-									addModuleToProject={this.addModuleToProject}
 									editProjectInfo={this.props.project.project}
 									pathname={this.props.location.pathname}
 								/>
@@ -118,5 +116,5 @@ const mapStateToProps = (state) => ({
 
 export default connect(
 	mapStateToProps,
-	{ addModule, getCurrentProject}
+	{getCurrentProject}
 )(withRouter(AddModule));

@@ -5,8 +5,7 @@ import { withStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
 import LeftIcon from "../../common/icons/LEFT_PRODUCT_GRID.jpg";
 import RightIcon from "../../common/icons/RIGHT_PRODUCT_GRID.jpg";
-import IconButton from "@material-ui/core/IconButton";
-import AddIcon from "@material-ui/icons/Add";
+import {addModule, getCurrentProject} from "../../../actions/profileActions";
 import Clog1 from "../icons/205330_97A_Crocband_Graphic_III_Clog_main.png";
 import Clog2 from "../icons/205166_1AS_Crocband_Gallery_Clog_main.png";
 import Clog3 from "../icons/205338_001_Leigh_Wedge_Chelsea_Boot_W_main.png";
@@ -18,6 +17,8 @@ import Radio from "@material-ui/core/Radio";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import UpdateIcon from "@material-ui/icons/Update";
+import { connect } from "react-redux";
+import { withRouter } from 'react-router-dom';
 
 const styles = (theme) => ({
 	root: {
@@ -129,7 +130,7 @@ class ProductGridForm extends Component {
 		this.state = {
 			classes: this.props.classes,
 			hash: this.props.projectID,
-			location: this.props.location,
+			location: this.props.currentSection,
 			layout: this.props.editSection.layout,
 			main_image_link: this.props.main_image_link,
 			main_image_SRC: this.props.main_image_SRC,
@@ -137,16 +138,20 @@ class ProductGridForm extends Component {
 			main_image_title: this.props.main_image_title,
 			updateButton: "ADD MODULE",
 			imageSets: this.props.editSection.imageSets,
+			editSection: this.props.editSection,
 			errors: ""
 		};
 		this.addGalleryToProject = this.addGalleryToProject.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
+	componentWillMount() {
+		console.log(this.props, 'WPRODUCTILL MOUNT  ')
+	}
 
 	//********** */WHEN DIALOG IS CLOSED AND INPUTS ARE SENT FROM DIALOG*******//
 	retrieveGalleryFormInput = (info) => {
-		console.log(info, "info");
-		var locationKey = Object.keys(info);
+		
+		var locationKey = Object.keys(info)[0];
 		// **IF IMAGES ARE ALREADY PRESENT**
 		if (this.props.editSection.imageSets) {
 			var productGridPhotosInfo = this.state.imageSets;
@@ -157,11 +162,10 @@ class ProductGridForm extends Component {
 					main_image_alt: info.Model.Alt,
 					main_image_title: info.Model.Title
 				});
-			} else if (
-				productGridPhotosInfo.filter(
+			} else if (productGridPhotosInfo.filter(
 					(image) => Object.keys(image)[0] === locationKey
-				).length > 0
-			) {
+			).length > 0) {
+				
 				productGridPhotosInfo = productGridPhotosInfo
 					.filter((image) => Object.keys(image)[0] !== locationKey)
 					.concat(info);
@@ -233,11 +237,11 @@ class ProductGridForm extends Component {
 				error: "Please pick a layout"
 			});
 		} else {
-			this.props.callbackfromparent(
+			this.props.addModule(
 				{
 					type: "ProductGrid",
 					projectID: this.props.projectID,
-					location: this.props.location,
+					location: this.state.location,
 					layout: this.state.layout,
 					main_image: {
 						SRC: this.state.main_image_SRC,
@@ -253,6 +257,7 @@ class ProductGridForm extends Component {
 				error: "",
 				refresh: "Refresh"
 			});
+			
 		}
 	}
 	handleLayout = (event) => {
@@ -352,7 +357,6 @@ class ProductGridForm extends Component {
 
 				<div className="error_container col-xs-12">
 					<p style={{ color: "red" }}>{this.state.error}</p>
-
 					<Button
 						onClick={this.addGalleryToProject}
 						variant="contained"
@@ -374,10 +378,16 @@ class ProductGridForm extends Component {
 ProductGridForm.propTypes = {
 	classes: PropTypes.object.isRequired,
 	projectID: PropTypes.string.isRequired,
-	location: PropTypes.string.isRequired
+	location: PropTypes.string.isRequired,
+	project: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
 	project: state.project
 });
 
-export default withStyles(styles)(ProductGridForm);
+export default withRouter(
+	connect(
+		mapStateToProps,
+		{ addModule, getCurrentProject }
+	)(withStyles(styles)(ProductGridForm))
+);

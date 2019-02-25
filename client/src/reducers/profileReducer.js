@@ -3,7 +3,7 @@ import {
 	GET_PROFILES,
 	PROFILE_LOADING,
 	CLEAR_CURRENT_PROFILE,
-	ADD_MODULE,
+
 
 
 } from '../actions/types';
@@ -39,12 +39,7 @@ export default function(state = initialState, action) {
 				...state,
 				profile: null
 			};
-		case ADD_MODULE:
-			return {
-				...state,
-				profile: action.payload,
-				loading: false
-			};
+
 
 
 		default:

@@ -8,8 +8,10 @@ import PropTypes from "prop-types";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import IconButton from "@material-ui/core/IconButton";
 import Add from "@material-ui/icons/Add";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
-export default class ProductGridDialog extends React.Component {
+class ProductGridDialog extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -19,16 +21,28 @@ export default class ProductGridDialog extends React.Component {
 			Alt: "",
 			Title: "",
 			galleryImg_NAME: this.props.galleryImageName,
+			savedProductGrid: "",
 			imageSets: "",
-			product1: "",
-			product2: "",
-			product3: "",
-			product4: "",
-			Model: "",
 			product1_SRC: "",
 			product1_Title: "",
 			product1_Alt: "",
-			product1_Link: ""
+			product1_Link: "",
+			product2_SRC: "",
+			product2_Title: "",
+			product2_Alt: "",
+			product2_Link: "",
+			product3_SRC: "",
+			product3_Title: "",
+			product3_Alt: "",
+			product3_Link: "",
+			product4_SRC: "",
+			product4_Title: "",
+			product4_Alt: "",
+			product4_Link: "",
+			Model_SRC: "",
+			Model_Title: "",
+			Model_Alt: "",
+			Model_Link: ""
 		};
 		this.newInput = React.createRef();
 		this.handleChange = this.handleChange.bind(this);
@@ -37,43 +51,63 @@ export default class ProductGridDialog extends React.Component {
 	handleClickOpen = () => {
 		this.setState({ open: true });
 	};
-	componentWillReceiveProps(nextProps) {
-		// console.log(nextProps, "NEXTOROPS");
-		// if (nextProps.imageSets !== this.props.imageSets ) {
-		// 	var product1 = nextProps.imageSets.filter(
-		// 		(product) => Object.keys(product)[0] === product.Product_1
-		// 	);
+	componentWillMount() {
+		//PROJECT STATE: ALREADY HAS MODULES
+		console.log(this.props.project.project.modules, 'MODULES OROPS?')
+		if (this.props.project.project.modules.length) {
 
-		// 	// var product2 = nextProps.imageSets.filter(
-		// 	// 	(product) => product.Product_2
-		// 	// )[0].Product_2;
-		// 	// var product3 = nextProps.imageSets.filter(
-		// 	// 	(product) => product.Product_3
-		// 	// )[0].Product_3;
-		// 	// var product4 = nextProps.imageSets.filter(
-		// 	// 	(product) => product.Product_4
-		// 	// )[0].Product_4;
-		// 	// var Model = nextProps.imageSets.filter(
-		// 	// 	(product) => product.Model
-		// 	// )[0].Model;
+			//FIND CURRENT PRODUCTGRID IN MODULES ARRAY and ADD STATE:
+			const productGrid = this.props.project.project.modules.filter(
+				(module) => module.type === "ProductGrid"
+			)[0];
+			const Product_1 = productGrid.imageSets.filter(
+				(product) => product["Product_1"]
+			)[0].Product_1;
+			const Product_2 = productGrid.imageSets.filter(
+				(product) => product["Product_2"]
+			)[0].Product_2;
+			const Product_3 = productGrid.imageSets.filter(
+				(product) => product["Product_3"]
+			)[0].Product_3;
+			const Product_4 = productGrid.imageSets.filter(
+				(product) => product["Product_4"]
+			)[0].Product_4;
+			const Model = productGrid.imageSets.filter(
+				(product) => product["Model"]
+			)[0].Model;
 
-		// 	this.setState({
-		// 		imageSets: nextProps.imageSets,
-		// 		product1: nextProps.imageSets.Product_1
-		// 		// product2: product2,
-		// 		// product3: product3,
-		// 		// product4: product4,
-		// 		// Model: Model
-		// 	});
-		// }
-		// //IF IMAGE SETS NULL//
-		// if (!nextProps.imageSets) {
-			
-		// }
+			this.setState({
+				savedProductGrid: productGrid,
+				product1_SRC: Product_1.SRC,
+				product1_Title: Product_1.Title,
+				product1_Alt: Product_1.Alt,
+				product1_Link: Product_1.Link,
+				product2_SRC: Product_2.SRC,
+				product2_Title: Product_2.Title,
+				product2_Alt: Product_2.Alt,
+				product2_Link: Product_2.Link,
+				product3_SRC: Product_3.SRC,
+				product3_Title: Product_3.Title,
+				product3_Alt: Product_3.Alt,
+				product3_Link: Product_3.Link,
+				product4_SRC: Product_4.SRC,
+				product4_Title: Product_4.Title,
+				product4_Alt: Product_4.Alt,
+				product4_Link: Product_4.Link,
+				Model_SRC: Model.SRC,
+				Model_Title: Model.Title,
+				Model_Alt: Model.Alt,
+				Model_Link: Model.Link
+			});
+		}
+		//PROJECT STATE : HAVENT ADDED YET
+		else {
+			console.log("NO MODULES IN THIS PROJECT in PRODUCTGRIDDIALOG");
+		}
 	}
-
 	//***** */TAKE TEXT INPUT FROM DIALOG POPUP******//
 	handleClose = () => {
+		console.log(this.props, "HANDLE CLOSE");
 		this.setState({ open: false });
 		const selectedImage = this.state.galleryImg_NAME;
 		var productOneObject = {
@@ -100,8 +134,15 @@ export default class ProductGridDialog extends React.Component {
 			Alt: this.state.product4_Alt,
 			Title: this.state.product4_Title
 		};
+		var ModelObject = {
+			SRC: this.state.Model_SRC,
+			Link: this.state.Model_Link,
+			Alt: this.state.Model_Alt,
+			Title: this.state.Model_Title
+		};
 
 		if (selectedImage === "Product_1") {
+			console.log(productOneObject, 'productOneObject')
 			return this.props.retrieveGalleryFormInput({
 				Product_1: productOneObject
 			});
@@ -117,10 +158,10 @@ export default class ProductGridDialog extends React.Component {
 			});
 		}
 		if (selectedImage === "Product_4") {
-			this.props.retrieveGalleryFormInput({ Product_4: productFourObject});
+			this.props.retrieveGalleryFormInput({ Product_4: productFourObject });
 		}
 		if (selectedImage === "Model") {
-			this.props.retrieveGalleryFormInput({ Model: this.state.Model });
+			this.props.retrieveGalleryFormInput({ Model: ModelObject });
 		}
 	};
 
@@ -132,7 +173,7 @@ export default class ProductGridDialog extends React.Component {
 	};
 
 	render() {
-
+		console.log(this.state.savedProductGrid, "***saved ");
 		return (
 			<div>
 				<IconButton variant="outlined" onClick={this.handleClickOpen}>
@@ -146,23 +187,21 @@ export default class ProductGridDialog extends React.Component {
 					<DialogTitle id="form-dialog-title">
 						{this.props.galleryImageName}
 					</DialogTitle>
-					{this.props.imageSets && this.props.imageSets.length > 5 ? (
+					{this.props.project.project.modules ? (
 						<DialogContent>
 							<TextField
 								autoFocus
 								name={
 									this.state.galleryImg_NAME === "Product_1"
-										? "Product_1"
+										? "product1_SRC"
 										: this.state.galleryImg_NAME === "Product_2"
-										? "Product_2"
+										? "product2_SRC"
 										: this.state.galleryImg_NAME === "Product_3"
-										? "Product_3"
+										? "product3_SRC"
 										: this.state.galleryImg_NAME === "Product_4"
-										? "Product_4"
-										: this.state.galleryImg_NAME === "Product_4"
-										? "Product_4"
+										? "product4_SRC"
 										: this.state.galleryImg_NAME === "Model"
-										? "Model"
+										? "Model_SRC"
 										: null
 								}
 								margin="dense"
@@ -170,40 +209,20 @@ export default class ProductGridDialog extends React.Component {
 								required
 								value={
 									this.state.galleryImg_NAME === "Product_1"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_1
-												)[0].Product_1.SRC
-										  }`
+										? this.state.product1_SRC
 										: this.state.galleryImg_NAME === "Product_2"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_2
-												)[0].Product_2.SRC
-										  }`
+										? this.state.product2_SRC
 										: this.state.galleryImg_NAME === "Product_3"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_3
-												)[0].Product_3.SRC
-										  }`
+										? this.state.product3_SRC
 										: this.state.galleryImg_NAME === "Product_4"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_4
-												)[0].Product_4.SRC
-										  }`
+										? this.state.product4_SRC
 										: this.state.galleryImg_NAME === "Model"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Model
-												)[0].Model.SRC
-										  }`
+										? this.state.Model_SRC
 										: null
 								}
 								type="text"
 								fullWidth
-								onChange={this.props.handleInputChange}
+								onChange={this.handleChange}
 							/>
 
 							<TextField
@@ -211,17 +230,15 @@ export default class ProductGridDialog extends React.Component {
 								required
 								name={
 									this.state.galleryImg_NAME === "Product_1"
-										? "Product_1"
+										? "product1_Link"
 										: this.state.galleryImg_NAME === "Product_2"
-										? "Product_2"
+										? "product2_Link"
 										: this.state.galleryImg_NAME === "Product_3"
-										? "Product_3"
+										? "product3_Link"
 										: this.state.galleryImg_NAME === "Product_4"
-										? "Product_4"
-										: this.state.galleryImg_NAME === "Product_4"
-										? "Product_4"
+										? "product4_Link"
 										: this.state.galleryImg_NAME === "Model"
-										? "Model"
+										? "Model_Link"
 										: null
 								}
 								margin="dense"
@@ -230,41 +247,33 @@ export default class ProductGridDialog extends React.Component {
 								fullWidth
 								value={
 									this.state.galleryImg_NAME === "Product_1"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_1
-												)[0].Product_1.Link
-										  }`
+										? this.state.product1_Link
 										: this.state.galleryImg_NAME === "Product_2"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_2
-												)[0].Product_2.Link
-										  }`
+										? this.state.product2_Link
 										: this.state.galleryImg_NAME === "Product_3"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_3
-												)[0].Product_3.Link
-										  }`
+										? this.state.product3_Link
 										: this.state.galleryImg_NAME === "Product_4"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_4
-												)[0].Product_4.Link
-										  }`
+										? this.state.product4_Link
 										: this.state.galleryImg_NAME === "Model"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Model
-												)[0].Model.Link
-										  }`
+										? this.state.Model_Link
 										: null
 								}
 								onChange={this.props.handleInputChange}
 							/>
 							<TextField
-								name="galleryImg_Alt"
+								name={
+									this.state.galleryImg_NAME === "Product_1"
+										? "product1_Alt"
+										: this.state.galleryImg_NAME === "Product_2"
+										? "product2_Alt"
+										: this.state.galleryImg_NAME === "Product_3"
+										? "product3_Alt"
+										: this.state.galleryImg_NAME === "Product_4"
+										? "product4_Alt"
+										: this.state.galleryImg_NAME === "Model"
+										? "Model_Alt"
+										: null
+								}
 								autoFocus
 								required
 								margin="dense"
@@ -272,25 +281,36 @@ export default class ProductGridDialog extends React.Component {
 								label="Alt Description for Image"
 								type="text"
 								fullWidth
-								placeholder={
+								value={
 									this.state.galleryImg_NAME === "Product_1"
-										? "Product_1"
+										? this.state.product1_Alt
 										: this.state.galleryImg_NAME === "Product_2"
-										? "Product_2"
+										? this.state.product2_Alt
 										: this.state.galleryImg_NAME === "Product_3"
-										? "Product_3"
+										? this.state.product3_Alt
 										: this.state.galleryImg_NAME === "Product_4"
-										? "Product_4"
+										? this.state.product4_Alt
 										: this.state.galleryImg_NAME === "Model"
-										? "Model"
+										? this.state.Model_Alt
 										: null
 								}
-								value={this.state.Alt}
 								onChange={this.props.handleInputChange}
 							/>
 							<TextField
 								autoFocus
-								name="galleryImg_Title"
+								name={
+									this.state.galleryImg_NAME === "Product_1"
+										? "product1_Title"
+										: this.state.galleryImg_NAME === "Product_2"
+										? "product2_Title"
+										: this.state.galleryImg_NAME === "Product_3"
+										? "product3_Title"
+										: this.state.galleryImg_NAME === "Product_4"
+										? "product4_Title"
+										: this.state.galleryImg_NAME === "Model"
+										? "Model_Title"
+										: null
+								}
 								margin="dense"
 								id="Title"
 								label="Image Title"
@@ -298,35 +318,15 @@ export default class ProductGridDialog extends React.Component {
 								fullWidth
 								value={
 									this.state.galleryImg_NAME === "Product_1"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_1
-												)[0].Product_1.Title
-										  }`
+										? this.state.product1_Title
 										: this.state.galleryImg_NAME === "Product_2"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_2
-												)[0].Product_2.Title
-										  }`
+										? this.state.product2_Title
 										: this.state.galleryImg_NAME === "Product_3"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_3
-												)[0].Product_3.Title
-										  }`
+										? this.state.product3_Title
 										: this.state.galleryImg_NAME === "Product_4"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Product_4
-												)[0].Product_4.Title
-										  }`
+										? this.state.product4_Title
 										: this.state.galleryImg_NAME === "Model"
-										? `${
-												this.props.imageSets.filter(
-													(section) => section.Model
-												)[0].Model.Title
-										  }`
+										? this.state.Model_Title
 										: null
 								}
 								onChange={this.props.handleInputChange}
@@ -361,13 +361,13 @@ export default class ProductGridDialog extends React.Component {
 									this.state.galleryImg_NAME === "Product_1"
 										? this.state.product1_SRC
 										: this.state.galleryImg_NAME === "Product_2"
-										? this.state.product2.SRC
+										? this.state.product2_SRC
 										: this.state.galleryImg_NAME === "Product_3"
-										? this.state.product3.SRC
+										? this.state.product3_SRC
 										: this.state.galleryImg_NAME === "Product_4"
-										? this.state.product4.SRC
+										? this.state.product4_SRC
 										: this.state.galleryImg_NAME === "Model"
-										? this.state.Model.SRC
+										? this.state.Model_SRC
 										: null
 								}
 								type="text"
@@ -380,17 +380,15 @@ export default class ProductGridDialog extends React.Component {
 								required
 								name={
 									this.state.galleryImg_NAME === "Product_1"
-										? "Product_1"
+										? "product1_Link"
 										: this.state.galleryImg_NAME === "Product_2"
-										? "Product_2"
+										? "product2_Link"
 										: this.state.galleryImg_NAME === "Product_3"
-										? "Product_3"
+										? "product3_Link"
 										: this.state.galleryImg_NAME === "Product_4"
-										? "Product_4"
-										: this.state.galleryImg_NAME === "Product_4"
-										? "Product_4"
+										? "product4_Link"
 										: this.state.galleryImg_NAME === "Model"
-										? "Model"
+										? "Model_Link"
 										: null
 								}
 								margin="dense"
@@ -399,15 +397,15 @@ export default class ProductGridDialog extends React.Component {
 								fullWidth
 								value={
 									this.state.galleryImg_NAME === "Product_1"
-										? this.state.product1.Link
+										? this.state.product1_Link
 										: this.state.galleryImg_NAME === "Product_2"
-										? this.state.product2.Link
+										? this.state.product2_Link
 										: this.state.galleryImg_NAME === "Product_3"
-										? this.state.product3.Link
+										? this.state.product3_Link
 										: this.state.galleryImg_NAME === "Product_4"
-										? this.state.product4.Link
+										? this.state.product4_Link
 										: this.state.galleryImg_NAME === "Model"
-										? this.state.Model.Link
+										? this.state.Model_Link
 										: null
 								}
 								onChange={this.handleChange}
@@ -447,15 +445,7 @@ export default class ProductGridDialog extends React.Component {
 								fullWidth
 								value={
 									this.state.galleryImg_NAME === "Product_1"
-										? this.state.product1.Title
-										: this.state.galleryImg_NAME === "Product_2"
-										? this.state.product2.Title
-										: this.state.galleryImg_NAME === "Product_3"
-										? this.state.product3.Title
-										: this.state.galleryImg_NAME === "Product_4"
-										? this.state.product4.Title
-										: this.state.galleryImg_NAME === "Model"
-										? this.state.Model.Title
+										? this.state.product1_Title
 										: null
 								}
 								onChange={this.handleChange}
@@ -478,5 +468,11 @@ export default class ProductGridDialog extends React.Component {
 }
 ProductGridDialog.propTypes = {
 	galleryImageName: PropTypes.string.isRequired,
-	retrieveGalleryFormInput: PropTypes.func.isRequired
+	retrieveGalleryFormInput: PropTypes.func.isRequired,
+	project: PropTypes.object.isRequired
 };
+const mapStateToProps = (state) => ({
+	project: state.project
+});
+
+export default withRouter(connect(mapStateToProps)(ProductGridDialog));

@@ -64,22 +64,22 @@ class FullWidthTabs extends React.Component {
 	};
 
 	render() {
-		
 		const { classes, theme } = this.props;
-		let Section1Type = ''
-		let Section2Type = ''
-		let Section3Type = ''
-		let Section1 = ''
-		let Section2 = ''
-		let Section3 = ''
-		let Section4 = ''
-		if (this.props.editProjectInfo) {
+		let Section1Type = "";
+		let Section2Type = "";
+		let Section3Type = "";
+		let Section1 = "";
+		let Section2 = "";
+		let Section3 = "";
+		let Section4 = "";
+		console.log(this.props, "PROPS TAB CONTAIN");
+		if (this.props.editProjectInfo.modules.length > 0) {
 			var changedType = this.props.editProjectInfo.modules.map((module) => {
 				if (module.type === "Jumbotron") {
 					module.selectedIndex = 1;
 				}
 				if (module.type === "ProductGrid") {
-					module.selectedIndex= 2;
+					module.selectedIndex = 2;
 				}
 				if (module.type === "Gallery") {
 					module.selectedIndex = 3;
@@ -87,95 +87,163 @@ class FullWidthTabs extends React.Component {
 				return module;
 			});
 
-			Section1 = changedType.filter(
-				(module) => module.location === "Section1"
+			Section1 = changedType.filter((module) => module.location === "Section1");
+			Section2 = changedType.filter((module) => module.location === "Section2");
+			Section3 = changedType.filter((module) => module.location === "Section3");
+			Section1Type = Section1[0].selectedIndex;
+			Section2Type = Section2[0].selectedIndex;
+			Section3Type = Section3[0].selectedIndex;
+
+			return (
+				<div className={classes.root}>
+					<AppBar position="static" color="default">
+						<Tabs
+							value={this.state.value}
+							onChange={this.handleChange}
+							indicatorColor="primary"
+							textColor="primary">
+							<Tab label="Edit Section One" />
+							<Tab label="Edit Section Two" />
+							<Tab label="Edit Section Three" />
+							<Tab label="Edit Section Four" />
+							<Tab label="Edit Section 5" />
+							<Tab label="PREVdIEW" />
+						</Tabs>
+					</AppBar>
+					<SwipeableViews
+						axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+						index={this.state.value}
+						onChangeIndex={this.handleChangeIndex}>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								selectedIndex={Section1Type}
+								editSection={Section1[0]}
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section1"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								editSection={Section2[0]}
+								selectedIndex={Section2Type}
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section2"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								editSection={Section3[0]}
+								selectedIndex={Section3Type}
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section3"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								editSection={Section4[0]}
+								selectedIndex={this.state.Section4Type}
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section4"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								selectedIndex={this.state.Section5Type}
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section5"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<PreviewAllModules moduleArray={this.state.all_modules} />
+						</TabContainer>
+					</SwipeableViews>
+				</div>
 			);
-			Section2 = changedType.filter(
-				(module) => module.location === "Section2"
-			);
-			Section3 = changedType.filter(
-				(module) => module.location === "Section3"
-			);
-			Section1Type = Section1[0].selectedIndex
-			Section2Type = Section2[0].selectedIndex
-			Section3Type = Section3[0].selectedIndex
-			console.log(Section1 , '********this.props.editProjectInfo TAB CONTAIENR PASSING TO LISTMODULES')
 		}
-		return (
-			<div className={classes.root}>
-				<AppBar position="static" color="default">
-					<Tabs
-						value={this.state.value}
-						onChange={this.handleChange}
-						indicatorColor="primary"
-						textColor="primary">
-						<Tab label="Edit Section One" />
-						<Tab label="Edit Section Two" />
-						<Tab label="Edit Section Three" />
-						<Tab label="Edit Section Four" />
-						<Tab label="Edit Section 5" />
-						<Tab label="PREVdIEW" />
-					</Tabs>
-				</AppBar>
-				<SwipeableViews
-					axis={theme.direction === "rtl" ? "x-reverse" : "x"}
-					index={this.state.value}
-					onChangeIndex={this.handleChangeIndex}>
-					<TabContainer dir={theme.direction}>
-						<ListModules
-							selectedIndex={Section1Type}
-							editSection = {Section1[0]}
-							projectID={this.state.projectID}
-							addModuleToProject={this.props.addModuleToProject}
-							addModuleInfoToContainer={this.addModuleInfoToContainer}
-							location={"Section1"}
-						/>
-					</TabContainer>
-					<TabContainer dir={theme.direction}>
-						<ListModules
-							editSection = {Section2[0]}
-							selectedIndex={Section2Type}
-							projectID={this.state.projectID}
-							addModuleToProject={this.props.addModuleToProject}
-							addModuleInfoToContainer={this.addModuleInfoToContainer}
-							location={"Section2"}
-						/>
-					</TabContainer>
-					<TabContainer dir={theme.direction}>
-						<ListModules
-							editSection = {Section3[0]}
-							selectedIndex={Section3Type}
-							projectID={this.state.projectID}
-							addModuleToProject={this.props.addModuleToProject}
-							addModuleInfoToContainer={this.addModuleInfoToContainer}
-							location={"Section3"}
-						/>
-					</TabContainer>
-					<TabContainer dir={theme.direction}>
-						<ListModules
-							editSection = {Section4[0]}
-							selectedIndex={this.state.Section4Type}
-							projectID={this.state.projectID}
-							addModuleToProject={this.props.addModuleToProject}
-							addModuleInfoToContainer={this.addModuleInfoToContainer}
-							location={"Section4"}
-						/>
-					</TabContainer>
-					<TabContainer dir={theme.direction}>
-						<ListModules
-							selectedIndex={this.state.Section5Type}
-							projectID={this.state.projectID}
-							addModuleToProject={this.props.addModuleToProject}
-							addModuleInfoToContainer={this.addModuleInfoToContainer}
-							location={"Section5"}
-						/>
-					</TabContainer>
-					<TabContainer dir={theme.direction}>
-						<PreviewAllModules moduleArray={this.state.all_modules} />
-					</TabContainer>
-				</SwipeableViews>
-			</div>
-		);
+		if (this.props.editProjectInfo.modules.length === 0) {
+			return (
+				<div className={classes.root}>
+					<AppBar position="static" color="default">
+						<Tabs
+							value={this.state.value}
+							onChange={this.handleChange}
+							indicatorColor="primary"
+							textColor="primary">
+							<Tab label="Edit Section One" />
+							<Tab label="Edit Section Two" />
+							<Tab label="Edit Section Three" />
+							<Tab label="Edit Section Four" />
+							<Tab label="Edit Section 5" />
+							<Tab label="PREVdIEW" />
+						</Tabs>
+					</AppBar>
+					<SwipeableViews
+						axis={theme.direction === "rtl" ? "x-reverse" : "x"}
+						index={this.state.value}
+						onChangeIndex={this.handleChangeIndex}>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section1"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section2"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section3"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section4"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<ListModules
+								projectID={this.state.projectID}
+								addModuleToProject={this.props.addModuleToProject}
+								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								location={"Section5"}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<PreviewAllModules moduleArray={this.state.all_modules} />
+						</TabContainer>
+					</SwipeableViews>
+				</div>
+			);
+		} else {
+			return (
+				<h2 className="error">
+					Looks like you haven't added any modules, please build project first.
+				</h2>
+			);
+		}
 
 		// const Section1 = this.props.editProjectInfo.modules.filter(module => module.location === "Section1")
 	}

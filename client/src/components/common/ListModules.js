@@ -48,12 +48,12 @@ class ListModules extends React.Component {
 		this.setState({ selectedIndex: index });
 	};
 
-	sendModuleToProject = (dataFromChild) => {
-		this.setState({ listDataFromChild: dataFromChild });
-		const projectID = this.props.projectID;
-		this.props.addModuleToProject(dataFromChild, projectID)
-		this.props.addModuleInfoToContainer(dataFromChild);
-	};
+	// sendModuleToProject = (dataFromChild) => {
+	// 	this.setState({ listDataFromChild: dataFromChild });
+	// 	const projectID = this.props.projectID;
+	// 	this.props.addModuleToProject(dataFromChild, projectID)
+	// 	this.props.addModuleInfoToContainer(dataFromChild);
+	// };
 	onUndo() {
 		this.setState({
 			listDataFromChild: "",
@@ -63,8 +63,9 @@ class ListModules extends React.Component {
 	
 
 	render() {
+		console.log(this.state, 'listDataFromChild')
 		const { classes } = this.props;
-		console.log('**********PROPS PASSING TO PRODUCTGRIDFORM EDITSECTION', this.props)
+	
 			return (
 				<div>
 					<div style={{ display: "flex" }}>
@@ -168,15 +169,15 @@ class ListModules extends React.Component {
 								editSection = {this.props.editSection}
 								location={this.props.location}
 								projectID={this.props.projectID}
-								callbackfromparent={this.sendModuleToProject}
+								sendModuleToProject={this.sendModuleToProject}
 							/>
 						) : null}
 						{this.state.selectedIndex === 2 ? (
 							<ProductGridForm
 								editSection={this.props.editSection}
-								location={this.props.location}
+								currentSection={this.state.currentSection}
 								projectID={this.props.projectID}
-								callbackfromparent={this.sendModuleToProject}
+								sendModuleToProject={this.sendModuleToProject}
 							/>
 						) : null}
 						{this.state.selectedIndex === 3 ? (
@@ -184,7 +185,7 @@ class ListModules extends React.Component {
 								editSection={this.props.editSection}
 								location={this.props.location}
 								projectID={this.props.projectID}
-								callbackfromparent={this.sendModuleToProject}
+								sendModuleToProject={this.sendModuleToProject}
 							/>
 						) : null}
 					</div>
