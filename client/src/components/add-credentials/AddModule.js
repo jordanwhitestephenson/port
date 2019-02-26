@@ -17,7 +17,6 @@ class AddModule extends Component {
 		};
 	}
 	componentWillMount() {
-		console.log('ADDMODULE componenent MOUNT', this.props)
 		this.props.getCurrentProject(this.state.projectID);
 		// this.setState({ project: this.props.project.project });
 	}
@@ -46,7 +45,7 @@ class AddModule extends Component {
 
 
 	render() {	
-		console.log(this.props, 'ADD MODULE PROPS')
+		
 		if (this.props.location.pathname === "/edit-project" && !this.props.project.loading) {
 			return (
 				<div className="edit-module">
@@ -62,7 +61,7 @@ class AddModule extends Component {
 								<TabContainer
 									projectID={this.state.projectID}
 									pathname= {this.props.location.pathname}
-									editProjectInfo = {this.props.project.project}
+									editProjectInfo={this.props.project.project}
 								/>
 							</div>
 						</div>

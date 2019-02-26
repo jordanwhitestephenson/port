@@ -265,9 +265,8 @@ router.post(
 									{ $push: { ["projects.$.modules"]: ModuleData } },
 									{ new: true },
 								)
-									.then(profile => console.log(profile.projects, 'YA'))
-									.then(profile.save())
-									.then((profile) => res.send(profile.projects[0]))
+									.then(profile.save())									
+									.then((profile) => res.send(profile.projects.filter(project => project._id == projectID)[0]))
 									.catch((err) => console.log(err))
 							)
 

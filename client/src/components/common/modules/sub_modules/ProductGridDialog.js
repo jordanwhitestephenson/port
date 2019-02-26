@@ -52,14 +52,15 @@ class ProductGridDialog extends React.Component {
 		this.setState({ open: true });
 	};
 	componentWillMount() {
-		//PROJECT STATE: ALREADY HAS MODULES
-		console.log(this.props.project.project.modules, 'MODULES OROPS?')
-		if (this.props.project.project.modules.length) {
 
+		//PROJECT STATE: ALREADY HAS MODULES && PRODUCT GRID HASNT BEEN ADDED TO PROJECT
+		if (this.props.project.project.modules.length && this.props.project.project.modules.filter(module => module.type === "ProductGrid").length < 0) {
+			console.log('MODULES OROPS?')
 			//FIND CURRENT PRODUCTGRID IN MODULES ARRAY and ADD STATE:
 			const productGrid = this.props.project.project.modules.filter(
 				(module) => module.type === "ProductGrid"
 			)[0];
+			console.log(productGrid, 'WYYY')
 			const Product_1 = productGrid.imageSets.filter(
 				(product) => product["Product_1"]
 			)[0].Product_1;

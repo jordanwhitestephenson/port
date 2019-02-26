@@ -73,7 +73,7 @@ class FullWidthTabs extends React.Component {
 		let Section3 = "";
 		let Section4 = "";
 		console.log(this.props, "PROPS TAB CONTAIN");
-		if (this.props.editProjectInfo.modules.length > 0) {
+		if (this.props.editProjectInfo.modules.length > 0 && this.props.pathname === "/edit-project") {
 			var changedType = this.props.editProjectInfo.modules.map((module) => {
 				if (module.type === "Jumbotron") {
 					module.selectedIndex = 1;
@@ -170,7 +170,7 @@ class FullWidthTabs extends React.Component {
 				</div>
 			);
 		}
-		if (this.props.editProjectInfo.modules.length === 0) {
+		if (this.props.pathname === "/add-module") {
 			return (
 				<div className={classes.root}>
 					<AppBar position="static" color="default">
@@ -179,12 +179,12 @@ class FullWidthTabs extends React.Component {
 							onChange={this.handleChange}
 							indicatorColor="primary"
 							textColor="primary">
-							<Tab label="Edit Section One" />
-							<Tab label="Edit Section Two" />
-							<Tab label="Edit Section Three" />
-							<Tab label="Edit Section Four" />
-							<Tab label="Edit Section 5" />
-							<Tab label="PREVdIEW" />
+							<Tab label="Section One" />
+							<Tab label="Section Two" />
+							<Tab label="Section Three" />
+							<Tab label="Section Four" />
+							<Tab label="Section 5" />
+							<Tab label="PREVIEW" />
 						</Tabs>
 					</AppBar>
 					<SwipeableViews
@@ -253,5 +253,6 @@ FullWidthTabs.propTypes = {
 	classes: PropTypes.object.isRequired,
 	theme: PropTypes.object.isRequired
 };
+
 
 export default withStyles(styles, { withTheme: true })(FullWidthTabs);

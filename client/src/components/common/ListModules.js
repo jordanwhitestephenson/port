@@ -21,6 +21,8 @@ import ProjectViewDialog from "../common/modules/sub_modules/ProjectViewDialog";
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 import GalleryForm from "../common/modules/GalleryForm";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
 const styles = (theme) => ({
 	root: {
@@ -39,7 +41,8 @@ class ListModules extends React.Component {
 		this.state = {
 			selectedIndex: this.props.selectedIndex,
 			currentSection: this.props.location,
-			listDataFromChild: ""
+			listDataFromChild: "",
+			previewEnabled: false
 		};
 		this.onUndo = this.onUndo.bind(this);
 	}
@@ -47,12 +50,20 @@ class ListModules extends React.Component {
 	handleListItemClick = (event, index) => {
 		this.setState({ selectedIndex: index });
 	};
+	componentWillReceiveProps(nextProps, nextContext) {
+		if (nextProps.project.preview_enabled) {
+			this.setState(({
+				previewEnabled: true
+			}))
+		}
+	}
 
 	// sendModuleToProject = (dataFromChild) => {
+	// 	console.log(dataFromChild, 'IS THIS EVENT GETTING INVOKED')
 	// 	this.setState({ listDataFromChild: dataFromChild });
-	// 	const projectID = this.props.projectID;
-	// 	this.props.addModuleToProject(dataFromChild, projectID)
-	// 	this.props.addModuleInfoToContainer(dataFromChild);
+	// 	// const projectID = this.props.projectID;
+	// 	// this.props.addModuleToProject(dataFromChild, projectID)
+	// 	// this.props.addModuleInfoToContainer(dataFromChild);
 	// };
 	onUndo() {
 		this.setState({
@@ -60,143 +71,143 @@ class ListModules extends React.Component {
 			selectedIndex: 0
 		});
 	}
-	
 
 	render() {
-		console.log(this.state, 'listDataFromChild')
 		const { classes } = this.props;
-	
-			return (
-				<div>
-					<div style={{ display: "flex" }}>
-						{this.state.listDataFromChild === "" ? (
-							<div className={classes.root}>
-								<List component="nav">
-									<ListItem
-										button
-										selected={this.state.selectedIndex === 0}
-										onClick={(event) => this.handleListItemClick(event, 0)}>
-										<ListItemIcon>
-											<ExpandMore />
-										</ListItemIcon>
-									</ListItem>
-									<ListItem
-										button
-										selected={this.state.selectedIndex === 1}
-										onClick={(event) => this.handleListItemClick(event, 1)}>
-										<ListItemIcon>
-											<JumboTron />
-										</ListItemIcon>
-										<ListItemText primary="JumboTron" />
-									</ListItem>
-									<ListItem
-										button
-										selected={this.state.selectedIndex === 2}
-										onClick={(event) => this.handleListItemClick(event, 2)}>
-										<ListItemIcon>
-											<SquareGrid />
-										</ListItemIcon>
-										<ListItemText primary="With Product Grid" />
-									</ListItem>
-									<ListItem
-										button
-										selected={this.state.selectedIndex === 3}
-										onClick={(event) => this.handleListItemClick(event, 3)}>
-										<ListItemIcon>
-											<ViewModule />
-										</ListItemIcon>
-										<ListItemText primary="Gallery" />
-									</ListItem>
 
-									<ListItem
-										button
-										selected={this.state.selectedIndex === 4}
-										onClick={(event) => this.handleListItemClick(event, 4)}>
-										<ListItemIcon>
-											<CallToAction />
-										</ListItemIcon>
-										<ListItemText primary="Footer" />
-									</ListItem>
+		return (
+			<div>
+				<div style={{ display: "flex" }}>
+					{!this.state.previewEnabled ? (
+						<div className={classes.root}>
+							<List component="nav">
+								<ListItem
+									button
+									selected={this.state.selectedIndex === 0}
+									onClick={(event) => this.handleListItemClick(event, 0)}>
+									<ListItemIcon>
+										<ExpandMore />
+									</ListItemIcon>
+								</ListItem>
+								<ListItem
+									button
+									selected={this.state.selectedIndex === 1}
+									onClick={(event) => this.handleListItemClick(event, 1)}>
+									<ListItemIcon>
+										<JumboTron />
+									</ListItemIcon>
+									<ListItemText primary="JumboTron" />
+								</ListItem>
+								<ListItem
+									button
+									selected={this.state.selectedIndex === 2}
+									onClick={(event) => this.handleListItemClick(event, 2)}>
+									<ListItemIcon>
+										<SquareGrid />
+									</ListItemIcon>
+									<ListItemText primary="With Product Grid" />
+								</ListItem>
+								<ListItem
+									button
+									selected={this.state.selectedIndex === 3}
+									onClick={(event) => this.handleListItemClick(event, 3)}>
+									<ListItemIcon>
+										<ViewModule />
+									</ListItemIcon>
+									<ListItemText primary="Gallery" />
+								</ListItem>
 
-									<ListItem
-										button
-										selected={this.state.selectedIndex === 5}
-										onClick={(event) => this.handleListItemClick(event, 5)}>
-										<ListItemIcon>
-											<MediaLeft />
-										</ListItemIcon>
-										<ListItemText primary="Media Left" />
-									</ListItem>
+								<ListItem
+									button
+									selected={this.state.selectedIndex === 4}
+									onClick={(event) => this.handleListItemClick(event, 4)}>
+									<ListItemIcon>
+										<CallToAction />
+									</ListItemIcon>
+									<ListItemText primary="Footer" />
+								</ListItem>
 
-									<ListItem
-										button
-										selected={this.state.selectedIndex === 6}
-										onClick={(event) => this.handleListItemClick(event, 6)}>
-										<ListItemIcon>
-											<MediaRight />
-										</ListItemIcon>
-										<ListItemText primary="Media Right" />
-									</ListItem>
+								<ListItem
+									button
+									selected={this.state.selectedIndex === 5}
+									onClick={(event) => this.handleListItemClick(event, 5)}>
+									<ListItemIcon>
+										<MediaLeft />
+									</ListItemIcon>
+									<ListItemText primary="Media Left" />
+								</ListItem>
 
-									<ListItem
-										button
-										selected={this.state.selectedIndex === 7}
-										onClick={(event) => this.handleListItemClick(event, 7)}>
-										<ListItemIcon>
-											<ProductGridThree />
-										</ListItemIcon>
-										<ListItemText primary="Product Gallery 3" />
-									</ListItem>
-								</List>
+								<ListItem
+									button
+									selected={this.state.selectedIndex === 6}
+									onClick={(event) => this.handleListItemClick(event, 6)}>
+									<ListItemIcon>
+										<MediaRight />
+									</ListItemIcon>
+									<ListItemText primary="Media Right" />
+								</ListItem>
 
-								<Divider />
-							</div>
-						) : (
-							<div className="home_base">
-								<IconButton
-									onClick={this.onUndo}
-									color="default"
-									variant="contained">
-									<DeleteIcon fontSize="large" />
-								</IconButton>
-								<ProjectViewDialog
-									modulePreview={this.state.listDataFromChild}
-								/>
-							</div>
-						)}
-						{this.state.selectedIndex === 1 ? (
-							<JumboTronForm
-								editSection = {this.props.editSection}
-								location={this.props.location}
-								projectID={this.props.projectID}
-								sendModuleToProject={this.sendModuleToProject}
-							/>
-						) : null}
-						{this.state.selectedIndex === 2 ? (
-							<ProductGridForm
-								editSection={this.props.editSection}
-								currentSection={this.state.currentSection}
-								projectID={this.props.projectID}
-								sendModuleToProject={this.sendModuleToProject}
-							/>
-						) : null}
-						{this.state.selectedIndex === 3 ? (
-							<GalleryForm
-								editSection={this.props.editSection}
-								location={this.props.location}
-								projectID={this.props.projectID}
-								sendModuleToProject={this.sendModuleToProject}
-							/>
-						) : null}
-					</div>
+								<ListItem
+									button
+									selected={this.state.selectedIndex === 7}
+									onClick={(event) => this.handleListItemClick(event, 7)}>
+									<ListItemIcon>
+										<ProductGridThree />
+									</ListItemIcon>
+									<ListItemText primary="Product Gallery 3" />
+								</ListItem>
+							</List>
+
+							<Divider />
+						</div>
+					) : (
+						<div className="home_base">
+							<IconButton
+								onClick={this.onUndo}
+								color="default"
+								variant="contained">
+								<DeleteIcon fontSize="large" />
+							</IconButton>
+							<ProjectViewDialog modulePreview={this.state.listDataFromChild} />
+						</div>
+					)}
+					{this.state.selectedIndex === 1 ? (
+						<JumboTronForm
+							editSection={this.props.editSection}
+							currentSection={this.state.currentSection}
+							projectID={this.props.projectID}
+							sendModuleToProject={this.sendModuleToProject}
+						/>
+					) : null}
+					{this.state.selectedIndex === 2 ? (
+						<ProductGridForm
+							editSection={this.props.editSection}
+							currentSection={this.state.currentSection}
+							projectID={this.props.projectID}
+							sendModuleToProject={this.sendModuleToProject}
+						/>
+					) : null}
+					{this.state.selectedIndex === 3 ? (
+						<GalleryForm
+							editSection={this.props.editSection}
+							location={this.props.location}
+							projectID={this.props.projectID}
+							sendModuleToProject={this.sendModuleToProject}
+						/>
+					) : null}
 				</div>
-			);
-		
+			</div>
+		);
 	}
 }
 
 ListModules.propTypes = {
 	classes: PropTypes.object.isRequired
 };
+const mapStateToProps = (state) => ({
+	project: state.project
+});
 
-export default withStyles(styles)(ListModules);
+export default withRouter(
+	connect(mapStateToProps)(withStyles(styles)(ListModules))
+);

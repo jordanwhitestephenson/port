@@ -131,13 +131,13 @@ class ProductGridForm extends Component {
 			classes: this.props.classes,
 			hash: this.props.projectID,
 			location: this.props.currentSection,
-			layout: this.props.editSection.layout,
+			layout: 'this.props.editSection.layout',
 			main_image_link: this.props.main_image_link,
 			main_image_SRC: this.props.main_image_SRC,
 			main_image_alt: this.props.main_image_alt,
 			main_image_title: this.props.main_image_title,
 			updateButton: "ADD MODULE",
-			imageSets: this.props.editSection.imageSets,
+			imageSets: 'this.props.editSection.imageSets',
 			editSection: this.props.editSection,
 			errors: ""
 		};
@@ -388,6 +388,6 @@ const mapStateToProps = (state) => ({
 export default withRouter(
 	connect(
 		mapStateToProps,
-		{ addModule, getCurrentProject }
+		{ addModule }
 	)(withStyles(styles)(ProductGridForm))
 );

@@ -42,7 +42,8 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				project: action.payload,
-				loading: false
+				loading: false,
+				preview_enabled: true
 			};
 
 		default:
