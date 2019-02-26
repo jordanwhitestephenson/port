@@ -40,7 +40,7 @@ class ListModules extends React.Component {
 		super(props);
 		this.state = {
 			selectedIndex: this.props.selectedIndex,
-			currentSection: this.props.location,
+			currentSection: this.props.currentSection,
 			listDataFromChild: "",
 			previewEnabled: false
 		};
@@ -74,7 +74,6 @@ class ListModules extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-
 		return (
 			<div>
 				<div style={{ display: "flex" }}>

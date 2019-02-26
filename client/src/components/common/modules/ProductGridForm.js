@@ -137,14 +137,26 @@ class ProductGridForm extends Component {
 			main_image_alt: this.props.main_image_alt,
 			main_image_title: this.props.main_image_title,
 			updateButton: "ADD MODULE",
-			imageSets: 'this.props.editSection.imageSets',
-			editSection: this.props.editSection,
+			imageSets: '',
+			editSection: '',
 			errors: ""
 		};
 		this.addGalleryToProject = this.addGalleryToProject.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
 	componentWillMount() {
+
+		//TO DO: editSection is undefined because we're implementing redux, so we need to change each reference to props.editSection to this.props.project.project etc\\
+		//CHECKING TO SEE IF MoudlesArray is empty, and if ProductGrid' type has been used ALREADY in this SECTION
+		if (this.props.project.project.modules.filter(module => module.location === this.props.currentSection && module.type === "ProductGrid")) {
+			var editSection = this.props.project.project.modules.filter(module => module.location === this.props.currentSection && module.type === "ProductGrid")[0]
+			var imageSets = editSection.imageSets
+			this.setState({
+				editSection: editSection,
+				imageSets: imageSets
+			})
+		}
+
 		console.log(this.props, 'WPRODUCTILL MOUNT  ')
 	}
 
@@ -153,7 +165,7 @@ class ProductGridForm extends Component {
 		
 		var locationKey = Object.keys(info)[0];
 		// **IF IMAGES ARE ALREADY PRESENT**
-		if (this.props.editSection.imageSets) {
+		if (this.state.editSection.imageSets) {
 			var productGridPhotosInfo = this.state.imageSets;
 			if (locationKey === "Model") {
 				this.setState({
@@ -266,6 +278,7 @@ class ProductGridForm extends Component {
 
 	render() {
 		const { classes } = this.props;
+		console.log(this.state.imageSets, 'IMAGE SETS')
 		return (
 			<div style={{ width: "100%" }}>
 				<Typography component="h2" variant="display1" gutterBottom>
@@ -378,7 +391,7 @@ class ProductGridForm extends Component {
 ProductGridForm.propTypes = {
 	classes: PropTypes.object.isRequired,
 	projectID: PropTypes.string.isRequired,
-	location: PropTypes.string.isRequired,
+	currentSelection: PropTypes.string.isRequired,
 	project: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({

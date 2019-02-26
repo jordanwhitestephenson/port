@@ -131,7 +131,7 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addModuleToProject={this.props.addModuleToProject}
 								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section2"}
+								currentSection={"Section2"}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -141,7 +141,7 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addModuleToProject={this.props.addModuleToProject}
 								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section3"}
+								currentSection={"Section3"}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -151,7 +151,7 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addModuleToProject={this.props.addModuleToProject}
 								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section4"}
+								currentSection={"Section4"}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -160,7 +160,7 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addModuleToProject={this.props.addModuleToProject}
 								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section5"}
+								currentSection={"Section5"}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -196,7 +196,7 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addModuleToProject={this.props.addModuleToProject}
 								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section1"}
+								currentSection={"Section1"}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -204,7 +204,7 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addModuleToProject={this.props.addModuleToProject}
 								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section2"}
+								currentSection={"Section2"}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -212,7 +212,7 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addModuleToProject={this.props.addModuleToProject}
 								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section3"}
+								currentSection={"Section3"}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -220,7 +220,7 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addModuleToProject={this.props.addModuleToProject}
 								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section4"}
+								currentSection={"Section4"}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -228,7 +228,7 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addModuleToProject={this.props.addModuleToProject}
 								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section5"}
+								currentSection={"Section5"}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
