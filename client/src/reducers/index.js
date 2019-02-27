@@ -7,7 +7,7 @@ import projectReducer from './projectReducer'
 
 export default combineReducers({
   auth: authReducer,
-  errors: errorReducer,
+  errors_object: errorReducer,
   profile: profileReducer,
   post: postReducer,
   project: projectReducer

@@ -149,38 +149,6 @@ router.post(
 	}
 );
 
-// @route   POST api/profile/experience
-// @desc    Add experience to profile
-// @access  Private
-router.post(
-	"/experience",
-	passport.authenticate("jwt", { session: false }),
-	(req, res) => {
-		const { errors, isValid } = validateExperienceInput(req.body);
-
-		// Check Validation
-		if (!isValid) {
-			// Return any errors with 400 status
-			return res.status(400).json(errors);
-		}
-
-		Profile.findOne({ user: req.user.id }).then((profile) => {
-			const newExp = {
-				title: req.body.title,
-				company: req.body.company,
-				location: req.body.location,
-				from: req.body.from,
-				to: req.body.to,
-				current: req.body.current,
-				description: req.body.description
-			};
-
-			// Add to exp array
-			profile.experience.unshift(newExp);
-			profile.save().then((profile) => res.json(profile));
-		});
-	}
-);
 
 // ****ADD MODULE TO PROJECT***
 // /api/profile/projects/module
@@ -190,6 +158,14 @@ router.post(
 	"/project/:project_id",
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
+		
+		const { errors_object, isValid } = validateProjectInput(req.body);
+		console.log( errors_object, 'ERROR OBEJCT*********')
+		if (!isValid) {
+			return res.status(400).json(errors_object);
+		}
+		
+		
 		var ModuleData = "";
 		if (req.body.type === "ProductGrid") {
 			ModuleData = {
@@ -213,6 +189,7 @@ router.post(
 					title: req.body.main_image.title
 				},
 				headline: req.body.headline,
+				headlineSize: req.body.headlineSize,
 				paragraphText: req.body.paragraphText,
 				location: req.body.location,
 				type: req.body.type,
@@ -242,9 +219,9 @@ router.post(
 				const sectionType = req.body.location;
 				console.log(ModuleData, "DATA SENT TO ROUTER");
 				Profile.find({ projects: { $elemMatch: { _id: projectID } } })
-					.then(function(result) {
+					.then(function (result) {
 						var filteredArray;
-						result.forEach(function(u) {
+						result.forEach(function (u) {
 							u.projects.map(
 								(e) =>
 									(filteredArray = e.modules.filter(
@@ -265,7 +242,7 @@ router.post(
 									{ $push: { ["projects.$.modules"]: ModuleData } },
 									{ new: true },
 								)
-									.then(profile.save())									
+									.then(profile.save())
 									.then((profile) => res.send(profile.projects.filter(project => project._id == projectID)[0]))
 									.catch((err) => console.log(err))
 							)
@@ -278,6 +255,7 @@ router.post(
 					.catch((err) => console.log(err));
 			}
 		});
+		
 	}
 );
 
@@ -285,7 +263,7 @@ router.post(
 	"/project",
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
-		const { errors, isValid } = validateProjectInput(req.body);
+		const { errorsObject, isValid } = validateProjectInput(req.body);
 		console.log(req.body, "FROM POST PROJECT IN ROUTER");
 		// Check Validation
 		if (!isValid) {
@@ -407,7 +385,7 @@ router.get(
 	"/preview-project/:id",
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
-		// const { errors, isValid } = validateProjectInput(req.body);
+
 		const newProject = {};
 		const projectID = req.params.id;
 		// newProject.user = req.user.id;
@@ -460,7 +438,6 @@ router.delete(
 	"/project/:id",
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
-		// const { errors, isValid } = validateProjectInput(req.body);
 		const newProject = {};
 		const projectID = req.params.id;
 		// newProject.user = req.user.id;

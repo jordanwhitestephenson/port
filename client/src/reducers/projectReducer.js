@@ -8,7 +8,8 @@ import {
 
 const initialState = {
 	project: null,
-	loading: true
+	loading: true,
+	addedSection: []
 };
 
 export default function (state = initialState, action) {
@@ -43,7 +44,9 @@ export default function (state = initialState, action) {
 				...state,
 				project: action.payload,
 				loading: false,
-				preview_enabled: true
+				preview_enabled: true,
+				addedModuleInfo: action.addedModuleInfo,
+				addedSection: [...state.addedSection, action.addedSection]
 			};
 
 		default:

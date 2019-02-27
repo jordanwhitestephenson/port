@@ -117,7 +117,6 @@ class AddProject extends Component {
 }
 
 AddProject.propTypes = {
-	// addExperience: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 };

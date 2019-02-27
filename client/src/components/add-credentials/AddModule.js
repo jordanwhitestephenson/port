@@ -17,11 +17,13 @@ class AddModule extends Component {
 		};
 	}
 	componentWillMount() {
+		
 		this.props.getCurrentProject(this.state.projectID);
-		// this.setState({ project: this.props.project.project });
 	}
 
 	componentWillReceiveProps(nextProps) {
+		console.log(nextProps, 'ANY ERRORS?')
+		
 		if (nextProps.project !== this.props.project) {
 			this.setState({ project: nextProps.project});
 		}
@@ -102,7 +104,6 @@ class AddModule extends Component {
 }
 
 AddModule.propTypes = {
-	addModule: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
 	errors: PropTypes.object.isRequired
 };

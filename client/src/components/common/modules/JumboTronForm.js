@@ -18,8 +18,8 @@ import AddIcon from "@material-ui/icons/Add";
 import CenterIcon from "../../common/icons/browser-8.png";
 import IconButton from "@material-ui/core/IconButton";
 import { connect } from "react-redux";
-import { withRouter } from 'react-router-dom';
-import { addModule, getCurrentProject } from "../../../actions/profileActions";
+import { withRouter } from "react-router-dom";
+import { addModule } from "../../../actions/profileActions";
 
 const styles = (theme) => ({
 	container: {
@@ -74,34 +74,89 @@ class JumboTronForm extends React.Component {
 		super(props);
 		this.state = {
 			html: "",
-			headline: this.props.headline,
+			headline: "",
 			paragraphText: this.props.paragraphText,
-      location: this.props.currentSection,
+			location: this.props.currentSection,
 			type: "Jumbotron",
-			button: this.props.button,
-			buttonText: this.props.buttonText,
+			button: "",
+			buttonText: "",
 			buttonLink: this.props.buttonLink,
-			layout: this.props.layout,
-			backgroundColor: this.props.backgroundColor,
+			layout: "",
+			backgroundColor: "",
 			textColor: this.props.textColor,
-			headlineSize: this.props.headlineSize,
-      errors: "",
-      projectID: this.props.location.hash.slice(1),
-			main_image_SRC: this.props.main_image_SRC,
-			main_image_link: this.props.main_image_link,
-			main_image_alt: this.props.main_image_alt,
-			main_image_title: this.props.main_image_title,
+			headlineSize: "20px",
+			errors: "",
+			editSection: "",
+			projectID: this.props.location.hash.slice(1),
+			main_image_SRC: "",
+			main_image_link: "",
+			main_image_alt: "",
+			main_image_title: "",
 			updateButton: "ADD MODULE",
-			include_image: false
+			include_image: false,
+			submitReady: false, 
+			errors_object: {}
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
 	}
+	componentWillReceiveProps(nextProps) {
+		
+		if (nextProps.errors_object) {
+			this.setState({ errors_object: nextProps.errors_object });
+		}
+	}
+	componentWillMount() {
+		//CHECKING TO SEE IF MoudlesArray is empty, and if ProductGrid' type has been used ALREADY in this SECTION
+		if (
+			this.props.project.project.modules.filter(
+				(module) =>
+					module.location === this.props.currentSection &&
+					module.type === "Jumbotron"
+			).length > 0
+		) {
+			var editSection = this.props.project.project.modules.filter(
+				(module) =>
+					module.location === this.props.currentSection &&
+					module.type === "Jumbotron"
+			)[0];
+
+			//If main_image is present in the modules array, then show image input fields//
+			if (editSection.main_image) {
+				this.setState({
+					include_image: true
+				})
+			}
+			this.setState({
+				editSection: editSection,
+				headline: editSection.headline,
+				backgroundColor: editSection.backgroundColor,
+				button: editSection.button,
+				buttonText: editSection.buttonInfo.text,
+				buttonLink: editSection.buttonInfo.link,
+				layout: editSection.layout,
+				paragraphText: editSection.paragraphText,
+				headlineSize: editSection.headlineSize,
+				main_image_SRC: editSection.main_image.SRC,
+				main_image_link: editSection.main_image.link,
+				main_image_alt: editSection.main_image.alt,
+				main_image_title: editSection.main_image.title,
+				new: false,
+			
+			});
+		}
+		//If ProductGrid is not found in the current project's modules
+		else {
+			this.setState({
+				new: true
+			});
+		}
+	}
 
 	onSubmit(e) {
 		e.preventDefault();
+
 		//TO DO : MAKE THIS FUNCTION FOR OTHER REGIONS!!//
-    console.log(this.props, 'ON SUBNIMT')
 		const moduleData = {
 			headline: this.state.headline,
 			headlineSize: this.state.headlineSize,
@@ -123,33 +178,49 @@ class JumboTronForm extends React.Component {
 				title: this.state.main_image_title
 			}
 		};
+		
+		// if (!this.state.button) {
+		// 	this.setState({
+		// 		errors: "Please choose whether to include a button or not",
+		// 		submitReady: false
+		// 	});
+		// }
+		// if (!this.state.backgroundColor) {
+		// 	this.setState({
+		// 		errors: "Please select background color",
+		// 		submitReady: false
+		// 	});
+		// }
+		// if (this.state.button === true && !this.state.buttonText) {
+		// 	this.setState({
+		// 		errors: "Please include button text",
+		// 		submitReady: false
+		// 	});
+		// }
+		// if (!this.state.layout) {
+		// 	this.setState({
+		// 		errors: "Please select a layout before submitting",
+		// 		submitReady: false
+		// 	});
+		// }
+	//  else if (this.state.layout && this.state.button && this.state.backgroundColor) {
+	// 		this.setState({
+	// 			submitReady: true
+	// 		});
+	// 	}
+		// if (this.state.submitReady === true) {
 
-		if (!this.state.button) {
-			this.setState({
-				errors: "Please choose whether to include a button or not"
-			});
-		}
-
-		if (this.state.button === true && !this.state.buttonText) {
-			this.setState({
-				errors: "Please include button text"
-			});
-		}
-
-		if (!this.state.layout) {
-			this.setState({
-				errors: "Please select a layout before submitting"
-			});
-		}
-
-		if (this.state.button && this.state.layout) {
-      this.props.addModule(moduleData, this.state.projectID);
+			this.props.addModule(moduleData, this.state.projectID);
 			this.setState({
 				updateButton: "UPDATE MODULE",
 				errors: ""
 			});
-		}
+		// }
 	}
+		 
+	
+		
+	
 
 	handleChange = (name) => (event) => {
 		if (name === "gradient") {
@@ -190,8 +261,9 @@ class JumboTronForm extends React.Component {
 	};
 
 	render() {
-    const { classes } = this.props;
-    console.log(this.props, 'where is currentSection')
+		const { classes } = this.props;
+		const { errors_object } = this.state;
+
 		return (
 			<div className={classes.formContainer}>
 				{this.state.errors ? (
@@ -230,6 +302,7 @@ class JumboTronForm extends React.Component {
 						</Grid>
 						<Grid item xs={12}>
 							<FormLabel>Layout</FormLabel>
+							<p className="error_text">{errors_object.layout}</p>
 						</Grid>
 						<Grid
 							container
@@ -285,30 +358,30 @@ class JumboTronForm extends React.Component {
 						{this.state.include_image ? (
 							<Grid item xs={12}>
 								<TextField
-									id="outlined-textarea"
 									label="Image SRC"
-									fullWidth
-									required
+									fullWidth		
+									error={errors_object.main_image_SRC}
+									helperText={errors_object.main_image_SRC}
 									className={classes.textField}
-									margin="normal"
-									placeholder="Image src location"
 									variant="outlined"
-									value={this.state.main_image_SRC}
-									onChange={this.handleChange("main_image_SRC")}
 									InputLabelProps={{
 										shrink: true
 									}}
+									margin="normal"
+									value={this.state.main_image_SRC}
+									onChange={this.handleChange("main_image_SRC")}
 								/>
 								<TextField
 									id="outlined-full-width"
 									label="Image Link"
-									required
 									value={this.state.main_image_link}
 									style={{ margin: 8 }}
 									onChange={this.handleChange("main_image_link")}
 									placeholder="Add product/collection link to image"
 									fullWidth
 									margin="normal"
+									error={errors_object.main_image_link}
+									helperText={errors_object.main_image_link}
 									variant="outlined"
 									InputLabelProps={{
 										shrink: true
@@ -323,8 +396,8 @@ class JumboTronForm extends React.Component {
 									onChange={this.handleChange("main_image_alt")}
 									placeholder="Add Alt Tag Description"
 									fullWidth
-									required
-									required
+									error={errors_object.main_image_alt}
+									helperText={errors_object.main_image_alt}
 									margin="normal"
 									variant="outlined"
 									InputLabelProps={{
@@ -363,6 +436,8 @@ class JumboTronForm extends React.Component {
 								className={classes.textField}
 								margin="normal"
 								variant="outlined"
+								error={errors_object.backgroundColor}
+								helperText={errors_object.backgroundColor}
 								value={this.state.backgroundColor}
 								onChange={this.handleChange("gradient")}
 								InputLabelProps={{
@@ -378,6 +453,8 @@ class JumboTronForm extends React.Component {
 								className={classes.textField}
 								margin="normal"
 								variant="outlined"
+								error={errors_object.paragraphText}
+								helperText={errors_object.paragraphText}
 								value={this.state.paragraphText}
 								onChange={this.handleChange("paragraphText")}
 								InputLabelProps={{
@@ -399,17 +476,18 @@ class JumboTronForm extends React.Component {
 						</div>
 						<div>
 							<TextField
-								id="outlined-uncontrolled"
 								label="Headline"
+								error={errors_object.headline}
+								helperText={errors_object.headline}
 								className={classes.textField}
 								margin="normal"
-								variant="outlined"
 								value={this.state.headline}
 								onChange={this.handleChange("headline")}
+								required
 								InputLabelProps={{
 									shrink: true
 								}}
-								required
+								variant="outlined"
 							/>
 							<TextField
 								id="outlined-number"
@@ -448,8 +526,6 @@ class JumboTronForm extends React.Component {
 									label="No Button"
 								/>
 							</RadioGroup>
-
-							{/* <Modal error={this.setError}/> */}
 
 							{this.state.button === "true" ? (
 								<div>
@@ -496,11 +572,12 @@ class JumboTronForm extends React.Component {
 
 JumboTronForm.propTypes = {
 	classes: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired
+	errors_object: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
-	project: state.project
+	project: state.project,
+	errors_object: state.errors_object
 });
 
 export default withRouter(

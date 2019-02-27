@@ -8,9 +8,10 @@ import Tab from "@material-ui/core/Tab";
 import Typography from "@material-ui/core/Typography";
 import SelectListGroup from "./SelectListGroup";
 import ListModules from "./ListModules";
-import { addModule } from "../../actions/profileActions";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
 
-import PreviewAllModules from "../common/preview_templates/PreviewAllModules";
+// import PreviewAllModules from "../common/preview_templates/PreviewAllModules";
 function TabContainer({ children, dir }) {
 	return (
 		<Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
@@ -37,15 +38,54 @@ class FullWidthTabs extends React.Component {
 			value: 0,
 			projectID: this.props.projectID,
 			all_modules: [],
+			project: "",
 			editProjectInfo: this.props.editProjectInfo,
 			Section1Type: "",
 			Section2Type: "",
 			Section3Type: "",
 			Section4Type: "",
-			Section5Type: ""
+			Section5Type: "",
+			enableSection1: false,
+			enableSection2: false,
+			enableSection3: false,
+			enableSection4: false,
+			enableSectionModel: false,
+			previewEnabled: false
 		};
 	}
 
+	componentWillReceiveProps(nextProps, nextContext) {
+		if (
+			nextProps.project.preview_enabled !== this.props.project.previewEnabled
+		) {
+			const enableSection1 = nextProps.project.addedSection.includes(
+				"Section1"
+			);
+			const enableSection2 = nextProps.project.addedSection.includes(
+				"Section2"
+			);
+			const enableSection3 = nextProps.project.addedSection.includes(
+				"Section3"
+			);
+			const enableSection4 = nextProps.project.addedSection.includes(
+				"Section4"
+			);
+			const enableSectionModel = nextProps.project.addedSection.includes(
+				"Model"
+			);
+
+			this.setState({
+				previewEnabled: true,
+				project: nextProps.project.project,
+				addedSections: nextProps.project.addedSection,
+				enableSection1: enableSection1,
+				enableSection2: enableSection2,
+				enableSection3: enableSection3,
+				enableSection4: enableSection4,
+				enableSectionModel: enableSectionModel
+			});
+		}
+	}
 	handleChange = (event, value) => {
 		this.setState({ value });
 	};
@@ -53,15 +93,15 @@ class FullWidthTabs extends React.Component {
 	handleChangeIndex = (index) => {
 		this.setState({ value: index });
 	};
-	addModuleInfoToContainer = (childInfo) => {
-		var filteredSectionArray = this.state.all_modules.filter(
-			(section) => section.location !== childInfo.location
-		);
-		var joined = filteredSectionArray.concat(childInfo);
-		this.setState({
-			all_modules: joined
-		});
-	};
+	// addModuleInfoToContainer = (childInfo) => {
+	// 	var filteredSectionArray = this.state.all_modules.filter(
+	// 		(section) => section.location !== childInfo.location
+	// 	);
+	// 	var joined = filteredSectionArray.concat(childInfo);
+	// 	this.setState({
+	// 		all_modules: joined
+	// 	});
+	// };
 
 	render() {
 		const { classes, theme } = this.props;
@@ -72,8 +112,12 @@ class FullWidthTabs extends React.Component {
 		let Section2 = "";
 		let Section3 = "";
 		let Section4 = "";
-		console.log(this.props, "PROPS TAB CONTAIN");
-		if (this.props.editProjectInfo.modules.length > 0 && this.props.pathname === "/edit-project") {
+
+		//****IF WERE ON EDIT****//
+		if (
+			this.props.editProjectInfo.modules.length > 0 &&
+			this.props.pathname === "/edit-project"
+		) {
 			var changedType = this.props.editProjectInfo.modules.map((module) => {
 				if (module.type === "Jumbotron") {
 					module.selectedIndex = 1;
@@ -119,9 +163,8 @@ class FullWidthTabs extends React.Component {
 								selectedIndex={Section1Type}
 								editSection={Section1[0]}
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
-								location={"Section1"}
+								currentSection={"Section1"}
+								pathname={this.props.pathname}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -129,9 +172,8 @@ class FullWidthTabs extends React.Component {
 								editSection={Section2[0]}
 								selectedIndex={Section2Type}
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
 								currentSection={"Section2"}
+								pathname={this.props.pathname}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -139,9 +181,8 @@ class FullWidthTabs extends React.Component {
 								editSection={Section3[0]}
 								selectedIndex={Section3Type}
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
 								currentSection={"Section3"}
+								pathname={this.props.pathname}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
@@ -149,28 +190,27 @@ class FullWidthTabs extends React.Component {
 								editSection={Section4[0]}
 								selectedIndex={this.state.Section4Type}
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
 								currentSection={"Section4"}
+								pathname={this.props.pathname}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
 								selectedIndex={this.state.Section5Type}
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
 								currentSection={"Section5"}
+								pathname={this.props.pathname}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
-							<PreviewAllModules moduleArray={this.state.all_modules} />
+							{/* <PreviewAllModules moduleArray={this.state.all_modules} /> */}
 						</TabContainer>
 					</SwipeableViews>
 				</div>
 			);
 		}
 		if (this.props.pathname === "/add-module") {
+			console.log(this.props, "ANT PROJECT>");
 			return (
 				<div className={classes.root}>
 					<AppBar position="static" color="default">
@@ -194,45 +234,45 @@ class FullWidthTabs extends React.Component {
 						<TabContainer dir={theme.direction}>
 							<ListModules
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								addedModuleInfo={this.props.project.addedModuleInfo}
 								currentSection={"Section1"}
+								previewEnabled={this.state.enableSection1}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								addedModuleInfo={this.props.project.addedModuleInfo}
 								currentSection={"Section2"}
+								previewEnabled={this.state.enableSection2}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								addedModuleInfo={this.props.project.addedModuleInfo}
 								currentSection={"Section3"}
+								previewEnabled={this.state.enableSection3}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
+								addedModuleInfo={this.props.project.addedModuleInfo}
 								currentSection={"Section4"}
+								previewEnabled={this.state.enableSection4}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
 								projectID={this.state.projectID}
-								addModuleToProject={this.props.addModuleToProject}
-								addModuleInfoToContainer={this.addModuleInfoToContainer}
 								currentSection={"Section5"}
+								addedModuleInfo={this.props.project.addedModuleInfo}
+								previewEnabled={this.state.enableSection5}
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
-							<PreviewAllModules moduleArray={this.state.all_modules} />
+							{/* <PreviewAllModules moduleArray={this.state.all_modules} /> */}
 						</TabContainer>
 					</SwipeableViews>
 				</div>
@@ -244,8 +284,6 @@ class FullWidthTabs extends React.Component {
 				</h2>
 			);
 		}
-
-		// const Section1 = this.props.editProjectInfo.modules.filter(module => module.location === "Section1")
 	}
 }
 
@@ -254,5 +292,15 @@ FullWidthTabs.propTypes = {
 	theme: PropTypes.object.isRequired
 };
 
+const mapStateToProps = (state) => ({
+	project: state.project,
+	addedSection: state.addedSection,
+	addedModuleInfo: state.addedModuleInfo
+});
 
-export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+export default withRouter(
+	connect(mapStateToProps)(
+		withStyles(styles, { withTheme: true })(FullWidthTabs)
+	)
+);
+// export default withStyles(styles, { withTheme: true })(FullWidthTabs);

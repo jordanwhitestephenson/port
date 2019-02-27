@@ -67,20 +67,23 @@ export const createProfile = (profileData, history) => dispatch => {
 // /projects/:projectID/:module
 // Create Profile
 export const addModule = (moduledata, projectID, history) => dispatch => {
- 
+  console.log(moduledata, 'moduledata sent to add module action')
   axios
     .post(`/api/profile/project/${projectID}`, moduledata)
     .then(res => 
 
       dispatch({
         type: ADD_MODULE,
-        payload: res.data
+        payload: res.data,
+        addedModuleInfo: moduledata,
+        addedSection: moduledata.location
+       
       })
     )
     .catch(err =>
       dispatch({
-        type: ADD_MODULE,
-        payload: err.res.data
+        type: GET_ERRORS,
+        payload: err.response.data
       })
     );
 };

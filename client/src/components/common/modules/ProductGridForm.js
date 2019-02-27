@@ -131,7 +131,7 @@ class ProductGridForm extends Component {
 			classes: this.props.classes,
 			hash: this.props.projectID,
 			location: this.props.currentSection,
-			layout: 'this.props.editSection.layout',
+			layout: '',
 			main_image_link: this.props.main_image_link,
 			main_image_SRC: this.props.main_image_SRC,
 			main_image_alt: this.props.main_image_alt,
@@ -139,25 +139,30 @@ class ProductGridForm extends Component {
 			updateButton: "ADD MODULE",
 			imageSets: '',
 			editSection: '',
-			errors: ""
+			errors: "",
+			new: true
 		};
 		this.addGalleryToProject = this.addGalleryToProject.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
 	componentWillMount() {
 
-		//TO DO: editSection is undefined because we're implementing redux, so we need to change each reference to props.editSection to this.props.project.project etc\\
 		//CHECKING TO SEE IF MoudlesArray is empty, and if ProductGrid' type has been used ALREADY in this SECTION
-		if (this.props.project.project.modules.filter(module => module.location === this.props.currentSection && module.type === "ProductGrid")) {
+		if (this.props.project.project.modules.filter(module => module.location === this.props.currentSection && module.type === "ProductGrid").length > 0) {
 			var editSection = this.props.project.project.modules.filter(module => module.location === this.props.currentSection && module.type === "ProductGrid")[0]
 			var imageSets = editSection.imageSets
 			this.setState({
 				editSection: editSection,
-				imageSets: imageSets
+				imageSets: imageSets,
+				new: false
 			})
 		}
-
-		console.log(this.props, 'WPRODUCTILL MOUNT  ')
+		//If ProductGrid is not found in the current project's modules
+		else {
+			this.setState({
+				new: true
+			})
+		}
 	}
 
 	//********** */WHEN DIALOG IS CLOSED AND INPUTS ARE SENT FROM DIALOG*******//
@@ -240,7 +245,7 @@ class ProductGridForm extends Component {
 	// **********ADD BUTTON EVENT********
 	addGalleryToProject(e) {
 		e.preventDefault();
-		if (this.state.imageSets.length < 4) {
+		if (this.state.imageSets.length < 5) {
 			this.setState({
 				error: "Please add all image information, must have 4"
 			});
