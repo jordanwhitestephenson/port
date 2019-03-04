@@ -105,12 +105,12 @@ class AddModule extends Component {
 
 AddModule.propTypes = {
 	profile: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired
+	errors_object: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({
 	profile: state.profile,
-	errors: state.errors,
+	errors_object: state.errors_object,
 	project: state.project,
 });
 

@@ -108,10 +108,13 @@ class FullWidthTabs extends React.Component {
 		let Section1Type = "";
 		let Section2Type = "";
 		let Section3Type = "";
+		let Section4Type = "";
+		let Section5Type = "";
 		let Section1 = "";
 		let Section2 = "";
 		let Section3 = "";
 		let Section4 = "";
+		let Section5 = "";
 
 		//****IF WERE ON EDIT****//
 		if (
@@ -134,6 +137,8 @@ class FullWidthTabs extends React.Component {
 			Section1 = changedType.filter((module) => module.location === "Section1");
 			Section2 = changedType.filter((module) => module.location === "Section2");
 			Section3 = changedType.filter((module) => module.location === "Section3");
+			Section3 = changedType.filter((module) => module.location === "Section4");
+			Section3 = changedType.filter((module) => module.location === "Section5");
 			Section1Type = Section1[0].selectedIndex;
 			Section2Type = Section2[0].selectedIndex;
 			Section3Type = Section3[0].selectedIndex;
@@ -188,7 +193,7 @@ class FullWidthTabs extends React.Component {
 						<TabContainer dir={theme.direction}>
 							<ListModules
 								editSection={Section4[0]}
-								selectedIndex={this.state.Section4Type}
+								selectedIndex={Section4Type}
 								projectID={this.state.projectID}
 								currentSection={"Section4"}
 								pathname={this.props.pathname}
@@ -196,7 +201,7 @@ class FullWidthTabs extends React.Component {
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
-								selectedIndex={this.state.Section5Type}
+								selectedIndex={Section5Type}
 								projectID={this.state.projectID}
 								currentSection={"Section5"}
 								pathname={this.props.pathname}
@@ -288,7 +293,6 @@ class FullWidthTabs extends React.Component {
 }
 
 FullWidthTabs.propTypes = {
-	classes: PropTypes.object.isRequired,
 	theme: PropTypes.object.isRequired
 };
 

@@ -82,8 +82,8 @@ class JumboTronForm extends React.Component {
 			buttonText: "",
 			buttonLink: this.props.buttonLink,
 			layout: "",
-			backgroundColor: "",
-			textColor: this.props.textColor,
+			backgroundColor: "#fff",
+			textColor: "#444",
 			headlineSize: "20px",
 			errors: "",
 			editSection: "",
@@ -178,38 +178,6 @@ class JumboTronForm extends React.Component {
 				title: this.state.main_image_title
 			}
 		};
-		
-		// if (!this.state.button) {
-		// 	this.setState({
-		// 		errors: "Please choose whether to include a button or not",
-		// 		submitReady: false
-		// 	});
-		// }
-		// if (!this.state.backgroundColor) {
-		// 	this.setState({
-		// 		errors: "Please select background color",
-		// 		submitReady: false
-		// 	});
-		// }
-		// if (this.state.button === true && !this.state.buttonText) {
-		// 	this.setState({
-		// 		errors: "Please include button text",
-		// 		submitReady: false
-		// 	});
-		// }
-		// if (!this.state.layout) {
-		// 	this.setState({
-		// 		errors: "Please select a layout before submitting",
-		// 		submitReady: false
-		// 	});
-		// }
-	//  else if (this.state.layout && this.state.button && this.state.backgroundColor) {
-	// 		this.setState({
-	// 			submitReady: true
-	// 		});
-	// 	}
-		// if (this.state.submitReady === true) {
-
 			this.props.addModule(moduleData, this.state.projectID);
 			this.setState({
 				updateButton: "UPDATE MODULE",

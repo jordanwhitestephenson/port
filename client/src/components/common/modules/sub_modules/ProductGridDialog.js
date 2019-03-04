@@ -52,9 +52,10 @@ class ProductGridDialog extends React.Component {
 		this.setState({ open: true });
 	};
 	componentWillMount() {
-
+		console.log(this.props.currentSelection, 'CURRENT SECTION TAB ON DIALOG')
 		//CHECKING TO SEE IF ProductGrid is already present in project, if so, then update state to ProductGrid data.
-		if (this.props.project.project.modules.length && this.props.project.project.modules.filter(module => module.type === "ProductGrid").length > 0) {
+		if (this.props.project.project.modules.length && this.props.project.project.modules.filter(module => module.type === "ProductGrid" && module.location === this.props.currentSelection).length > 0) {
+			console.log(this.props,  "************h")
 			//FIND CURRENT PRODUCTGRID IN MODULES ARRAY and ADD STATE:
 			const productGrid = this.props.project.project.modules.filter(
 				(module) => module.type === "ProductGrid"

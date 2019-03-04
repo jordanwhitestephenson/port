@@ -140,14 +140,25 @@ class ProductGridForm extends Component {
 			imageSets: '',
 			editSection: '',
 			errors: "",
-			new: true
+			new: true,
+			errors_object: {}
 		};
 		this.addGalleryToProject = this.addGalleryToProject.bind(this);
 		this.handleInputChange = this.handleInputChange.bind(this);
 	}
+	componentWillReceiveProps(nextProps, nextContext) {
+		if (nextProps.errors_object) {
+			this.setState({ errors_object: nextProps.errors_object });
+		}
+	}
 	componentWillMount() {
 
 		//CHECKING TO SEE IF MoudlesArray is empty, and if ProductGrid' type has been used ALREADY in this SECTION
+
+		
+		var fetchedProjectsLocation = this.props.project.project.modules.filter(module => module.location)
+
+		
 		if (this.props.project.project.modules.filter(module => module.location === this.props.currentSection && module.type === "ProductGrid").length > 0) {
 			var editSection = this.props.project.project.modules.filter(module => module.location === this.props.currentSection && module.type === "ProductGrid")[0]
 			var imageSets = editSection.imageSets
@@ -159,6 +170,7 @@ class ProductGridForm extends Component {
 		}
 		//If ProductGrid is not found in the current project's modules
 		else {
+			
 			this.setState({
 				new: true
 			})
@@ -224,22 +236,31 @@ class ProductGridForm extends Component {
 		const { name, value } = e.target;
 		const type = e.target.id;
 		const productGridPhotosSTATE = this.state.imageSets;
-		const filteredArray = productGridPhotosSTATE.filter(
-			(image) => Object.keys(image)[0] !== name
-		);
-		const productArray = productGridPhotosSTATE.filter(
-			(image) => Object.keys(image)[0] === name
-		);
-		var productObject = productArray[0];
-		let k;
-		for (k in productObject) {
-			productObject[k][type] = value;
-		}
-		const finalResultArray = filteredArray.concat(productObject);
+		//Checking to see if 'this.state.image' is empty aka this would hopefully mean that ProductGrid is
+		//not found in this current seciton
+		if (productGridPhotosSTATE) {
+			const filteredArray = productGridPhotosSTATE.filter(
+				(image) => Object.keys(image)[0] !== name
+			);
+			const productArray = productGridPhotosSTATE.filter(
+				(image) => Object.keys(image)[0] === name
+			);
+			var productObject = productArray[0];
+			let k;
+			for (k in productObject) {
+				productObject[k][type] = value;
+			}
+			const finalResultArray = filteredArray.concat(productObject);
 
-		this.setState({
-			imageSets: finalResultArray
-		});
+			this.setState({
+				imageSets: finalResultArray
+			});
+		} 
+		else {
+
+		}
+
+
 	}
 
 	// **********ADD BUTTON EVENT********
@@ -282,8 +303,10 @@ class ProductGridForm extends Component {
 	};
 
 	render() {
+
 		const { classes } = this.props;
-		console.log(this.state.imageSets, 'IMAGE SETS')
+		const { errors_object } = this.state;
+		console.log('this.state.imageSets',  this.state.imageSets)
 		return (
 			<div style={{ width: "100%" }}>
 				<Typography component="h2" variant="display1" gutterBottom>
@@ -313,6 +336,7 @@ class ProductGridForm extends Component {
 									retrieveGalleryFormInput={this.retrieveGalleryFormInput}
 									imageSets={this.state.imageSets}
 									handleInputChange={this.handleInputChange}
+									currentSelection = {this.state.location}
 								/>
 							</ButtonBase>
 						))}
@@ -333,12 +357,13 @@ class ProductGridForm extends Component {
 									backgroundImage: `url(${model.url})`
 								}}
 							/>
-							<span className={classes.imageBackdrop} />
+							<span className={classes.imageBackdrop}> {this.state.errors_object.imageSets}</span>
 							<ProductGridDialog
 								galleryImageName={model.title}
 								retrieveGalleryFormInput={this.retrieveGalleryFormInput}
 								imageSets={this.state.imageSets}
 								handleInputChange={this.handleInputChange}
+								currentSelection={this.state.location}
 							/>
 						</ButtonBase>
 					</div>
@@ -388,6 +413,7 @@ class ProductGridForm extends Component {
 						)}
 					</Button>
 				</div>
+				
 			</div>
 		);
 	}
