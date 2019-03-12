@@ -7,16 +7,12 @@ import PropTypes from 'prop-types';
 
 class JumboTronPreview extends Component {
 	state = {
-		modulePreview: ''
+		modulePreview: this.props.modulePreview
 	};
-	componentWillReceiveProps(nextProps, nextContext) {
-		this.setState({
-			modulePreview: nextProps.modulePreview
-		})
-	}
 
 	render() {
 		const module = this.state.modulePreview;
+		console.log('what do you mean no layout?', module )
 		return (
 			<div className="jumboTron" style={{ maxWidth: '980px', margin: 'auto' }}>		
 				{module.layout === 'Left' ? (

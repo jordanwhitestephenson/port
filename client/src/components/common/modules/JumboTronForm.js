@@ -112,7 +112,7 @@ class JumboTronForm extends React.Component {
 	// }
 	componentWillReceiveProps(nextProps) {
 		//CHECKING TO SEE IF MoudlesArray is empty, and if Jumbotron' type has been used ALREADY in this SECTION
-
+		console.log('NEXT PROPS -> ', nextProps.errors_object, 'this.props =>', this.props.errors_object)
 		if (nextProps.errors_object) {
 			this.setState({ errors_object: nextProps.errors_object });
 		}
@@ -163,7 +163,6 @@ class JumboTronForm extends React.Component {
 
 	onSubmit(e) {
 		e.preventDefault();
-
 		//TO DO : MAKE THIS FUNCTION FOR OTHER REGIONS!!//
 		const moduleData = {
 			headline: this.state.headline,
@@ -186,7 +185,6 @@ class JumboTronForm extends React.Component {
 				title: this.state.main_image_title
 			}
 		};
-		console.log(this.state.backgroundColor, 'ERRRPOR', 'MODULE DATA', moduleData)
 			this.props.addModule(moduleData, this.state.projectID);
 			this.setState({
 				updateButton: "UPDATE MODULE",
@@ -233,14 +231,12 @@ class JumboTronForm extends React.Component {
 	handleTextColorChange = (color) => {
 		this.setState({ textColor: color.hex });
 	};
-	setError = (error) => {
-		this.setState({});
-	};
+
 
 	render() {
 		const { classes } = this.props;
 		const { errors_object } = this.state;
-
+		console.log(this.props.errors_object, 'WE SHOULD SEE THIS CORRECT?')
 		return (
 			<div className={classes.formContainer}>
 				{this.state.errors ? (

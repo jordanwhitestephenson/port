@@ -51,16 +51,20 @@ class FullWidthTabs extends React.Component {
 			enableSection4: false,
 			enableSectionModel: false,
 			previewEnabled: false,
-			sectionCheck: '',
-			pathname: ''
+			sectionCheck: "",
+			pathname: this.props.pathname,
+			sectionOneCheck: "",
+			sectionTwoCheck: "",
+			sectionThreeCheck: "",
+			sectionFourCheck: ""
 		};
 	}
 
-	componentWillReceiveProps(nextProps, nextContext) {
-		console.log(nextProps.editProjectInfo, 'EDIT')
-		if (
-			nextProps.project.preview_enabled !== this.props.project.previewEnabled
-		) {
+	componentWillReceiveProps(nextProps) {
+		//***REMOVING PREVEIW_ENABLED LOGIC - FORGET WHY THIS IS NEEDED? */
+		console.log(nextProps, 'NEXT PROPS')
+		if (nextProps.project !== this.props.project) {
+			// if (nextProps.project.preview_enabled !== this.props.project.previewEnabled) {
 			const enableSection1 = nextProps.project.addedSection.includes(
 				"Section1"
 			);
@@ -76,7 +80,6 @@ class FullWidthTabs extends React.Component {
 			const enableSectionModel = nextProps.project.addedSection.includes(
 				"Model"
 			);
-		
 			this.setState({
 				previewEnabled: true,
 				project: nextProps.project.project,
@@ -99,7 +102,6 @@ class FullWidthTabs extends React.Component {
 		this.setState({ value: index });
 	};
 
-
 	render() {
 		const { classes, theme } = this.props;
 		let Section1Type = "";
@@ -112,10 +114,16 @@ class FullWidthTabs extends React.Component {
 		let Section3 = "";
 		let Section4 = "";
 		let Section5 = "";
+		let sectionOneCheck = "";
+		let sectionTwoCheck = "";
+		let sectionThreeCheck = "";
+		let sectionFourCheck = "";
+		let sectionFiveCheck = "";
 
 		//****IF WERE ON EDIT****//
-		if (this.state.pathname === "/edit-project" && this.state.editProjectInfo.modules.length > 0
-			
+		if (
+			this.state.pathname === "/edit-project" &&
+			this.state.editProjectInfo.modules.length > 0
 		) {
 			var changedType = this.state.editProjectInfo.modules.map((module) => {
 				if (module.type === "Jumbotron") {
@@ -129,39 +137,58 @@ class FullWidthTabs extends React.Component {
 				}
 				return module;
 			});
-			
 			Section1 = changedType.filter((module) => module.location === "Section1");
 			Section2 = changedType.filter((module) => module.location === "Section2");
 			Section3 = changedType.filter((module) => module.location === "Section3");
-		
 			Section4 = changedType.filter((module) => module.location === "Section4");
 			Section5 = changedType.filter((module) => module.location === "Section5");
 
-		//*****ENDING ON : trying to dislay if a section is NULL in EDIT, then display NULL on the tab?//********* */
-			console.log('Section4.length', Section4.length )
+			Section1.length === 0
+				? (sectionOneCheck = "Section 1 is Null")
+				: (sectionOneCheck = "Section 1");
+			Section2.length === 0
+				? (sectionTwoCheck = "Section 2 is Null")
+				: (sectionTwoCheck = "Section 2");
+			Section3.length === 0
+				? (sectionThreeCheck = "Section 3 is Null")
+				: (sectionThreeCheck = "Section 3");
+			Section4.length === 0
+				? (sectionFourCheck = "Section 4 is Null")
+				: (sectionFourCheck = "Section 4");
+			Section5.length === 0
+				? (sectionFiveCheck = "Section 5 is Null")
+				: (sectionFiveCheck = "Section 5");
 
-			Section1.length ? (Section1Type = Section1[0].selectedIndex) : Section1Type = '' && this.setState({ sectionCheck: "1 Null" })
-
-			Section2.length > 0 ? (Section2Type = Section2[0].selectedIndex) : Section2Type = '' && this.setState({ sectionCheck: "2 Null" })
-			Section3.length > 0 ? (Section3Type = Section3[0].selectedIndex) : Section3Type = '' && this.setState({ sectionCheck: "3 Null" })
-			Section4.length > 0 ? (Section4Type = Section4[0].selectedIndex) : Section4Type = '' && this.setState({ sectionCheck: "4 Null" })
-			Section5.length > 0 ? (Section5Type = Section5[0].selectedIndex) : Section5Type = '' && this.setState({ sectionCheck : "5 Null"})
-	
-
+			// Section1.length > 0
+			// 	? (Section1Type = Section1[0].selectedIndex)
+			// 	: (Section1Type = "" && this.setState({ sectionOneCheck: "1 Null" }));
+			// // Section2.length > 0
+			// // 	? (Section2Type = Section2[0].selectedIndex)
+			// // 	: (Section2Type = "");
+			// // sectionTwoCheck = "Null";
+			// Section3.length > 0
+			// 	? (Section3Type = Section3[0].selectedIndex)
+			// 	: (Section3Type = "" && this.setState({ sectionThreeCheck: "3 Null" }));
+			// Section4.length > 0
+			// 	? (Section4Type = Section4[0].selectedIndex)
+			// 	: (Section4Type = "" && this.setState({ sectionFourCheck: "4 Null" }));
+			// Section5.length > 0
+			// 	? (Section5Type = Section5[0].selectedIndex)
+			// 	: (Section5Type = "" && this.setState({ sectionFiveCheck: "5 Null" }));
 			return (
 				<div className={classes.root}>
 					<AppBar position="static" color="default">
 						<Tabs
 							value={this.state.value}
 							onChange={this.handleChange}
-							indicatorColor="primary"
-							textColor="primary">
-							<Tab label={'Edit Section One' + `${this.state.sectionCheck}`}/>
-							<Tab label={'Edit Section One' + `${this.state.sectionCheck}`} />
-							<Tab label="Edit Section Three" />
-							<Tab label={'Edit SectionFour' + `${this.state.sectionCheck}`} />
-							<Tab label="Edit Section 5" />
-							<Tab label="PREVdIEW" />
+							indicatorColor="secondary"
+							textColor="secondary">
+							<Tab label={sectionOneCheck} />
+							<Tab label={sectionTwoCheck} />
+							<Tab label={sectionThreeCheck} />
+							<Tab label={sectionFourCheck} />
+							<Tab label={sectionFiveCheck} />
+							<Tab label="PREVIEW" />
 						</Tabs>
 					</AppBar>
 					<SwipeableViews
@@ -229,11 +256,11 @@ class FullWidthTabs extends React.Component {
 							onChange={this.handleChange}
 							indicatorColor="primary"
 							textColor="primary">
-							<Tab label={'Section One'}/>
-								<Tab label={'Section Two'}/>
-							<Tab label={'Section Three'}/>
-							<Tab label={'Section Four'} />
-								<Tab label={'Section Fice'}/>
+							<Tab label={"Section 1"} />
+							<Tab label={"Section 2"} />
+							<Tab label={"Section 3"} />
+							<Tab label={"Section 4"} />
+							<Tab label={"Section 5"} />
 							<Tab label="PREVIEW" />
 						</Tabs>
 					</AppBar>
@@ -298,7 +325,8 @@ class FullWidthTabs extends React.Component {
 }
 
 FullWidthTabs.propTypes = {
-	theme: PropTypes.object.isRequired
+	theme: PropTypes.object.isRequired,
+	pathname: PropTypes.string.isRequired
 };
 
 const mapStateToProps = (state) => ({

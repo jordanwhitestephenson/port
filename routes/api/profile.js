@@ -212,53 +212,56 @@ router.post(
 		Profile.findOne({ user: req.user.id }).then((profile) => {
 			const projectID = req.params.project_id;
 			if (profile) {
-				var obj = {};
 				const sectionType = req.body.location;
-				console.log(ModuleData, "DATA SENT TO ROUTER");
+
 				Profile.find({ projects: { $elemMatch: { _id: projectID } } })
-					.then(function(result) {
+					.then(function (result) {
 						var filteredArray;
-						result.forEach(function(u) {
-							// u.projects.map(
-							// 	(e) =>
-
-							// );
-							u.projects.map(function(e) {
-								if (e.modules.legnth > 0) {
-									return filteredArray = e.modules.filter(
-										(location) => location.location !== ModuleData.location
-									);
-								}
-								else {
-									return filteredArray = []
-								}
-							});
-
+						result.forEach(function(projects) {
+							let selectedProject = projects.projects.filter(project => project._id == projectID)[0]
+							if (selectedProject.modules.length > 0) {
+								return filteredArray = selectedProject.modules.filter(duplicate => duplicate.location !== ModuleData.location)
+							}							
 							return filteredArray;
 						});
 
-						Profile.update(
-							{ projects: { $elemMatch: { _id: projectID } } },
-							{ $set: { ["projects.$.modules"]: filteredArray } }
-						)
-							.then((result) =>
-								Profile.findOneAndUpdate(
-									{ projects: { $elemMatch: { _id: projectID } } },
-									{ $push: { ["projects.$.modules"]: ModuleData } },
-									{ new: true }
-								)
-									.then(profile.save())
-									.then((profile) =>
-										res.send(
-											profile.projects.filter(
-												(project) => project._id == projectID
-											)[0]
-										)
-									)
-									.catch((err) => console.log(err))
+						if (filteredArray) {
+							Profile.update(
+								{ projects: { $elemMatch: { _id: projectID } } },
+								{ $set: { ["projects.$.modules"]: filteredArray } }
 							)
-
-							.catch((err) => console.log(err));
+								.then((result) =>
+									Profile.findOneAndUpdate(
+										{ projects: { $elemMatch: { _id: projectID } } },
+										{ $push: { ["projects.$.modules"]: ModuleData } },
+										{ new: true }
+									)
+								)
+								.then(profile.save())
+								.then((profile) =>
+									res.send(
+										profile.projects.filter(
+											(project) => project._id == projectID
+										)[0]
+									)
+								)
+								.catch((err) => console.log(err));
+						} else {
+							Profile.findOneAndUpdate(
+								{ projects: { $elemMatch: { _id: projectID } } },
+								{ $push: { ["projects.$.modules"]: ModuleData } },
+								{ new: true }
+							)
+								.then(profile.save())
+								.then((profile) =>
+									res.send(
+										profile.projects.filter(
+											(project) => project._id == projectID
+										)[0]
+									)
+								)
+								.catch((err) => console.log(err));
+						}
 					})
 
 					.catch((err) => console.log(err));

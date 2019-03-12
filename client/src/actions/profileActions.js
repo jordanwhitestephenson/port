@@ -81,11 +81,10 @@ export const addModule = (moduledata, projectID, history) => dispatch => {
       })
     )
     .catch(err =>
-      console.log(err, 'ERROR,sdf')
-      // dispatch({
-      //   type: GET_ERRORS,
-      //   payload: err.response.data
-      // })
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
     );
 };
 
