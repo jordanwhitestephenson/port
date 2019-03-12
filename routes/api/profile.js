@@ -149,7 +149,6 @@ router.post(
 	}
 );
 
-
 // ****ADD MODULE TO PROJECT***
 // /api/profile/projects/module
 // @route   POST MODULES
@@ -158,14 +157,12 @@ router.post(
 	"/project/:project_id",
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
-		
 		const { errors_object, isValid } = validateProjectInput(req.body);
-		console.log( errors_object, 'ERROR OBEJCT*********')
+		console.log(errors_object, "ERROR OBEJCT*********");
 		if (!isValid) {
 			return res.status(400).json(errors_object);
 		}
-		
-		
+
 		var ModuleData = "";
 		if (req.body.type === "ProductGrid") {
 			ModuleData = {
@@ -219,15 +216,23 @@ router.post(
 				const sectionType = req.body.location;
 				console.log(ModuleData, "DATA SENT TO ROUTER");
 				Profile.find({ projects: { $elemMatch: { _id: projectID } } })
-					.then(function (result) {
+					.then(function(result) {
 						var filteredArray;
-						result.forEach(function (u) {
-							u.projects.map(
-								(e) =>
-									(filteredArray = e.modules.filter(
+						result.forEach(function(u) {
+							// u.projects.map(
+							// 	(e) =>
+
+							// );
+							u.projects.map(function(e) {
+								if (e.modules.legnth > 0) {
+									return filteredArray = e.modules.filter(
 										(location) => location.location !== ModuleData.location
-									))
-							);
+									);
+								}
+								else {
+									return filteredArray = []
+								}
+							});
 
 							return filteredArray;
 						});
@@ -240,22 +245,25 @@ router.post(
 								Profile.findOneAndUpdate(
 									{ projects: { $elemMatch: { _id: projectID } } },
 									{ $push: { ["projects.$.modules"]: ModuleData } },
-									{ new: true },
+									{ new: true }
 								)
 									.then(profile.save())
-									.then((profile) => res.send(profile.projects.filter(project => project._id == projectID)[0]))
+									.then((profile) =>
+										res.send(
+											profile.projects.filter(
+												(project) => project._id == projectID
+											)[0]
+										)
+									)
 									.catch((err) => console.log(err))
 							)
 
-							
-							
 							.catch((err) => console.log(err));
 					})
 
 					.catch((err) => console.log(err));
 			}
 		});
-		
 	}
 );
 
@@ -385,7 +393,6 @@ router.get(
 	"/preview-project/:id",
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
-
 		const newProject = {};
 		const projectID = req.params.id;
 		// newProject.user = req.user.id;

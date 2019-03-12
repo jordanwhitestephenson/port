@@ -100,25 +100,32 @@ class JumboTronForm extends React.Component {
 
 		this.onSubmit = this.onSubmit.bind(this);
 	}
+	// componentWillReceiveProps(nextProps) {
+
+
+	// 	if (nextProps.project.project) {
+	// 		this.setState({
+
+	// 		})
+	// 	}
+
+	// }
 	componentWillReceiveProps(nextProps) {
-		console.log('ERROS OBJECT IN JUMBO', nextProps.errors_object)
+		//CHECKING TO SEE IF MoudlesArray is empty, and if Jumbotron' type has been used ALREADY in this SECTION
+
 		if (nextProps.errors_object) {
 			this.setState({ errors_object: nextProps.errors_object });
 		}
-	}
-	componentWillMount() {
-		//CHECKING TO SEE IF MoudlesArray is empty, and if ProductGrid' type has been used ALREADY in this SECTION
 		if (
-			this.props.project.project.modules.filter(
+			nextProps.project.project.modules.filter(
 				(module) =>
-					module.location === this.props.currentSection &&
+					module.location === nextProps.currentSection &&
 					module.type === "Jumbotron"
 			).length > 0
 		) {
-			console.log('are we in this?')
-			var editSection = this.props.project.project.modules.filter(
+			var editSection = nextProps.project.project.modules.filter(
 				(module) =>
-					module.location === this.props.currentSection &&
+					module.location === nextProps.currentSection &&
 					module.type === "Jumbotron"
 			)[0];
 
