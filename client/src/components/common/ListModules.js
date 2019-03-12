@@ -67,7 +67,6 @@ class ListModules extends React.Component {
 	}
 
 	render() {
-		console.log("What section are we on? List modules", this.props);
 		const { classes } = this.props;
 		return (
 			<div>

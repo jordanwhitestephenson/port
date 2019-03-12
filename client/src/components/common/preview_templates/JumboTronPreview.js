@@ -7,8 +7,13 @@ import PropTypes from 'prop-types';
 
 class JumboTronPreview extends Component {
 	state = {
-		modulePreview: this.props.modulePreview
+		modulePreview: ''
 	};
+	componentWillReceiveProps(nextProps, nextContext) {
+		this.setState({
+			modulePreview: nextProps.modulePreview
+		})
+	}
 
 	render() {
 		const module = this.state.modulePreview;

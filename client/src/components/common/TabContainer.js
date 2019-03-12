@@ -51,11 +51,13 @@ class FullWidthTabs extends React.Component {
 			enableSection4: false,
 			enableSectionModel: false,
 			previewEnabled: false,
-			sectionCheck: ''
+			sectionCheck: '',
+			pathname: ''
 		};
 	}
 
 	componentWillReceiveProps(nextProps, nextContext) {
+		console.log(nextProps.editProjectInfo, 'EDIT')
 		if (
 			nextProps.project.preview_enabled !== this.props.project.previewEnabled
 		) {
@@ -74,7 +76,7 @@ class FullWidthTabs extends React.Component {
 			const enableSectionModel = nextProps.project.addedSection.includes(
 				"Model"
 			);
-
+		
 			this.setState({
 				previewEnabled: true,
 				project: nextProps.project.project,
@@ -83,7 +85,9 @@ class FullWidthTabs extends React.Component {
 				enableSection2: enableSection2,
 				enableSection3: enableSection3,
 				enableSection4: enableSection4,
-				enableSectionModel: enableSectionModel
+				enableSectionModel: enableSectionModel,
+				editProjectInfo: nextProps.editProjectInfo,
+				pathname: nextProps.pathname
 			});
 		}
 	}
@@ -94,15 +98,7 @@ class FullWidthTabs extends React.Component {
 	handleChangeIndex = (index) => {
 		this.setState({ value: index });
 	};
-	// addModuleInfoToContainer = (childInfo) => {
-	// 	var filteredSectionArray = this.state.all_modules.filter(
-	// 		(section) => section.location !== childInfo.location
-	// 	);
-	// 	var joined = filteredSectionArray.concat(childInfo);
-	// 	this.setState({
-	// 		all_modules: joined
-	// 	});
-	// };
+
 
 	render() {
 		const { classes, theme } = this.props;
@@ -118,11 +114,10 @@ class FullWidthTabs extends React.Component {
 		let Section5 = "";
 
 		//****IF WERE ON EDIT****//
-		if (
-			this.props.editProjectInfo.modules.length > 0 &&
-			this.props.pathname === "/edit-project"
+		if (this.state.pathname === "/edit-project" && this.state.editProjectInfo.modules.length > 0
+			
 		) {
-			var changedType = this.props.editProjectInfo.modules.map((module) => {
+			var changedType = this.state.editProjectInfo.modules.map((module) => {
 				if (module.type === "Jumbotron") {
 					module.selectedIndex = 1;
 				}

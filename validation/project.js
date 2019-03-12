@@ -18,11 +18,9 @@ module.exports = function validateProjectInput(data) {
 		data.main_image.alt = !isEmpty(data.main_image.alt)
 			? data.main_image.alt
 			: "";
-    data.paragraphText = !isEmpty(data.paragraphText) ? data.paragraphText : "";
-    data.textColor = !isEmpty(data.textColor) ? data.textColor : "";
-		data.backgroundColor = !isEmpty(data.backgroundColor)
-			? data.backgroundColor
-			: "";
+		data.paragraphText = !isEmpty(data.paragraphText) ? data.paragraphText : "";
+		// data.textColor = !isEmpty(data.textColor) ? data.textColor : "";
+		// data.backgroundColor = !isEmpty(data.backgroundColor) ? data.backgroundColor : "";
 		data.headline = !isEmpty(data.headline) ? data.headline : "";
 		if (!data.layout === "no_image") {
 			if (Validator.isEmpty(data.main_image.SRC)) {
@@ -46,17 +44,15 @@ module.exports = function validateProjectInput(data) {
 		}
 		if (Validator.isEmpty(data.headline)) {
 			errors_object.headline = "Jumbotron headline is required";
-    }
-    if (Validator.isEmpty(data.textColor)) {
-      errors_object.textColor = "Please input a text color";
-    }
-
+		}
+		if (Validator.isEmpty(data.textColor)) {
+			errors_object.textColor = "Please input a text color";
+		}
 	}
 	if (data.type === "ProductGrid") {
 		if (Validator.isEmpty(data.imageSets)) {
 			errors_object.imageSets = "imageSets is required!";
 		}
-		
 	}
 
 	return {

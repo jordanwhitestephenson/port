@@ -101,7 +101,7 @@ class JumboTronForm extends React.Component {
 		this.onSubmit = this.onSubmit.bind(this);
 	}
 	componentWillReceiveProps(nextProps) {
-		
+		console.log('ERROS OBJECT IN JUMBO', nextProps.errors_object)
 		if (nextProps.errors_object) {
 			this.setState({ errors_object: nextProps.errors_object });
 		}
@@ -115,6 +115,7 @@ class JumboTronForm extends React.Component {
 					module.type === "Jumbotron"
 			).length > 0
 		) {
+			console.log('are we in this?')
 			var editSection = this.props.project.project.modules.filter(
 				(module) =>
 					module.location === this.props.currentSection &&
@@ -178,6 +179,7 @@ class JumboTronForm extends React.Component {
 				title: this.state.main_image_title
 			}
 		};
+		console.log(this.state.backgroundColor, 'ERRRPOR', 'MODULE DATA', moduleData)
 			this.props.addModule(moduleData, this.state.projectID);
 			this.setState({
 				updateButton: "UPDATE MODULE",
