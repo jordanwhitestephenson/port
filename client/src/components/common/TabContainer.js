@@ -50,7 +50,8 @@ class FullWidthTabs extends React.Component {
 			enableSection3: false,
 			enableSection4: false,
 			enableSectionModel: false,
-			previewEnabled: false
+			previewEnabled: false,
+			sectionCheck: ''
 		};
 	}
 
@@ -133,15 +134,24 @@ class FullWidthTabs extends React.Component {
 				}
 				return module;
 			});
-
+			
 			Section1 = changedType.filter((module) => module.location === "Section1");
 			Section2 = changedType.filter((module) => module.location === "Section2");
 			Section3 = changedType.filter((module) => module.location === "Section3");
-			Section3 = changedType.filter((module) => module.location === "Section4");
-			Section3 = changedType.filter((module) => module.location === "Section5");
-			Section1Type = Section1[0].selectedIndex;
-			Section2Type = Section2[0].selectedIndex;
-			Section3Type = Section3[0].selectedIndex;
+		
+			Section4 = changedType.filter((module) => module.location === "Section4");
+			Section5 = changedType.filter((module) => module.location === "Section5");
+
+		//*****ENDING ON : trying to dislay if a section is NULL in EDIT, then display NULL on the tab?//********* */
+			console.log('Section4.length', Section4.length )
+
+			Section1.length ? (Section1Type = Section1[0].selectedIndex) : Section1Type = '' && this.setState({ sectionCheck: "1 Null" })
+
+			Section2.length > 0 ? (Section2Type = Section2[0].selectedIndex) : Section2Type = '' && this.setState({ sectionCheck: "2 Null" })
+			Section3.length > 0 ? (Section3Type = Section3[0].selectedIndex) : Section3Type = '' && this.setState({ sectionCheck: "3 Null" })
+			Section4.length > 0 ? (Section4Type = Section4[0].selectedIndex) : Section4Type = '' && this.setState({ sectionCheck: "4 Null" })
+			Section5.length > 0 ? (Section5Type = Section5[0].selectedIndex) : Section5Type = '' && this.setState({ sectionCheck : "5 Null"})
+	
 
 			return (
 				<div className={classes.root}>
@@ -151,10 +161,10 @@ class FullWidthTabs extends React.Component {
 							onChange={this.handleChange}
 							indicatorColor="primary"
 							textColor="primary">
-							<Tab label="Edit Section One" />
-							<Tab label="Edit Section Two" />
+							<Tab label={'Edit Section One' + `${this.state.sectionCheck}`}/>
+							<Tab label={'Edit Section One' + `${this.state.sectionCheck}`} />
 							<Tab label="Edit Section Three" />
-							<Tab label="Edit Section Four" />
+							<Tab label={'Edit SectionFour' + `${this.state.sectionCheck}`} />
 							<Tab label="Edit Section 5" />
 							<Tab label="PREVdIEW" />
 						</Tabs>
@@ -224,11 +234,11 @@ class FullWidthTabs extends React.Component {
 							onChange={this.handleChange}
 							indicatorColor="primary"
 							textColor="primary">
-							<Tab label="Section One" />
-							<Tab label="Section Two" />
-							<Tab label="Section Three" />
-							<Tab label="Section Four" />
-							<Tab label="Section 5" />
+							<Tab label={'Section One'}/>
+								<Tab label={'Section Two'}/>
+							<Tab label={'Section Three'}/>
+							<Tab label={'Section Four'} />
+								<Tab label={'Section Fice'}/>
 							<Tab label="PREVIEW" />
 						</Tabs>
 					</AppBar>

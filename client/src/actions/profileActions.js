@@ -211,10 +211,11 @@ export const getCurrentProject = (projectID) => dispatch => {
       })
 
   ).catch(err =>
-      dispatch({
-        type: GET_ERRORS,
-        payload: err.response.data
-      })
+    console.log(err, 'THIS IS ERROR IN PROFILE ACTION')
+      // dispatch({
+      //   type: GET_ERRORS,
+      //   payload: err.response.data
+      // })
     );
 };
 

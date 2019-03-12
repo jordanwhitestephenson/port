@@ -12,11 +12,19 @@ export class PreviewProjectVIEW extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			project: this.props.project.project
+			project: "",
+			modules: ""
 		};
 	}
+	componentWillReceiveProps(nextProps, nextContext) {
+		this.setState({
+			project: nextProps.project.project,
+			modules: nextProps.project.project.modules
+		});
+	}
 	render() {
-		if (this.props.project.project) {
+		if (this.state.modules.length > 0) {
+			console.log(this.state.project.project, "YASDFSD");
 			const Section1 = this.props.project.project.modules.filter(
 				(section) => section.location === "Section1"
 			)[0];
@@ -66,6 +74,14 @@ export class PreviewProjectVIEW extends Component {
 					</div>
 				</section>
 			);
+		}
+		if (this.state.modules.length === 0) {
+			return (<div>
+				<a class="btn btn-light" href="/dashboard">
+					Go Back
+				</a>
+				<p>Please add modules before previewing...</p>
+			</div>)
 		} else {
 			return <h1>Loading....</h1>;
 		}
