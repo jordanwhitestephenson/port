@@ -1,9 +1,15 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles';
-import Typography from '@material-ui/core/Typography';
-import Modal from '@material-ui/core/Modal';
-import Button from '@material-ui/core/Button';
+import React from "react";
+import PropTypes from "prop-types";
+import { withStyles } from "@material-ui/core/styles";
+import Typography from "@material-ui/core/Typography";
+import Modal from "@material-ui/core/Modal";
+import Button from "@material-ui/core/Button";
+import $ from "jquery";
+import Dialog from "@material-ui/core/Dialog";
+import DialogActions from "@material-ui/core/DialogActions";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogContentText from "@material-ui/core/DialogContentText";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
 function rand() {
 	return Math.round(Math.random() * 20) - 10;
@@ -20,34 +26,36 @@ function getModalStyle() {
 	};
 }
 
-const styles = theme => ({
+const styles = (theme) => ({
 	paper: {
-		position: 'absolute',
-		width: theme.spacing.unit * 50,
+		position: "absolute",
+		width: theme.spacing.unit * 100,
 		backgroundColor: theme.palette.background.paper,
 		boxShadow: theme.shadows[5],
 		padding: theme.spacing.unit * 4,
-		outline: 'none'
+		outline: "none"
 	}
 });
 
 class SimpleModal extends React.Component {
-	state = {
-        open: false,
-        errors: this.props.errorData
-	};
+	constructor(props) {
+		super(props);
+		this.state = {
+			open: false,
+			HTML: "",
+			scroll: "paper"
+		};
+	}
 
-    // componentDidRecieve(yes) {
-    //     console.log(yes)
-    //     console.log(this.props.handleOpen, 'handle opem')
-    // }
-    componentWillReceiveProps(props) {
-        this.setState({
-            open: this.props.openModal
-        })
-    }
-	handleOpen = () => {
-		this.setState({ open: true });
+	handleOpen = (e) => {
+		let HTML = $(e.target)
+			.parentsUntil(".parentDiv")
+			.find(".parentDiv")[0].innerHTML;
+		this.setState({
+			HTML: HTML,
+			open: true,
+			scroll: "paper"
+		});
 	};
 
 	handleClose = () => {
@@ -59,23 +67,23 @@ class SimpleModal extends React.Component {
 
 		return (
 			<div>
-				<Typography gutterBottom>Click to get the full Modal experience!</Typography>
-                <Button onClick={this.props.handleOpen}>{this.props.open}</Button>
+				<Button onClick={this.handleOpen}>GET HTML</Button>
 				<Modal
 					aria-labelledby="simple-modal-title"
 					aria-describedby="simple-modal-description"
 					open={this.state.open}
-					onClose={this.handleClose}
-				>
-					<div style={getModalStyle()} className={classes.paper}>
-						<Typography variant="h6" id="modal-title">
-							Text in a modal
-						</Typography>
-						<Typography variant="subtitle1" id="simple-modal-description">
-							Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-						</Typography>
-						<SimpleModalWrapped />
-					</div>
+					onClose={this.handleClose}>
+					<Dialog
+						open={this.state.open}
+						onClose={this.handleClose}
+						scroll={this.state.scroll}
+						aria-labelledby="scroll-dialog-title">
+						<DialogTitle id="scroll-dialog-title">HTML</DialogTitle>
+						<DialogContent>
+							<DialogContentText>{this.state.HTML}</DialogContentText>
+						</DialogContent>
+			
+					</Dialog>
 				</Modal>
 			</div>
 		);

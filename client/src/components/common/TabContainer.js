@@ -34,6 +34,7 @@ const styles = (theme) => ({
 class FullWidthTabs extends React.Component {
 	constructor(props) {
 		super(props);
+		console.log(this.props, 'IN CONS')
 		this.state = {
 			value: 0,
 			projectID: this.props.projectID,
@@ -106,7 +107,6 @@ class FullWidthTabs extends React.Component {
 	};
 
 	render() {
-		console.log(this.props, 'props in Tba')
 		const { classes, theme } = this.props;
 		let Section1Type = "";
 		let Section2Type = "";
@@ -123,7 +123,7 @@ class FullWidthTabs extends React.Component {
 		let sectionThreeCheck = "";
 		let sectionFourCheck = "";
 		let sectionFiveCheck = "";
-
+		console.log(this.state.editProjectInfo.modules, 'WHYYY')
 		//****IF WERE ON EDIT****//
 		if (
 			this.state.pathname === "/edit-project" &&
@@ -334,8 +334,7 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-	connect(mapStateToProps)(
-		withStyles(styles, { withTheme: true })(FullWidthTabs)
+	connect(mapStateToProps)(withStyles(styles, { withTheme: true })(FullWidthTabs)
 	)
 );
 // export default withStyles(styles, { withTheme: true })(FullWidthTabs);

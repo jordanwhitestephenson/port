@@ -12,32 +12,24 @@ class AddModule extends Component {
 		this.state = {
 			projectID: this.props.location.hash.slice(1),
 			current: false,
-			title: this.props.location.search.slice(6),
-			project: ''
+			title: "",
+			project: '',
+			paragraph: ""
 		};
 	}
 	componentWillMount() {
-		
 		this.props.getCurrentProject(this.state.projectID);
 	}
 
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps, 'ANY ERRORS?')
-		
 		if (nextProps.project !== this.props.project) {
-			this.setState({ project: nextProps.project});
+			console.log(nextProps.project.project, 'TITLE')
+			this.setState({
+				project: nextProps.project,
+				title: nextProps.project.project.title,
+				paragraph: nextProps.project.project.openingParagraph
+			});
 		}
-		
-		//So, my goal is now, that when the form passes, the UI changes to just show the previe button.
-		// console.log(this.props, '<-props', nextProps, '<---NEXT PROPS')
-		// if (nextProps.project !== this.props.project) {
-		
-		// 	this.setState({ project: nextProps.project.project });
-		// }
-		
-		// this.setState({
-		// 	project : nextProps.project.project
-		// })
 	}
 
 	// addModuleToProject = (moduleData) => {
@@ -59,6 +51,7 @@ class AddModule extends Component {
 								</Link>
 								<h1 className="display-4 text-center">Edit</h1>
 								<p className="lead text-center">{this.state.title} project</p>
+								<p className="cx-brand-font">{this.state.paragraph}</p>
 								<small className="d-block pb-3">* = required fields</small>
 								<TabContainer
 									projectID={this.state.projectID}

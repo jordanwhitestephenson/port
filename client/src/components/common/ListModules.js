@@ -55,12 +55,13 @@ class ListModules extends React.Component {
 			}
 		}
 		// eslint-disable-next-line no-unused-expressions
-		props.tabIndex === 1 ? ({ currentSection: "Section1" }) : props.tabIndex === 2 ? ({ currentSection: "Section2" }) : props.tabIndex === 3 ? ({currentSection : "Section3"}) : null
+
 		if (props.project.preview_enabled) {
 			return {
 				previewEnabled: props.project.preview_enabled
 			};
 		}
+		return props.tabIndex === 1 ? ({ currentSection: "Section1" }) : props.tabIndex === 2 ? ({ currentSection: "Section2" }) : props.tabIndex === 3 ? ({ currentSection: "Section3" }) : null
 	}
 	handleListItemClick = (event, index) => {
 		this.setState({ selectedIndex: index });
