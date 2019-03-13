@@ -11,6 +11,10 @@
 
 /* *****NEW ADDITIONS**** */
 
+.ImgMediaCard-card-98, .ImgMediaCard-card-487 {
+	margin: 20px;
+}
+
 .flex_box_default_no_wrap {
 	display: flex;
 	justify-content: center;
@@ -52,9 +56,11 @@
 	flex-wrap: wrap;
 	align-items: center;
 }
+
 .product_description {
 	color: #444;
 }
+
 .flex_box_default_bare {
 	display: flex;
 	flex-wrap: wrap

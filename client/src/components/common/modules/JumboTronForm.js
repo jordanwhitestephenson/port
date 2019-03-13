@@ -94,47 +94,31 @@ class JumboTronForm extends React.Component {
 			main_image_title: "",
 			updateButton: "ADD MODULE",
 			include_image: false,
-			submitReady: false, 
+			submitReady: false,
 			errors_object: {}
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
 	}
-	// componentWillReceiveProps(nextProps) {
 
-
-	// 	if (nextProps.project.project) {
-	// 		this.setState({
-
-	// 		})
-	// 	}
-
-	// }
-	componentWillReceiveProps(nextProps) {
-		//CHECKING TO SEE IF MoudlesArray is empty, and if Jumbotron' type has been used ALREADY in this SECTION
-		console.log('NEXT PROPS -> ', nextProps.errors_object, 'this.props =>', this.props.errors_object)
-		if (nextProps.errors_object) {
-			this.setState({ errors_object: nextProps.errors_object });
-		}
-		if (
-			nextProps.project.project.modules.filter(
+	componentWillMount() {
+		console.log(this.props.project.project.modules, 'NARROW THIS DOWN')
+		let jumboTron = this.props.project.project.modules.filter(
+			(module) =>
+				module.location === this.props.currentSection &&
+				module.type === "Jumbotron" && module.projectID === this.state.projectID
+		);
+		if (jumboTron.length > 0) {
+			var editSection = this.props.project.project.modules.filter(
 				(module) =>
-					module.location === nextProps.currentSection &&
-					module.type === "Jumbotron"
-			).length > 0
-		) {
-			var editSection = nextProps.project.project.modules.filter(
-				(module) =>
-					module.location === nextProps.currentSection &&
+					module.location === this.props.currentSection &&
 					module.type === "Jumbotron"
 			)[0];
-
 			//If main_image is present in the modules array, then show image input fields//
-			if (editSection.main_image) {
-				this.setState({
-					include_image: true
-				})
-			}
+			// eslint-disable-next-line no-unused-expressions
+			editSection.main_image ? this.setState({ include_image: true }) : null;		
+			// eslint-disable-next-line no-unused-expressions
+			editSection.errors_object ? this.setState({ errors_object: this.props.errors_object }) : null;		
 			this.setState({
 				editSection: editSection,
 				headline: editSection.headline,
@@ -149,14 +133,7 @@ class JumboTronForm extends React.Component {
 				main_image_link: editSection.main_image.link,
 				main_image_alt: editSection.main_image.alt,
 				main_image_title: editSection.main_image.title,
-				new: false,
-			
-			});
-		}
-		//If ProductGrid is not found in the current project's modules
-		else {
-			this.setState({
-				new: true
+				new: false
 			});
 		}
 	}
@@ -185,17 +162,13 @@ class JumboTronForm extends React.Component {
 				title: this.state.main_image_title
 			}
 		};
-			this.props.addModule(moduleData, this.state.projectID);
-			this.setState({
-				updateButton: "UPDATE MODULE",
-				errors: ""
-			});
+		this.props.addModule(moduleData, this.state.projectID);
+		this.setState({
+			updateButton: "UPDATE MODULE",
+			errors: ""
+		});
 		// }
 	}
-		 
-	
-		
-	
 
 	handleChange = (name) => (event) => {
 		if (name === "gradient") {
@@ -232,11 +205,10 @@ class JumboTronForm extends React.Component {
 		this.setState({ textColor: color.hex });
 	};
 
-
 	render() {
 		const { classes } = this.props;
 		const { errors_object } = this.state;
-		console.log(this.props.errors_object, 'WE SHOULD SEE THIS CORRECT?')
+
 		return (
 			<div className={classes.formContainer}>
 				{this.state.errors ? (
@@ -332,7 +304,7 @@ class JumboTronForm extends React.Component {
 							<Grid item xs={12}>
 								<TextField
 									label="Image SRC"
-									fullWidth		
+									fullWidth
 									error={errors_object.main_image_SRC}
 									helperText={errors_object.main_image_SRC}
 									className={classes.textField}

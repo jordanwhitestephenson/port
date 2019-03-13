@@ -43,19 +43,25 @@ class ListModules extends React.Component {
 			currentSection: this.props.currentSection,
 			listDataFromChild: "",
 			previewEnabled: false,
-			project: ""
+			project: this.props.project.project
 		};
 		this.onUndo = this.onUndo.bind(this);
 	}
-	componentWillReceiveProps(nextProps, nextContext) {
-		if (nextProps.previewEnabled) {
-			this.setState({
-				previewEnabled: nextProps.previewEnabled
-				// project: nextProps.project.project
-			});
+	static getDerivedStateFromProps(props, state) {
+		console.log(props.tabIndex, "DFFF");
+		if (props.tabIndex === 1) {
+			return {
+				currentSection : "Section1"
+			}
+		}
+		// eslint-disable-next-line no-unused-expressions
+		props.tabIndex === 1 ? ({ currentSection: "Section1" }) : props.tabIndex === 2 ? ({ currentSection: "Section2" }) : props.tabIndex === 3 ? ({currentSection : "Section3"}) : null
+		if (props.project.preview_enabled) {
+			return {
+				previewEnabled: props.project.preview_enabled
+			};
 		}
 	}
-
 	handleListItemClick = (event, index) => {
 		this.setState({ selectedIndex: index });
 	};
@@ -68,6 +74,7 @@ class ListModules extends React.Component {
 
 	render() {
 		const { classes } = this.props;
+		console.log(this.props, "RENDER IN LIST");
 		return (
 			<div>
 				<div style={{ display: "flex" }}>
@@ -155,19 +162,21 @@ class ListModules extends React.Component {
 						</div>
 					) : (
 						<div className="home_base">
-							<div>
-								<IconButton
-									onClick={this.onUndo}
-									color="default"
-									variant="contained">
-									<DeleteIcon fontSize="large" />
-								</IconButton>
-									{this.props.addedModuleInfo ? (
-										<ProjectViewDialog modulePreview={this.props.addedModuleInfo} />
-								) : (
-									<div>NO preview available</div>
-								)}
-							</div>
+							{this.props.project.previewEnabled ? (
+								<div>
+									<IconButton
+										onClick={this.onUndo}
+										color="default"
+										variant="contained">
+										<DeleteIcon fontSize="large" />
+									</IconButton>
+									<ProjectViewDialog
+										modulePreview={this.props.project.addedModuleInfo}
+									/>
+								</div>
+							) : (
+								<div>NO preview available</div>
+							)}
 						</div>
 					)}
 					{this.state.selectedIndex === 1 ? (
@@ -203,8 +212,9 @@ class ListModules extends React.Component {
 ListModules.propTypes = {
 	classes: PropTypes.object.isRequired
 };
-// const mapStateToProps = (state) => ({
-// 	project: state.project
-// });
-
-export default withStyles(styles)(ListModules);
+const mapStateToProps = (state) => ({
+	project: state.project
+});
+export default withRouter(
+	connect(mapStateToProps)(withStyles(styles)(ListModules))
+);

@@ -23,39 +23,60 @@ export class PreviewProjectVIEW extends Component {
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			project: nextProps.project.project,
-			modules: nextProps.project.project.modules,
+			modules: nextProps.project.project.modules
 		});
-		
-		if (nextProps.project.project.modules.filter(section => section.location === "Section1").length > 0) {
-			this.setState(({
-				Section1: nextProps.project.project.modules.filter((section) => section.location === "Section1")[0]
-			}))
+
+		if (
+			nextProps.project.project.modules.filter(
+				(section) => section.location === "Section1"
+			).length > 0
+		) {
+			this.setState({
+				Section1: nextProps.project.project.modules.filter(
+					(section) => section.location === "Section1"
+				)[0]
+			});
 		}
-		if (nextProps.project.project.modules.filter(section => section.location === "Section2").length > 0) {
-			this.setState(({
-				Section2: nextProps.project.project.modules.filter((section) => section.location === "Section2")[0]
-			}))
+		if (
+			nextProps.project.project.modules.filter(
+				(section) => section.location === "Section2"
+			).length > 0
+		) {
+			this.setState({
+				Section2: nextProps.project.project.modules.filter(
+					(section) => section.location === "Section2"
+				)[0]
+			});
 		}
-		if (nextProps.project.project.modules.filter(section => section.location === "Section3").length > 0) {
-			this.setState(({
-				Section3: nextProps.project.project.modules.filter((section) => section.location === "Section3")[0]
-			}))
+		if (
+			nextProps.project.project.modules.filter(
+				(section) => section.location === "Section3"
+			).length > 0
+		) {
+			this.setState({
+				Section3: nextProps.project.project.modules.filter(
+					(section) => section.location === "Section3"
+				)[0]
+			});
 		}
-		if (nextProps.project.project.modules.filter(section => section.location === "Section4").length > 0) {
-			this.setState(({
-				Section4: nextProps.project.project.modules.filter((section) => section.location === "Section4")[0]
-			}))
+		if (
+			nextProps.project.project.modules.filter(
+				(section) => section.location === "Section4"
+			).length > 0
+		) {
+			this.setState({
+				Section4: nextProps.project.project.modules.filter(
+					(section) => section.location === "Section4"
+				)[0]
+			});
 		}
-		
 	}
 	render() {
 		if (this.state.modules.length > 0) {
-			
-			const Section1 = this.state.Section1
-			console.log(Section1, 'SECTION ')
-			const Section2 = this.state.Section2
-			const Section3 = this.state.Section3
-			const Section4 = this.state.Section4
+			const Section1 = this.state.Section1;
+			const Section2 = this.state.Section2;
+			const Section3 = this.state.Section3;
+			const Section4 = this.state.Section4;
 
 			return (
 				<section>
@@ -63,18 +84,17 @@ export class PreviewProjectVIEW extends Component {
 						Go Back
 					</a>
 					<div className="cs_container-crocs">
-						
-							<div className="SECTION_1">
-								{Section1.type === "Jumbotron" ? (
-									<JumboTronPreview modulePreview={Section1} />
-								) : Section1.type === "ProductGrid" ? (
-									<ProductGridPreview modulePreview={Section1} />
-								) : Section1.type === "Gallery" ? (
-									<GalleryPreview modulePreview={Section1} />
-								) : null}
-							</div>
-						
-						 <div className="SECTION_2">
+						<div className="SECTION_1">
+							{Section1.type === "Jumbotron" ? (
+								<JumboTronPreview modulePreview={Section1} />
+							) : Section1.type === "ProductGrid" ? (
+								<ProductGridPreview modulePreview={Section1} />
+							) : Section1.type === "Gallery" ? (
+								<GalleryPreview modulePreview={Section1} />
+							) : null}
+						</div>
+
+						<div className="SECTION_2">
 							{Section2.type === "Jumbotron" ? (
 								<JumboTronPreview modulePreview={Section2} />
 							) : Section2.type === "ProductGrid" ? (
@@ -91,7 +111,7 @@ export class PreviewProjectVIEW extends Component {
 							) : Section3.type === "Gallery" ? (
 								<GalleryPreview modulePreview={Section3} />
 							) : null}
-						</div> 
+						</div>
 					</div>
 				</section>
 			);
@@ -103,11 +123,7 @@ export class PreviewProjectVIEW extends Component {
 	}
 }
 const mapStateToProps = (state) => ({
-	project: state.project,
+	project: state.project
 });
 
-
-
-export default connect(
-	mapStateToProps
-)(PreviewProjectVIEW);
+export default connect(mapStateToProps)(PreviewProjectVIEW);

@@ -20,11 +20,15 @@ import { deleteProject } from '../../actions/profileActions'
 import PostMalone from '../common/icons/PostClog.jpg'
 import DrewBarrymore from '../common/icons/DrewBarryMoreCrocs.png'
 import JohnCen from '../common/icons/PostClog.jpg'
+import Reviva from '../common/icons/Reviva.jpeg'
+import LiteRide from '../common/icons/LiteRide.jpeg'
+import ClassicClog from '../common/icons/ClassicClog.jpeg'
 
 
 const styles = {
 	card: {
-    maxWidth: 345,
+		maxWidth: 345,
+		margin: "20px"
 	},
 	media: {
 		// ⚠️ object-fit is not supported by IE 11.
@@ -58,16 +62,26 @@ class ImgMediaCard extends Component {
 		e.preventDefault();
 		this.props.deleteProject(this.props.id, this.props.history)
 		this.props.onDeleteClick(this.props.id)
-		console.log(this.props, 'IN IMAGECARD')
 	}
 	render() {
 		var photo = ''
-		console.log(this.props, 'in IMgMEDiaCard')
 		if (this.props.icon === "Post Malone") {
 			photo =  PostMalone 
 		}
 		if (this.props.icon === "Drew Barrymore") {
 			photo =  DrewBarrymore 
+		}
+		if (this.props.icon === "John Cena") {
+			photo = JohnCen
+		}
+		if (this.props.icon === "LiteRide") {
+			photo = LiteRide
+		}
+		if (this.props.icon === "Reviva") {
+			photo = Reviva
+		}
+		if (this.props.icon === "Classic Clog") {
+			photo = ClassicClog
 		}
 		const { classes } = this.props;
 	

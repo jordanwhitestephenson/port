@@ -62,6 +62,9 @@ class AddProject extends Component {
 			{ label: 'Drew Barrymore', value: 'Drew Barrymore' },
 			{ label: 'Post Malone', value: 'Post Malone' },
 			{ label: 'John Cena', value: 'John Cena' },
+			{ label: 'LiteRide', value: 'LiteRide' },
+			{ label: 'Reviva', value: 'Reviva' },
+			{ label: 'Classic Clog', value: 'Classic Clog' },
 		  ];
 		return (
 			<div className="add-project">

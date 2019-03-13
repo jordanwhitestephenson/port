@@ -62,9 +62,9 @@ class FullWidthTabs extends React.Component {
 
 	componentWillReceiveProps(nextProps) {
 		//***REMOVING PREVEIW_ENABLED LOGIC - FORGET WHY THIS IS NEEDED? */
-		console.log(nextProps, 'NEXT PROPS')
-		if (nextProps.project !== this.props.project) {
-			// if (nextProps.project.preview_enabled !== this.props.project.previewEnabled) {
+		console.log(nextProps.project, 'this.props.project', this.props.project)
+		// if (nextProps.project !== this.props.project) {
+			if (nextProps.project.preview_enabled !== this.props.project.previewEnabled) {
 			const enableSection1 = nextProps.project.addedSection.includes(
 				"Section1"
 			);
@@ -96,13 +96,17 @@ class FullWidthTabs extends React.Component {
 	}
 	handleChange = (event, value) => {
 		this.setState({ value });
+		// console.log('handleChangeIndex', this.state.value)
 	};
 
 	handleChangeIndex = (index) => {
 		this.setState({ value: index });
+		console.log('handleChangeIndex', this.state.value)
+		
 	};
 
 	render() {
+		console.log(this.props, 'props in Tba')
 		const { classes, theme } = this.props;
 		let Section1Type = "";
 		let Section2Type = "";
@@ -137,45 +141,31 @@ class FullWidthTabs extends React.Component {
 				}
 				return module;
 			});
+			
 			Section1 = changedType.filter((module) => module.location === "Section1");
 			Section2 = changedType.filter((module) => module.location === "Section2");
 			Section3 = changedType.filter((module) => module.location === "Section3");
 			Section4 = changedType.filter((module) => module.location === "Section4");
 			Section5 = changedType.filter((module) => module.location === "Section5");
 
-			Section1.length === 0
-				? (sectionOneCheck = "Section 1 is Null")
-				: (sectionOneCheck = "Section 1");
-			Section2.length === 0
-				? (sectionTwoCheck = "Section 2 is Null")
-				: (sectionTwoCheck = "Section 2");
-			Section3.length === 0
-				? (sectionThreeCheck = "Section 3 is Null")
-				: (sectionThreeCheck = "Section 3");
-			Section4.length === 0
-				? (sectionFourCheck = "Section 4 is Null")
-				: (sectionFourCheck = "Section 4");
-			Section5.length === 0
-				? (sectionFiveCheck = "Section 5 is Null")
-				: (sectionFiveCheck = "Section 5");
+			var sectionOnePresent = () => { sectionOneCheck = "Section 1"; Section1Type = Section1[0].selectedIndex }
+			var sectionTwoPresent = () => { sectionTwoCheck = "Section 2"; Section2Type = Section2[0].selectedIndex }
+			var sectionThreePresent = () => { sectionThreeCheck = "Section 3"; Section3Type = Section3[0].selectedIndex }
+			var sectionFourPresent = () => { sectionFourCheck = "Section 4"; Section4Type = Section4[0].selectedIndex }
+			var sectionFivePresent = () => { sectionFiveCheck = "Section 5"; Section5Type = Section5[0].selectedIndex }
 
-			// Section1.length > 0
-			// 	? (Section1Type = Section1[0].selectedIndex)
-			// 	: (Section1Type = "" && this.setState({ sectionOneCheck: "1 Null" }));
-			// // Section2.length > 0
-			// // 	? (Section2Type = Section2[0].selectedIndex)
-			// // 	: (Section2Type = "");
-			// // sectionTwoCheck = "Null";
-			// Section3.length > 0
-			// 	? (Section3Type = Section3[0].selectedIndex)
-			// 	: (Section3Type = "" && this.setState({ sectionThreeCheck: "3 Null" }));
-			// Section4.length > 0
-			// 	? (Section4Type = Section4[0].selectedIndex)
-			// 	: (Section4Type = "" && this.setState({ sectionFourCheck: "4 Null" }));
-			// Section5.length > 0
-			// 	? (Section5Type = Section5[0].selectedIndex)
-			// 	: (Section5Type = "" && this.setState({ sectionFiveCheck: "5 Null" }));
+			Section1.length === 0
+				? (sectionOneCheck = "Section 1 is Null" ) : sectionOnePresent() ;
+			Section2.length === 0
+				? (sectionTwoCheck = "Section 2 is Null") : sectionTwoPresent() ;
+			Section3.length === 0
+				? (sectionThreeCheck = "Section 3 is Null") : sectionThreePresent();
+			Section4.length === 0
+				? (sectionFourCheck = "Section 4 is Null") : sectionFourPresent();
+			Section5.length === 0
+				? (sectionFiveCheck = "Section 5 is Null") : sectionFivePresent() ;
 			return (
+				
 				<div className={classes.root}>
 					<AppBar position="static" color="default">
 						<Tabs
@@ -195,8 +185,9 @@ class FullWidthTabs extends React.Component {
 						axis={theme.direction === "rtl" ? "x-reverse" : "x"}
 						index={this.state.value}
 						onChangeIndex={this.handleChangeIndex}>
-						<TabContainer dir={theme.direction}>
+						<TabContainer dir={theme.direction} tabClicked = {"Section1"}>
 							<ListModules
+								tabIndex = {this.state.value}
 								selectedIndex={Section1Type}
 								editSection={Section1[0]}
 								projectID={this.state.projectID}
@@ -206,6 +197,7 @@ class FullWidthTabs extends React.Component {
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
+								tabIndex={this.state.value}
 								editSection={Section2[0]}
 								selectedIndex={Section2Type}
 								projectID={this.state.projectID}
@@ -215,6 +207,7 @@ class FullWidthTabs extends React.Component {
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
+								tabIndex={this.state.value}
 								editSection={Section3[0]}
 								selectedIndex={Section3Type}
 								projectID={this.state.projectID}
@@ -224,6 +217,7 @@ class FullWidthTabs extends React.Component {
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
+								tabIndex={this.state.value}
 								editSection={Section4[0]}
 								selectedIndex={Section4Type}
 								projectID={this.state.projectID}
@@ -233,6 +227,7 @@ class FullWidthTabs extends React.Component {
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
+								tabIndex={this.state.value}
 								selectedIndex={Section5Type}
 								projectID={this.state.projectID}
 								currentSection={"Section5"}
@@ -247,7 +242,9 @@ class FullWidthTabs extends React.Component {
 			);
 		}
 		if (this.props.pathname === "/add-module") {
-			console.log(this.props, "ANT PROJECT>");
+			let locations = this.props.editProjectInfo.modules.map(module => module.location)
+			
+
 			return (
 				<div className={classes.root}>
 					<AppBar position="static" color="default">
@@ -256,7 +253,8 @@ class FullWidthTabs extends React.Component {
 							onChange={this.handleChange}
 							indicatorColor="primary"
 							textColor="primary">
-							<Tab label={"Section 1"} />
+							{locations.includes('Section1') ? <Tab label={"Section 1 - BUILT"} disabled /> : <Tab label={"Section 1"} />}
+							
 							<Tab label={"Section 2"} />
 							<Tab label={"Section 3"} />
 							<Tab label={"Section 4"} />
