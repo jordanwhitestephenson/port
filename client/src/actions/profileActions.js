@@ -67,11 +67,10 @@ export const createProfile = (profileData, history) => dispatch => {
 // /projects/:projectID/:module
 // Create Profile
 export const addModule = (moduledata, projectID, history) => dispatch => {
-
+  console.log(moduledata, 'PROFILE ACTION MODULE DATA')
   axios
     .post(`/api/profile/project/${projectID}`, moduledata)
     .then(res => 
-
       dispatch({
         type: ADD_MODULE,
         payload: res.data,
@@ -87,6 +86,7 @@ export const addModule = (moduledata, projectID, history) => dispatch => {
       })
     );
 };
+
 
 
 
@@ -211,14 +211,34 @@ export const getCurrentProject = (projectID) => dispatch => {
       })
 
   ).catch(err =>
-    console.log(err, 'THIS IS ERROR IN PROFILE ACTION')
+    // console.log(err, 'THIS IS ERROR IN PROFILE ACTION')
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+export const addHTML = (HTML, projectID) => {
+
+  axios
+    .post(`/api/profile/project/HTML/${projectID}`, HTML)
+    .then(res =>
+      console.log(res, 'RESULT OF ADDING HTML')
+      // dispatch({
+      //   type: ADD_MODULE,
+      //   payload: res.data,
+      //   addedModuleInfo: moduledata,
+      //   addedSection: moduledata.location
+      // })
+    )
+    .catch(err =>
+      console.log(err)
       // dispatch({
       //   type: GET_ERRORS,
       //   payload: err.response.data
       // })
     );
 };
-
 
 // Profile loading
 export const setProfileLoading = () => {

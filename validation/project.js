@@ -50,6 +50,7 @@ module.exports = function validateProjectInput(data) {
 		}
 	}
 	if (data.type === "ProductGrid") {
+		console.log('WHATS WRONG HERE?', data)
 		if (Validator.isEmpty(data.imageSets)) {
 			errors_object.imageSets = "imageSets is required!";
 		}

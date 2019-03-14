@@ -154,8 +154,6 @@ class ProductGridForm extends Component {
 	componentWillMount() {
 
 		//CHECKING TO SEE IF MoudlesArray is empty, and if ProductGrid' type has been used ALREADY in this SECTION
-
-		
 		var fetchedProjectsLocation = this.props.project.project.modules.filter(module => module.location)
 
 		
@@ -207,6 +205,7 @@ class ProductGridForm extends Component {
 			var productGridPhotosInfo = this.state.imageSets;
 
 			//CHECK FOR DUPLICATIONS
+			console.log(this.state.imageSets, 'IMAGE SETS?')
 			if (
 				this.state.imageSets &&
 				this.state.imageSets.filter(
@@ -306,7 +305,7 @@ class ProductGridForm extends Component {
 
 		const { classes } = this.props;
 		const { errors_object } = this.state;
-		console.log('this.state.imageSets',  this.state.imageSets)
+		console.log('this.state.location undefined?',  this.state.location)
 		return (
 			<div style={{ width: "100%" }}>
 				<Typography component="h2" variant="display1" gutterBottom>
@@ -369,7 +368,7 @@ class ProductGridForm extends Component {
 					</div>
 				</div>
 				<div className="layout col-xs-12" style={{ marginTop: "2em" }}>
-					<div class="col-xs-12 col-md-12 flex_box_column">
+					<div className="col-xs-12 col-md-12 flex_box_column">
 						<FormLabel>Layout</FormLabel>
 						<div className="col-xs-12 col-md-6">
 							<div className="col-xs-12 col-md-6">

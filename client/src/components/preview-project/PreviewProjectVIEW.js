@@ -19,7 +19,6 @@ export class PreviewProjectVIEW extends Component {
 			Section2: "",
 			Section3: "",
 			Section4: "",
-			HTML : ""
 		};
 		
 	}
@@ -77,12 +76,13 @@ export class PreviewProjectVIEW extends Component {
 	}
 
 	render() {
+		console.log(this.props.project, 'PRPKE')
 		if (this.state.modules.length > 0) {
 			const Section1 = this.state.Section1;
 			const Section2 = this.state.Section2;
 			const Section3 = this.state.Section3;
 			const Section4 = this.state.Section4;
-
+			
 			return (
 				<section>
 					<a className="btn btn-light" href="/dashboard">
@@ -121,14 +121,14 @@ export class PreviewProjectVIEW extends Component {
 							</div>
 						</div>
 					</div>
-					<SimpleModal/>
-					{/* <button onClick={this.getHTML}>GET HTML</button>
-					{this.state.HTML ? (
-						<div>{this.state.HTML}</div>
-					) : null} */}
+					<SimpleModal projectID={this.props.project.project._id}/>
 				</section>
 			);
-		} else {
+		}
+		if (!this.props.project.modules) {
+			return <h1>No modules found..</h1>;
+		}
+		else {
 			return <h1>Loading....</h1>;
 		}
 

@@ -56,7 +56,7 @@ class ListModules extends React.Component {
 		}
 		// eslint-disable-next-line no-unused-expressions
 
-		if (props.project.preview_enabled) {
+		if (props.project.preview_enabled && props.project.previewEnabled !== this.state.previewEnabled) {
 			return {
 				previewEnabled: props.project.preview_enabled
 			};
@@ -75,7 +75,7 @@ class ListModules extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-		console.log(this.props, "RENDER IN LIST");
+		console.log(this.props, 'LIST MODULES PROPS')
 		return (
 			<div>
 				<div style={{ display: "flex" }}>
@@ -163,7 +163,7 @@ class ListModules extends React.Component {
 						</div>
 					) : (
 						<div className="home_base">
-							{this.props.project.previewEnabled ? (
+							{this.state.previewEnabled ? (
 								<div>
 									<IconButton
 										onClick={this.onUndo}

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { Link, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
-import { addModule, getCurrentProject } from "../../actions/profileActions";
+import { getCurrentProject } from "../../actions/profileActions";
 
 import TabContainer from "../common/TabContainer";
 
@@ -23,7 +23,6 @@ class AddModule extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		if (nextProps.project !== this.props.project) {
-			console.log(nextProps.project.project, 'TITLE')
 			this.setState({
 				project: nextProps.project,
 				title: nextProps.project.project.title,

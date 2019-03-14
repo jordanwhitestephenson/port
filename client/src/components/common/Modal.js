@@ -1,12 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import Typography from "@material-ui/core/Typography";
+import { withRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import $ from "jquery";
 import Dialog from "@material-ui/core/Dialog";
-import DialogActions from "@material-ui/core/DialogActions";
+import { addHTML } from "../../actions/profileActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
@@ -56,6 +57,7 @@ class SimpleModal extends React.Component {
 			open: true,
 			scroll: "paper"
 		});
+		// this.props.addHTML(this.state.HTML, this.props.projectID);
 	};
 
 	handleClose = () => {
@@ -82,7 +84,6 @@ class SimpleModal extends React.Component {
 						<DialogContent>
 							<DialogContentText>{this.state.HTML}</DialogContentText>
 						</DialogContent>
-			
 					</Dialog>
 				</Modal>
 			</div>
@@ -91,10 +92,12 @@ class SimpleModal extends React.Component {
 }
 
 SimpleModal.propTypes = {
-	classes: PropTypes.object.isRequired
+	classes: PropTypes.object.isRequired,
+	projectID: PropTypes.string.isRequired
 };
 
 // We need an intermediary variable for handling the recursive nesting.
 const SimpleModalWrapped = withStyles(styles)(SimpleModal);
 
-export default SimpleModalWrapped;
+// export default connect({ addHTML })(withRouter(SimpleModalWrapped));
+export default SimpleModalWrapped

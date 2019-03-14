@@ -157,11 +157,12 @@ router.post(
 	"/project/:project_id",
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
-		const { errors_object, isValid } = validateProjectInput(req.body);
-		console.log(errors_object, "ERROR OBEJCT*********");
-		if (!isValid) {
-			return res.status(400).json(errors_object);
-		}
+		console.log(req.body, "ERROR OBEJCT*********");
+		// const { errors_object, isValid } = validateProjectInput(req.body);
+	
+		// if (!isValid) {
+		// 	return res.status(400).json(errors_object);
+		// }
 
 		var ModuleData = "";
 		if (req.body.type === "ProductGrid") {
@@ -215,13 +216,17 @@ router.post(
 				const sectionType = req.body.location;
 
 				Profile.find({ projects: { $elemMatch: { _id: projectID } } })
-					.then(function (result) {
+					.then(function(result) {
 						var filteredArray;
 						result.forEach(function(projects) {
-							let selectedProject = projects.projects.filter(project => project._id == projectID)[0]
+							let selectedProject = projects.projects.filter(
+								(project) => project._id == projectID
+							)[0];
 							if (selectedProject.modules.length > 0) {
-								return filteredArray = selectedProject.modules.filter(duplicate => duplicate.location !== ModuleData.location)
-							}							
+								return (filteredArray = selectedProject.modules.filter(
+									(duplicate) => duplicate.location !== ModuleData.location
+								));
+							}
 							return filteredArray;
 						});
 

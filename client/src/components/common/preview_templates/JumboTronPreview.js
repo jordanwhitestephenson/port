@@ -12,7 +12,7 @@ class JumboTronPreview extends Component {
 
 	render() {
 		const module = this.state.modulePreview;
-		console.log('what do you mean no layout?', module )
+
 		return (
 			<div className="jumboTron" style={{ maxWidth: '980px', margin: 'auto' }}>		
 				{module.layout === 'Left' ? (
@@ -20,7 +20,7 @@ class JumboTronPreview extends Component {
 						container
 						spacing={24}
 						className="module_container"
-						moduleName={module.type}
+						modulename={module.type}
 						style={{ background: `${module.backgroundColor}` }}
 					>
 						<Grid item xs={12} sm={6} style ={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
@@ -35,7 +35,7 @@ class JumboTronPreview extends Component {
 						container
 						spacing={24}
 						className="module_container"
-						moduleName={module.type}
+						modulename={module.type}
 						style={{ background: `${module.backgroundColor}` }}
 					>
 						<Grid item xs={12} sm={6} style ={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
@@ -50,7 +50,7 @@ class JumboTronPreview extends Component {
 						container
 						spacing={24}
 						className="module_container"
-						moduleName={module.type}
+						modulename={module.type}
 						style={{ background: `${module.backgroundColor}` }}>
 						<Grid item xs={12} style ={{ display: "flex", justifyContent: "center", alignItems: "center"}}>
 							<TextContainer modulePreview={this.state.modulePreview} />
@@ -62,7 +62,7 @@ class JumboTronPreview extends Component {
 	}
 }
 JumboTronPreview.propTypes = {
-	modulePreview: PropTypes.string.isRequired,
+	modulePreview: PropTypes.object.isRequired,
 
 };
 

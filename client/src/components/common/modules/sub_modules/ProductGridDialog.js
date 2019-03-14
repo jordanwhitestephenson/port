@@ -52,10 +52,17 @@ class ProductGridDialog extends React.Component {
 		this.setState({ open: true });
 	};
 	componentWillMount() {
-		console.log(this.props.currentSelection, 'CURRENT SECTION TAB ON DIALOG')
+		console.log(this.props.currentSelection, "CURRENT SECTION TAB ON DIALOG");
+
 		//CHECKING TO SEE IF ProductGrid is already present in project, if so, then update state to ProductGrid data.
-		if (this.props.project.project.modules.length && this.props.project.project.modules.filter(module => module.type === "ProductGrid" && module.location === this.props.currentSelection).length > 0) {
-			console.log(this.props,  "************h")
+		if (
+			this.props.project.project.modules.length &&
+			this.props.project.project.modules.filter(
+				(module) =>
+					module.type === "ProductGrid" &&
+					module.location === this.props.currentSelection
+			).length > 0
+		) {
 			//FIND CURRENT PRODUCTGRID IN MODULES ARRAY and ADD STATE:
 			const productGrid = this.props.project.project.modules.filter(
 				(module) => module.type === "ProductGrid"
@@ -63,7 +70,7 @@ class ProductGridDialog extends React.Component {
 			const Product_1 = productGrid.imageSets.filter(
 				(product) => product["Product_1"]
 			)[0].Product_1;
-			console.log(Product_1, 'WYYY')
+			console.log(Product_1, "WYYY");
 			const Product_2 = productGrid.imageSets.filter(
 				(product) => product["Product_2"]
 			)[0].Product_2;
@@ -108,8 +115,6 @@ class ProductGridDialog extends React.Component {
 	}
 	//***** */TAKE TEXT INPUT FROM DIALOG POPUP******//
 	handleClose = () => {
-		console.log(this.props, "HANDLE CLOSE");
-		this.setState({ open: false });
 		const selectedImage = this.state.galleryImg_NAME;
 		var productOneObject = {
 			SRC: this.state.product1_SRC,
@@ -143,26 +148,86 @@ class ProductGridDialog extends React.Component {
 		};
 
 		if (selectedImage === "Product_1") {
-			console.log(productOneObject, 'productOneObject')
-			return this.props.retrieveGalleryFormInput({
-				Product_1: productOneObject
-			});
+			if (!this.state.product1_Alt) {
+				this.setState({
+					error: "Alt Tag Text is required*"
+				});
+			} else if (!this.state.product1_SRC) {
+				this.setState({
+					error: "SRC is required*"
+				});
+			} else {
+				this.props.retrieveGalleryFormInput({
+					Product_1: productOneObject
+				});
+				this.setState({ open: false });
+			}
 		}
+
 		if (selectedImage === "Product_2") {
-			return this.props.retrieveGalleryFormInput({
-				Product_2: productTwoObject
-			});
+			if (!this.state.product2_Alt) {
+				this.setState({
+					error: "Alt Tag Text is required*"
+				});
+			} else if (!this.state.product2_SRC) {
+				this.setState({
+					error: "SRC is required*"
+				});
+			} else {
+				this.props.retrieveGalleryFormInput({
+					Product_2: productTwoObject
+				});
+				this.setState({ open: false });
+			}
 		}
+
 		if (selectedImage === "Product_3") {
-			return this.props.retrieveGalleryFormInput({
-				Product_3: productThreeObject
-			});
+			if (!this.state.product3_Alt) {
+				this.setState({
+					error: "Alt Tag Text is required*"
+				});
+			} else if (!this.state.product3_SRC) {
+				this.setState({
+					error: "SRC is required*"
+				});
+			} else {
+				this.props.retrieveGalleryFormInput({
+					Product_3: productThreeObject
+				});
+				this.setState({ open: false });
+			}
 		}
 		if (selectedImage === "Product_4") {
-			this.props.retrieveGalleryFormInput({ Product_4: productFourObject });
+			if (!this.state.product4_Alt) {
+				this.setState({
+					error: "Alt Tag Text is required*"
+				});
+			} else if (!this.state.product4_SRC) {
+				this.setState({
+					error: "SRC is required*"
+				});
+			} else {
+				this.props.retrieveGalleryFormInput({
+					Product_4: productFourObject
+				});
+				this.setState({ open: false });
+			}
 		}
 		if (selectedImage === "Model") {
-			this.props.retrieveGalleryFormInput({ Model: ModelObject });
+			if (!this.state.Model_Alt) {
+				this.setState({
+					error: "Alt Tag Text is required*"
+				});
+			} else if (!this.state.Model_SRC) {
+				this.setState({
+					error: "SRC is required*"
+				});
+			} else {
+				this.props.retrieveGalleryFormInput({
+					Model: ModelObject
+				});
+				this.setState({ open: false });
+			}
 		}
 	};
 
@@ -192,6 +257,7 @@ class ProductGridDialog extends React.Component {
 						<DialogContent>
 							<TextField
 								autoFocus
+								label="Product SRC"
 								name={
 									this.state.galleryImg_NAME === "Product_1"
 										? "product1_SRC"
@@ -228,6 +294,7 @@ class ProductGridDialog extends React.Component {
 
 							<TextField
 								autoFocus
+								label="Product Link"
 								required
 								name={
 									this.state.galleryImg_NAME === "Product_1"
@@ -259,7 +326,7 @@ class ProductGridDialog extends React.Component {
 										? this.state.Model_Link
 										: null
 								}
-								onChange={this.props.handleInputChange}
+								onChange={this.handleChange}
 							/>
 							<TextField
 								name={
@@ -295,10 +362,9 @@ class ProductGridDialog extends React.Component {
 										? this.state.Model_Alt
 										: null
 								}
-								onChange={this.props.handleInputChange}
+								onChange={this.handleChange}
 							/>
 							<TextField
-								autoFocus
 								name={
 									this.state.galleryImg_NAME === "Product_1"
 										? "product1_Title"
@@ -330,7 +396,7 @@ class ProductGridDialog extends React.Component {
 										? this.state.Model_Title
 										: null
 								}
-								onChange={this.props.handleInputChange}
+								onChange={this.handleChange}
 							/>
 
 							{this.state.error ? (
@@ -434,7 +500,7 @@ class ProductGridDialog extends React.Component {
 										: null
 								}
 								value={this.state.Alt}
-								onChange={this.props.handleInputChange}
+								onChange={this.handleChange}
 							/>
 							<TextField
 								autoFocus

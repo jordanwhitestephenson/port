@@ -24,8 +24,6 @@ class PreviewProject extends Component {
 			hash: this.props.location.hash.slice(1),
 			project: ''
 		};
-
-		// 
 	}
 
 	componentDidMount() {
@@ -63,7 +61,8 @@ class PreviewProject extends Component {
 	render() {
 		if (this.props.project) {
 			return <PreviewProjectVIEW project={this.state.project}/>;
-		} else {
+		}
+		else {
 			return <div>Loading...</div>;
 		}
 	}
@@ -72,13 +71,13 @@ class PreviewProject extends Component {
 PreviewProject.propTypes = {
 	getCurrentProfile: PropTypes.func.isRequired,
 	profile: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired
 };
+
+
 
 const mapStateToProps = state => ({
 	profile: state.profile,
 	project: state.project,
-	errors: state.errors
 });
 
 export default connect(
