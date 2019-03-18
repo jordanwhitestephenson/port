@@ -177,19 +177,22 @@ class ProductGridForm extends Component {
 
 	//********** */WHEN DIALOG IS CLOSED AND INPUTS ARE SENT FROM DIALOG*******//
 	retrieveGalleryFormInput = (info) => {
-		
+		console.log(info, 'info being sent from dialog')
 		var locationKey = Object.keys(info)[0];
 		// **IF IMAGES ARE ALREADY PRESENT**
 		if (this.state.editSection.imageSets) {
+
 			var productGridPhotosInfo = this.state.imageSets;
-			if (locationKey === "Model") {
-				this.setState({
-					main_image_link: info.Model.Link,
-					main_image_SRC: info.Model.SRC,
-					main_image_alt: info.Model.Alt,
-					main_image_title: info.Model.Title
-				});
-			} else if (productGridPhotosInfo.filter(
+
+			// if (locationKey === "Model") {
+			// 	this.setState({
+			// 		main_image_link: info.Model.Link,
+			// 		main_image_SRC: info.Model.SRC,
+			// 		main_image_alt: info.Model.Alt,
+			// 		main_image_title: info.Model.Title
+			// 	});
+			// }
+			if (productGridPhotosInfo.filter(
 					(image) => Object.keys(image)[0] === locationKey
 			).length > 0) {
 				
@@ -197,15 +200,13 @@ class ProductGridForm extends Component {
 					.filter((image) => Object.keys(image)[0] !== locationKey)
 					.concat(info);
 			}
+			
 			this.setState({
 				imageSets: productGridPhotosInfo
 			});
 			//IF NO IMAGES (aka editSection.imageSets === null)
 		} else {
-			var productGridPhotosInfo = this.state.imageSets;
-
 			//CHECK FOR DUPLICATIONS
-			console.log(this.state.imageSets, 'IMAGE SETS?')
 			if (
 				this.state.imageSets &&
 				this.state.imageSets.filter(
@@ -264,6 +265,7 @@ class ProductGridForm extends Component {
 
 	// **********ADD BUTTON EVENT********
 	addGalleryToProject(e) {
+		console.log(this.state.imageSets, 'imageSets')
 		e.preventDefault();
 		if (this.state.imageSets.length < 5) {
 			this.setState({

@@ -165,6 +165,7 @@ class ProductGridDialog extends React.Component {
 		}
 
 		if (selectedImage === "Product_2") {
+
 			if (!this.state.product2_Alt) {
 				this.setState({
 					error: "Alt Tag Text is required*"
@@ -257,6 +258,19 @@ class ProductGridDialog extends React.Component {
 						<DialogContent>
 							<TextField
 								autoFocus
+								helperText={
+									this.state.galleryImg_NAME === "Product_1"
+										? "EXAMPLE : LiteRideBlackClog.jpg?$staticlink$"
+										: this.state.galleryImg_NAME === "Product_2"
+										? "EXAMPLE :  Clog_Teal_Band.jpg?$staticlink$"
+										: this.state.galleryImg_NAME === "Product_3"
+										? "EXAMPLE : Caya_Teal_Flip.jpg?$staticlink$"
+										: this.state.galleryImg_NAME === "Product_4"
+										? "EXAMPLE :  10001_3N9_Classic_main.jpg?$staticlink$"
+										: this.state.galleryImg_NAME === "Model"
+										? "EXAMPLE :  redchairman.png?$staticlink$"
+										: null
+								}
 								label="Product SRC"
 								name={
 									this.state.galleryImg_NAME === "Product_1"
@@ -483,7 +497,7 @@ class ProductGridDialog extends React.Component {
 								required
 								margin="dense"
 								id="galleryImg_Alt"
-								label="Alt Description for Image"
+								label="HEYYYYYY"
 								type="text"
 								fullWidth
 								placeholder={

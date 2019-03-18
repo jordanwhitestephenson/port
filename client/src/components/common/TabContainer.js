@@ -13,6 +13,7 @@ import PreviewAllModules from "../common/preview_templates/PreviewAllModules";
 import Done from "@material-ui/icons/Done";
 import SyncProblem from "@material-ui/icons/Warning";
 import Visibility from "@material-ui/icons/Visibility";
+import { getCurrentProject } from "../../actions/profileActions";
 
 function TabContainer({ children, dir }) {
 	return (
@@ -42,6 +43,7 @@ class FullWidthTabs extends React.Component {
 			projectID: this.props.projectID,
 			all_modules: [],
 			project: "",
+			hash: this.props.location.hash.slice(1),
 			editProjectInfo: this.props.editProjectInfo,
 			Section1Type: "",
 			Section2Type: "",
@@ -82,22 +84,25 @@ class FullWidthTabs extends React.Component {
 			const enableSectionModel = nextProps.project.addedSection.includes(
 				"Model"
 			);
-			this.setState({
-				previewEnabled: true,
-				project: nextProps.project.project,
-				addedSections: nextProps.project.addedSection,
-				enableSection1: enableSection1,
-				enableSection2: enableSection2,
-				enableSection3: enableSection3,
-				enableSection4: enableSection4,
-				enableSectionModel: enableSectionModel,
-				editProjectInfo: nextProps.editProjectInfo,
-				pathname: nextProps.pathname
-			});
+			if (nextProps.project !== this.props.project) {
+				this.setState({
+					previewEnabled: true,
+					project: nextProps.project.project,
+					addedSections: nextProps.project.addedSection,
+					enableSection1: enableSection1,
+					enableSection2: enableSection2,
+					enableSection3: enableSection3,
+					enableSection4: enableSection4,
+					enableSectionModel: enableSectionModel,
+					editProjectInfo: nextProps.editProjectInfo,
+					pathname: nextProps.pathname
+				});
+			}
 		}
 	}
 	handleChange = (event, value) => {
 		this.setState({ value });
+		// this.props.getCurrentProject(this.state.hash);
 	};
 
 	handleChangeIndex = (index) => {
@@ -122,6 +127,7 @@ class FullWidthTabs extends React.Component {
 		let sectionFourCheck = "";
 		let sectionFiveCheck = "";
 		let project = this.state.editProjectInfo.modules;
+
 		//****IF WERE ON EDIT****//
 		if (
 			this.state.pathname === "/edit-project" &&
@@ -195,7 +201,7 @@ class FullWidthTabs extends React.Component {
 							<Tab label={"Section 3"} icon={sectionThreeCheck} />
 							<Tab label={"Section 4"} icon={sectionFourCheck} />
 							<Tab label={"Section 5"} icon={sectionFiveCheck} />
-							<Tab label={"Preview"} icon={<Visibility />}/>
+							<Tab label={"Preview"} icon={<Visibility />} />
 						</Tabs>
 					</AppBar>
 					<SwipeableViews
@@ -252,7 +258,7 @@ class FullWidthTabs extends React.Component {
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
-							<PreviewAllModules moduleArray={project} />
+							<PreviewAllModules moduleArray={this.state.project} />
 						</TabContainer>
 					</SwipeableViews>
 				</div>
@@ -274,29 +280,29 @@ class FullWidthTabs extends React.Component {
 							{location.includes("Section1") ? (
 								<Tab label={"Section 1 - BUILT"} icon={<Done />} />
 							) : (
-									<Tab label={"Section 1"} icon={<SyncProblem />}/>
+								<Tab label={"Section 1"} icon={<SyncProblem />} />
 							)}
 							{location.includes("Section2") ? (
 								<Tab label={"Section 2 - BUILT"} icon={<Done />} />
 							) : (
-									<Tab label={"Section 2"} icon={<SyncProblem />}/>
+								<Tab label={"Section 2"} icon={<SyncProblem />} />
 							)}
 							{location.includes("Section3") ? (
 								<Tab label={"Section 3 - BUILT"} icon={<Done />} />
 							) : (
-									<Tab label={"Section 3"} icon={<SyncProblem/>}/>
+								<Tab label={"Section 3"} icon={<SyncProblem />} />
 							)}
 							{location.includes("Section4") ? (
 								<Tab label={"Section 4 - BUILT"} icon={<Done />} />
 							) : (
-									<Tab label={"Section 4"} icon={<SyncProblem />}/>
+								<Tab label={"Section 4"} icon={<SyncProblem />} />
 							)}
 							{location.includes("Section5") ? (
 								<Tab label={"Section 5 - BUILT"} icon={<Done />} />
 							) : (
-									<Tab label={"Section 5"} icon={<SyncProblem />} />
+								<Tab label={"Section 5"} icon={<SyncProblem />} />
 							)}
-							<Tab label="PREVIEW" icon={<Visibility/>}/>
+							<Tab label="PREVIEW" icon={<Visibility />} />
 						</Tabs>
 					</AppBar>
 					<SwipeableViews
@@ -371,8 +377,13 @@ const mapStateToProps = (state) => ({
 });
 
 export default withRouter(
-	connect(mapStateToProps)(
-		withStyles(styles, { withTheme: true })(FullWidthTabs)
-	)
+	connect(
+		mapStateToProps,
+		{ getCurrentProject }
+	)(withStyles(styles, { withTheme: true })(FullWidthTabs))
 );
 // export default withStyles(styles, { withTheme: true })(FullWidthTabs);
+// export default connect(
+// 	mapStateToProps,
+// 	{ getCurrentProfile, getCurrentProject }
+// )(withRouter(PreviewProject));

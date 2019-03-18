@@ -2,18 +2,15 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
-
-import Example1 from "../icons/GalleryExample_01.jpg";
-import Example2 from "../icons/GalleryExample_03.jpg";
-import Example3 from "../icons/GalleryExample_05.jpg";
-import SimpleDialog from "../SimpleDialog";
-
-import { connect } from "react-redux";
-import { withRouter } from "react-router-dom";
-import { addModule } from "../../../actions/profileActions";
+import Example1 from "../icons/Story1Example.png";
+import Example2 from "../icons/StoryTwoExample.png";
+import StoryDialog from "./sub_modules/StoryDialog";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import UpdateIcon from "@material-ui/icons/Update";
+import { connect } from "react-redux";
+import { withRouter } from "react-router-dom";
+import { addModule } from "../../../actions/profileActions";
 
 const styles = (theme) => ({
 	root: {
@@ -70,7 +67,7 @@ const styles = (theme) => ({
 		top: 0,
 		bottom: 0,
 		backgroundColor: theme.palette.common.black,
-		opacity: 0.4,
+		opacity: 0.1,
 		transition: theme.transitions.create("opacity")
 	},
 	imageTitle: {
@@ -92,73 +89,63 @@ const styles = (theme) => ({
 const images = [
 	{
 		url: Example1,
-		title: "Left",
+		title: "Story_1",
 		width: "100%"
 	},
 	{
 		url: Example2,
-		title: "Center",
-		width: "100%"
-	},
-	{
-		url: Example3,
-		title: "Right",
+		title: "Story_2",
 		width: "100%"
 	}
 ];
 
-class GalleryForm extends Component {
+class StoriesForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			classes: this.props.classes,
 			hash: this.props.projectID,
-			image1Preview: "",
-			galleryPhotos: [],
 			errors: "",
-			leftDW_Image: "",
-			rightDW_Image: "",
-			centerDW_Image: "",
-			dm_IMAGE_ARRAY: [],
 			refresh: "Upload",
-			location: this.props.location
+			location: this.props.location,
+			stories: []
 		};
-		this.addGalleryToProject = this.addGalleryToProject.bind(this);
+		this.addStoriesToProject = this.addStoriesToProject.bind(this);
 	}
-	retrieveGalleryFormInput = (info) => {
-		var locationKey = Object.keys(info)[0];
-		var galleryPhotosInfo = this.state.galleryPhotos.concat(info);
-		if (
-			this.state.galleryPhotos.filter(
-				(image) => Object.keys(image)[0] === locationKey
-			).length > 0
-		) {
-			galleryPhotosInfo = this.state.galleryPhotos
-				.filter((image) => Object.keys(image)[0] !== locationKey)
-				.concat(info);
-		}
+	retrieveStoryFormInput = (info) => {
+		var storyType = Object.keys(info)[0];
+		var storyState = this.state.stories;
+		var storyAddedArray = storyState.filter(
+			(story) => Object.keys(story)[0] === storyType
+		);
+		var addToArray = storyState.concat(info);
+		var checkforDuplicate = storyState
+			.filter((story) => Object.keys(story)[0] !== storyType)
+			.concat(info);
 
-		this.setState({
-			galleryPhotos: galleryPhotosInfo
-		});
-	};
-
-	addGalleryToProject(e) {
-		e.preventDefault();
-		console.log(this.props, "PROPS FROM GALLERY FORM");
-		if (this.state.galleryPhotos.length < 3) {
+		if (storyAddedArray.length > 0) {
 			this.setState({
-				error: "Please add all image information, must have 3"
+				stories: checkforDuplicate
 			});
 		} else {
-			this.props.addModule(
-				{
-					type: "Gallery",
-					location: this.props.location,
-					imageSets: this.state.galleryPhotos
-				},
-				this.state.hash
-			);
+			this.setState({
+				stories: addToArray
+			});
+		}
+	};
+
+	addStoriesToProject(e) {
+		e.preventDefault();
+		if (this.state.stories.length < 2) {
+			this.setState({
+				error: "Please add both stories"
+			});
+		} else {
+			const moduleData = {
+				stories: this.state.stories
+			};
+			this.props.addModule(moduleData, this.state.hash);
+
 			this.setState({
 				error: "",
 				refresh: "Refresh"
@@ -168,12 +155,15 @@ class GalleryForm extends Component {
 
 	render() {
 		const { classes } = this.props;
+		var storyState = this.state.stories;
+		console.log(this.state.stories, "stories");
+		// var removeDuplicates = storyState.filter(story => story.)
 
 		return (
 			<div style={{ width: "100%" }}>
 				<div className="flex_box_default_no_wrap">
 					{images.map((image, index) => (
-						<div className="col-xs-12 col-md-3">
+						<div className="col-xs-12 col-md-6">
 							<ButtonBase
 								focusRipple
 								key={image.title}
@@ -189,9 +179,9 @@ class GalleryForm extends Component {
 									}}
 								/>
 								<span className={classes.imageBackdrop} />
-								<SimpleDialog
-									galleryImageName={image.title}
-									retrieveGalleryFormInput={this.retrieveGalleryFormInput}
+								<StoryDialog
+									storyType={image.title}
+									retrieveStoryFormInput={this.retrieveStoryFormInput}
 								/>
 							</ButtonBase>
 						</div>
@@ -201,7 +191,7 @@ class GalleryForm extends Component {
 					<p style={{ color: "red" }}>{this.state.error}</p>
 
 					<Button
-						onClick={this.addGalleryToProject}
+						onClick={this.addStoriesToProject}
 						variant="contained"
 						color="default"
 						className={classes.button}>
@@ -218,17 +208,17 @@ class GalleryForm extends Component {
 	}
 }
 
-GalleryForm.propTypes = {
+StoriesForm.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
 	project: state.project,
 	errors_object: state.errors_object
 });
-
 export default withRouter(
 	connect(
 		mapStateToProps,
 		{ addModule }
-	)(withStyles(styles)(GalleryForm))
+	)(withStyles(styles)(StoriesForm))
 );
+// export default withStyles(styles)(StoriesForm);

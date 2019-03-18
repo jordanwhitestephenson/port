@@ -2,13 +2,8 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {Link, withRouter} from 'react-router-dom';
 import PropTypes from 'prop-types';
-import TextFieldGroup from '../common/TextFieldGroup';
-import TextAreaFieldGroup from '../common/TextAreaFieldGroup';
-import InputGroup from '../common/InputGroup';
-import SelectListGroup from '../common/SelectListGroup';
 import {getCurrentProfile, getCurrentProject} from '../../actions/profileActions';
 import isEmpty from '../../validation/is-Empty';
-import { timingSafeEqual } from 'crypto';
 import PreviewProjectVIEW from '../preview-project/PreviewProjectVIEW'
 
 class PreviewProject extends Component {

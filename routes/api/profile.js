@@ -158,11 +158,11 @@ router.post(
 	passport.authenticate("jwt", { session: false }),
 	(req, res) => {
 		console.log(req.body, "ERROR OBEJCT*********");
-		// const { errors_object, isValid } = validateProjectInput(req.body);
+		const { errors_object, isValid } = validateProjectInput(req.body);
 	
-		// if (!isValid) {
-		// 	return res.status(400).json(errors_object);
-		// }
+		if (!isValid) {
+			return res.status(400).json(errors_object);
+		}
 
 		var ModuleData = "";
 		if (req.body.type === "ProductGrid") {

@@ -15,7 +15,6 @@ import JumboTron from "@material-ui/icons/PanoramaWideAngle";
 import SquareGrid from "@material-ui/icons/ViewComfy";
 import Divider from "@material-ui/core/Divider";
 import JumboTronForm from "../common/modules/JumboTronForm";
-import Typography from "@material-ui/core/Typography";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import ProjectViewDialog from "../common/modules/sub_modules/ProjectViewDialog";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -23,6 +22,8 @@ import IconButton from "@material-ui/core/IconButton";
 import GalleryForm from "../common/modules/GalleryForm";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
+import StoriesForm from "./modules/StoriesForm";
+import TwoColumnStory  from "./icons/twoColumn.png";
 
 const styles = (theme) => ({
 	root: {
@@ -48,20 +49,32 @@ class ListModules extends React.Component {
 		this.onUndo = this.onUndo.bind(this);
 	}
 	static getDerivedStateFromProps(props, state) {
-		console.log(props.tabIndex, "DFFF");
-		if (props.tabIndex === 1) {
-			return {
-				currentSection : "Section1"
-			}
-		}
+		console.log(props.project, "DFFF");
+
 		// eslint-disable-next-line no-unused-expressions
 
-		if (props.project.preview_enabled && props.project.previewEnabled !== this.state.previewEnabled) {
+		if (
+			props.project.preview_enabled &&
+			props.project.previewEnabled !== state.previewEnabled
+		) {
 			return {
 				previewEnabled: props.project.preview_enabled
 			};
 		}
-		return props.tabIndex === 1 ? ({ currentSection: "Section1" }) : props.tabIndex === 2 ? ({ currentSection: "Section2" }) : props.tabIndex === 3 ? ({ currentSection: "Section3" }) : null
+
+		// if (props.project !== state.project) {
+		// 	return {
+		// 		project: props.project
+		// 	}
+		// }
+
+		return props.tabIndex === 1
+			? { currentSection: "Section1" }
+			: props.tabIndex === 2
+			? { currentSection: "Section2" }
+			: props.tabIndex === 3
+			? { currentSection: "Section3" }
+			: null;
 	}
 	handleListItemClick = (event, index) => {
 		this.setState({ selectedIndex: index });
@@ -75,7 +88,7 @@ class ListModules extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-		console.log(this.props, 'LIST MODULES PROPS')
+		console.log(this.props, "LIST MODULES PROPS");
 		return (
 			<div>
 				<div style={{ display: "flex" }}>
@@ -133,7 +146,7 @@ class ListModules extends React.Component {
 									selected={this.state.selectedIndex === 5}
 									onClick={(event) => this.handleListItemClick(event, 5)}>
 									<ListItemIcon>
-										<MediaLeft />
+										<img src={TwoColumnStory} />
 									</ListItemIcon>
 									<ListItemText primary="Media Left" />
 								</ListItem>
@@ -198,6 +211,14 @@ class ListModules extends React.Component {
 					) : null}
 					{this.state.selectedIndex === 3 ? (
 						<GalleryForm
+							editSection={this.props.editSection}
+							location={this.props.location}
+							projectID={this.props.projectID}
+							sendModuleToProject={this.sendModuleToProject}
+						/>
+					) : null}
+					{this.state.selectedIndex === 5 ? (
+						<StoriesForm
 							editSection={this.props.editSection}
 							location={this.props.location}
 							projectID={this.props.projectID}

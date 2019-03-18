@@ -14,8 +14,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
 	switch (action.type) {	
-		case GET_PROJECT:
-			
+		case GET_PROJECT:		
 			return {
 				...state,
 				project: action.payload,
