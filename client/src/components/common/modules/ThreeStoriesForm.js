@@ -2,9 +2,10 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import ButtonBase from "@material-ui/core/ButtonBase";
-import Example1 from "../icons/Story1Example.png";
-import Example2 from "../icons/StoryTwoExample.png";
-import StoryDialog from "./sub_modules/StoryDialog";
+import Example1 from "../icons/Story3_Example1.png";
+import Example2 from "../icons/Story3_Example2.png";
+import Example3 from "../icons/Story3_Example3.png";
+import ThreeStoryDialog from "./sub_modules/ThreeStoryDialog";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import UpdateIcon from "@material-ui/icons/Update";
@@ -96,10 +97,15 @@ const images = [
 		url: Example2,
 		title: "Story_2",
 		width: "100%"
-	}
+    },
+    	{
+        url: Example3,
+        title: "Story_3",
+        width: "100%"
+    }
 ];
 
-class StoriesForm extends Component {
+class TwoStoriesForm extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -108,10 +114,27 @@ class StoriesForm extends Component {
 			errors: "",
 			refresh: "Upload",
 			location: this.props.location,
-			stories: []
+			projectID: this.props.location.hash.slice(1),
+			stories: [],
+			originalStory: []
 		};
 		this.addStoriesToProject = this.addStoriesToProject.bind(this);
 	}
+
+	componentWillMount() {
+		let originalStory = this.props.project.project.modules.filter(
+			(module) =>
+				module.location === this.props.currentSection &&
+				module.type === "Three_Stories"
+		);
+		//Checking to see if Two_Stories is already in project
+		if (originalStory.length > 0) {
+			this.setState({
+				originalStory: originalStory[0].stories
+			});
+		}
+	}
+
 	retrieveStoryFormInput = (info) => {
 		var storyType = Object.keys(info)[0];
 		var storyState = this.state.stories;
@@ -136,13 +159,16 @@ class StoriesForm extends Component {
 
 	addStoriesToProject(e) {
 		e.preventDefault();
-		if (this.state.stories.length < 2) {
+		if (this.state.stories.length < 3) {
 			this.setState({
 				error: "Please add both stories"
 			});
 		} else {
 			const moduleData = {
-				stories: this.state.stories
+				stories: this.state.stories,
+				type: "Three_Stories",
+				location: this.props.currentSection,
+				project_id: this.state.projectID
 			};
 			this.props.addModule(moduleData, this.state.hash);
 
@@ -155,15 +181,11 @@ class StoriesForm extends Component {
 
 	render() {
 		const { classes } = this.props;
-		var storyState = this.state.stories;
-		console.log(this.state.stories, "stories");
-		// var removeDuplicates = storyState.filter(story => story.)
-
 		return (
 			<div style={{ width: "100%" }}>
 				<div className="flex_box_default_no_wrap">
 					{images.map((image, index) => (
-						<div className="col-xs-12 col-md-6">
+						<div className="col-xs-12 col-md-4">
 							<ButtonBase
 								focusRipple
 								key={image.title}
@@ -179,9 +201,10 @@ class StoriesForm extends Component {
 									}}
 								/>
 								<span className={classes.imageBackdrop} />
-								<StoryDialog
+								<ThreeStoryDialog
 									storyType={image.title}
 									retrieveStoryFormInput={this.retrieveStoryFormInput}
+									originalStory={this.state.originalStory}
 								/>
 							</ButtonBase>
 						</div>
@@ -208,7 +231,7 @@ class StoriesForm extends Component {
 	}
 }
 
-StoriesForm.propTypes = {
+TwoStoriesForm.propTypes = {
 	classes: PropTypes.object.isRequired
 };
 const mapStateToProps = (state) => ({
@@ -219,6 +242,6 @@ export default withRouter(
 	connect(
 		mapStateToProps,
 		{ addModule }
-	)(withStyles(styles)(StoriesForm))
+	)(withStyles(styles)(TwoStoriesForm))
 );
-// export default withStyles(styles)(StoriesForm);
+// export default withStyles(styles)(TwoStoriesForm);

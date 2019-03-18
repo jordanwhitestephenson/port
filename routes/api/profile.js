@@ -159,7 +159,7 @@ router.post(
 	(req, res) => {
 		console.log(req.body, "ERROR OBEJCT*********");
 		const { errors_object, isValid } = validateProjectInput(req.body);
-	
+
 		if (!isValid) {
 			return res.status(400).json(errors_object);
 		}
@@ -178,7 +178,6 @@ router.post(
 			};
 		}
 		if (req.body.type === "Jumbotron") {
-			console.log("JUMBOTRON", req.body);
 			ModuleData = {
 				main_image: {
 					SRC: req.body.main_image.SRC,
@@ -206,7 +205,24 @@ router.post(
 			ModuleData = {
 				type: req.body.type,
 				location: req.body.location,
-				imageSets: req.body.imageSets
+				imageSets: req.body.imageSets,
+				projectID: req.params.project_id
+			};
+		}
+		if (req.body.type === "Two_Stories") {
+			ModuleData = {
+				type: req.body.type,
+				location: req.body.location,
+				stories: req.body.stories,
+				projectID: req.params.project_id
+			};
+		}
+		if (req.body.type === "Three_Stories") {
+			ModuleData = {
+				type: req.body.type,
+				location: req.body.location,
+				stories: req.body.stories,
+				projectID: req.params.project_id
 			};
 		}
 

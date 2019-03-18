@@ -102,7 +102,7 @@ class JumboTronForm extends React.Component {
 	}
 
 	componentWillMount() {
-		console.log(this.props.project.project.modules, 'NARROW THIS DOWN')
+
 		let jumboTron = this.props.project.project.modules.filter(
 			(module) =>
 				module.location === this.props.currentSection &&

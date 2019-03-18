@@ -7,7 +7,7 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 
-export default class FormDialog extends React.Component {
+export default class TwoStoryDialog extends React.Component {
 	constructor(props) {
 		super(props);
 
@@ -29,6 +29,32 @@ export default class FormDialog extends React.Component {
 		};
 		this.ErrorCheck = this.ErrorCheck.bind(this);
 		this.sendStoryInfo = this.sendStoryInfo.bind(this);
+		this.handleCancel = this.handleCancel.bind(this);
+	}
+	componentWillMount() {
+		if (this.props.originalStory.length > 0) {
+			const story1 = this.props.originalStory.filter(
+				(story) => Object.keys(story)[0] === "Story_1"
+			)[0].Story_1;
+			const story2 = this.props.originalStory.filter(
+				(story) => Object.keys(story)[0] === "Story_2"
+			)[0].Story_2;
+
+			this.setState({
+				story1_ImgSRC: story1.story1_ImgSRC,
+				story1_ImgAlt: story1.story1_ImgAlt,
+				story1_Link: story1.story1_Link,
+				story1_CTA: story1.story1_CTA,
+				story1_Headline_Text: story1.story1_Headline_Text,
+				story1_Paragraph_Text: story1.story1_Paragraph_Text,
+				story2_ImgSRC: story2.story2_ImgSRC,
+				story2_ImgAlt: story2.story2_ImgAlt,
+				story2_Link: story2.story2_Link,
+				story2_CTA: story2.story2_CTA,
+				story2_Headline_Text: story2.story2_Headline_Text,
+				story2_Paragraph_Text: story2.story2_Paragraph_Text
+			});
+		}
 	}
 
 	handleClickOpen = () => {
@@ -105,6 +131,11 @@ export default class FormDialog extends React.Component {
 	handleClose = () => {
 		this.ErrorCheck();
 	};
+	handleCancel = () => {
+		this.setState({
+			open: false
+		});
+	};
 	sendStoryInfo = () => {
 		if (this.props.storyType === "Story_1") {
 			let Story_1 = {
@@ -129,10 +160,10 @@ export default class FormDialog extends React.Component {
 				story2_Headline_Text: this.state.story2_Headline_Text,
 				story2_Paragraph_Text: this.state.story2_Paragraph_Text
 			};
-            this.props.retrieveStoryFormInput({ Story_2 });
-            this.setState({
-                open: false
-            });
+			this.props.retrieveStoryFormInput({ Story_2 });
+			this.setState({
+				open: false
+			});
 		}
 	};
 	handleChange = (name) => (event) => {
@@ -171,12 +202,24 @@ export default class FormDialog extends React.Component {
 							autoFocus
 							margin="dense"
 							id="name"
+							value={
+								storyType === "Story_1"
+									? this.state.story1_ImgSRC
+									: storyType === "Story_2"
+									? this.state.story2_ImgSRC
+									: null
+							}
 							label={
 								storyType === "Story_1"
 									? "Story1 Image SRC"
 									: storyType === "Story_2"
 									? "Story2_Image SRC"
 									: null
+							}
+							helperText={
+								storyType === "Story_1"
+									? "Example : 205473_4S3_Reviva_Flip_W_SS19_OF_OL_Woani_0250.png?$staticlink$ "
+									: "HeroYellowimage.png?$staticlink$"
 							}
 							type="image source"
 							fullWidth
@@ -191,7 +234,19 @@ export default class FormDialog extends React.Component {
 						<TextField
 							autoFocus
 							margin="dense"
-							id="name"
+							id="alt"
+							value={
+								storyType === "Story_1"
+									? this.state.story1_ImgAlt
+									: storyType === "Story_2"
+									? this.state.story2_ImgAlt
+									: null
+							}
+							helperText={
+								storyType === "Story_1"
+									? "Example : Reviva™ "
+									: "Example : Our Favorite Destinations to Travel with Crocs"
+							}
 							label={
 								storyType === "Story_1"
 									? "Story1 Image Alt"
@@ -199,7 +254,6 @@ export default class FormDialog extends React.Component {
 									? "Story2 Image Alt"
 									: null
 							}
-							type="email"
 							fullWidth
 							onChange={
 								storyType === "Story_1"
@@ -212,7 +266,19 @@ export default class FormDialog extends React.Component {
 						<TextField
 							autoFocus
 							margin="dense"
-							id="name"
+							helperText={
+								storyType === "Story_1"
+									? "Example : $httpUrl('Page-Show','cid','reviva')$"
+									: "Example : $httpUrl('Page-Show','cid','best-destinations-to-travel')$"
+							}
+							value={
+								storyType === "Story_1"
+									? this.state.story1_Link
+									: storyType === "Story_2"
+									? this.state.story2_Link
+									: null
+							}
+							id="link"
 							label={
 								storyType === "Story_1"
 									? "Story1 Link"
@@ -220,7 +286,6 @@ export default class FormDialog extends React.Component {
 									? "Story 2 Link"
 									: null
 							}
-							type="email"
 							fullWidth
 							onChange={
 								storyType === "Story_1"
@@ -233,7 +298,14 @@ export default class FormDialog extends React.Component {
 						<TextField
 							autoFocus
 							margin="dense"
-							id="name"
+							id="CTA"
+							value={
+								storyType === "Story_1"
+									? this.state.story1_CTA
+									: storyType === "Story_2"
+									? this.state.story2_CTA
+									: null
+							}
 							label={
 								storyType === "Story_1"
 									? "Story1 CTA"
@@ -241,7 +313,6 @@ export default class FormDialog extends React.Component {
 									? "Story 2 CTA"
 									: null
 							}
-							type="email"
 							fullWidth
 							onChange={
 								storyType === "Story_1"
@@ -255,7 +326,14 @@ export default class FormDialog extends React.Component {
 						<TextField
 							autoFocus
 							margin="dense"
-							id="name"
+							id="headline"
+							value={
+								storyType === "Story_1"
+									? this.state.story1_Headline_Text
+									: storyType === "Story_2"
+									? this.state.story2_Headline_Text
+									: null
+							}
 							label={
 								storyType === "Story_1"
 									? "Story1 Headline Text"
@@ -263,7 +341,11 @@ export default class FormDialog extends React.Component {
 									? "Story 2 Headline Text"
 									: null
 							}
-							type="email"
+							helperText={
+								storyType === "Story_1"
+									? "Example : Introducing Reviva™ by Crocs"
+									: "Example : Our Favorite Destinations to Travel with Crocs"
+							}
 							fullWidth
 							onChange={
 								storyType === "Story_1"
@@ -285,7 +367,18 @@ export default class FormDialog extends React.Component {
 									? "Story 2 Paragraph Text"
 									: null
 							}
-							type="email"
+							helperText={
+								storyType === "Story_1"
+									? "Example : Engineered to add a little bounce to your day, the all-new Crocs Reviva™ Collection features bliss-inducing bubbles that massage and comfort while you’re on the go."
+									: "Example : An inspiring look at the places Crocs employees are visiting and the styles they’re packing to maximize the adventure."
+							}
+							value={
+								storyType === "Story_1"
+									? this.state.story1_Paragraph_Text
+									: storyType === "Story_2"
+                                        ? this.state.story2_Paragraph_Text
+									: null
+							}
 							fullWidth
 							onChange={
 								storyType === "Story_1"
@@ -297,7 +390,7 @@ export default class FormDialog extends React.Component {
 						/>
 					</DialogContent>
 					<DialogActions>
-						<Button onClick={this.handleClose} color="primary">
+						<Button onClick={this.handleCancel} color="primary">
 							Cancel
 						</Button>
 						<Button onClick={this.ErrorCheck} color="primary">

@@ -4,7 +4,9 @@ import { connect } from "react-redux";
 import JumboTronPreview from "../common/preview_templates/JumboTronPreview";
 import ProductGridPreview from "../common/preview_templates/ProductGridPreview";
 import GalleryPreview from "../common/preview_templates/GalleryPreview";
-import SimpleModal from '../common/Modal'
+import Two_StoryPreview from "../common/preview_templates/Two_StoriesPreview";
+import Three_StoryPreview from "../common/preview_templates/Three_StoriesPreview";
+import RetrieveHTML from "../common/RetrieveHTML";
 
 export class PreviewProjectVIEW extends Component {
 	static propTypes = {
@@ -18,9 +20,8 @@ export class PreviewProjectVIEW extends Component {
 			Section1: "",
 			Section2: "",
 			Section3: "",
-			Section4: "",
+			Section4: ""
 		};
-		
 	}
 	componentWillReceiveProps(nextProps) {
 		this.setState({
@@ -76,13 +77,13 @@ export class PreviewProjectVIEW extends Component {
 	}
 
 	render() {
-		console.log(this.props.project, 'PRPKE')
+		console.log(this.props.project, "PRPKE");
 		if (this.state.modules.length > 0) {
 			const Section1 = this.state.Section1;
 			const Section2 = this.state.Section2;
 			const Section3 = this.state.Section3;
 			const Section4 = this.state.Section4;
-			
+
 			return (
 				<section>
 					<a className="btn btn-light" href="/dashboard">
@@ -98,6 +99,10 @@ export class PreviewProjectVIEW extends Component {
 									<ProductGridPreview modulePreview={Section1} />
 								) : Section1.type === "Gallery" ? (
 									<GalleryPreview modulePreview={Section1} />
+								) : Section1.type === "Two_Stories" ? (
+									<Two_StoryPreview modulePreview={Section1} />
+								) : Section1.type === "Three_Stories" ? (
+									<Three_StoryPreview modulePreview={Section1} />
 								) : null}
 							</div>
 
@@ -108,6 +113,8 @@ export class PreviewProjectVIEW extends Component {
 									<ProductGridPreview modulePreview={Section2} />
 								) : Section2.type === "Gallery" ? (
 									<GalleryPreview modulePreview={Section2} />
+								) : Section2.type === "Two_Stories" ? (
+									<Two_StoryPreview modulePreview={Section2} />
 								) : null}
 							</div>
 							<div className="SECTION_3">
@@ -117,18 +124,19 @@ export class PreviewProjectVIEW extends Component {
 									<ProductGridPreview modulePreview={Section3} />
 								) : Section3.type === "Gallery" ? (
 									<GalleryPreview modulePreview={Section3} />
+								) : Section3.type === "Two_Stories" ? (
+									<Two_StoryPreview modulePreview={Section3} />
 								) : null}
 							</div>
 						</div>
 					</div>
-					<SimpleModal projectID={this.props.project.project._id}/>
+					<RetrieveHTML projectID={this.props.project.project._id} />
 				</section>
 			);
 		}
 		if (!this.props.project.modules) {
 			return <h1>No modules found..</h1>;
-		}
-		else {
+		} else {
 			return <h1>Loading....</h1>;
 		}
 

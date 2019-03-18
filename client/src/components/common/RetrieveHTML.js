@@ -1,31 +1,13 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
-import { withRouter } from "react-router-dom";
-import { connect } from "react-redux";
 import Modal from "@material-ui/core/Modal";
 import Button from "@material-ui/core/Button";
 import $ from "jquery";
 import Dialog from "@material-ui/core/Dialog";
-import { addHTML } from "../../actions/profileActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
-
-function rand() {
-	return Math.round(Math.random() * 20) - 10;
-}
-
-function getModalStyle() {
-	const top = 50 + rand();
-	const left = 50 + rand();
-
-	return {
-		top: `${top}%`,
-		left: `${left}%`,
-		transform: `translate(-${top}%, -${left}%)`
-	};
-}
 
 const styles = (theme) => ({
 	paper: {
@@ -38,7 +20,7 @@ const styles = (theme) => ({
 	}
 });
 
-class SimpleModal extends React.Component {
+class retrieveHTML extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -82,7 +64,9 @@ class SimpleModal extends React.Component {
 						aria-labelledby="scroll-dialog-title">
 						<DialogTitle id="scroll-dialog-title">HTML</DialogTitle>
 						<DialogContent>
-							<DialogContentText>{this.state.HTML}</DialogContentText>
+							<DialogContentText>
+								<div className="preview_model">{this.state.HTML}</div>
+							</DialogContentText>
 						</DialogContent>
 					</Dialog>
 				</Modal>
@@ -91,13 +75,13 @@ class SimpleModal extends React.Component {
 	}
 }
 
-SimpleModal.propTypes = {
+retrieveHTML.propTypes = {
 	classes: PropTypes.object.isRequired,
 	projectID: PropTypes.string.isRequired
 };
 
 // We need an intermediary variable for handling the recursive nesting.
-const SimpleModalWrapped = withStyles(styles)(SimpleModal);
+const SimpleModalWrapped = withStyles(styles)(retrieveHTML);
 
 // export default connect({ addHTML })(withRouter(SimpleModalWrapped));
-export default SimpleModalWrapped
+export default SimpleModalWrapped;

@@ -1,16 +1,4 @@
 import React, { Component } from "react";
-import Grid from "@material-ui/core/Grid";
-import ImageContainer from "./preview_components/ImageContainer";
-import ProductContainer from "./preview_components/ProductContainer";
-import { func } from "prop-types";
-
-const styles = {
-	flexbox: {
-		display: "flex",
-		justifyContent: "center",
-		alignItems: "center"
-	}
-};
 
 class ProductGridPreview extends Component {
 	state = {

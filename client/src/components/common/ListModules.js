@@ -22,13 +22,15 @@ import IconButton from "@material-ui/core/IconButton";
 import GalleryForm from "../common/modules/GalleryForm";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
-import StoriesForm from "./modules/StoriesForm";
-import TwoColumnStory  from "./icons/twoColumn.png";
+import TwoStoriesForm from "./modules/TwoStoriesForm";
+import ThreeStoriesForm from "./modules/ThreeStoriesForm";
+import TwoColumnStory from "./icons/twoColumn.png";
+import ThreeColumnStory from "./icons/ThreeColumn.png";
 
 const styles = (theme) => ({
 	root: {
-		width: "100%",
-		maxWidth: 360,
+		width: "80%",
+		maxWidth: 200,
 		backgroundColor: theme.palette.background.paper,
 		position: "relative",
 		overflow: "auto",
@@ -148,7 +150,7 @@ class ListModules extends React.Component {
 									<ListItemIcon>
 										<img src={TwoColumnStory} />
 									</ListItemIcon>
-									<ListItemText primary="Media Left" />
+									<ListItemText primary="Two Column" />
 								</ListItem>
 
 								<ListItem
@@ -156,9 +158,9 @@ class ListModules extends React.Component {
 									selected={this.state.selectedIndex === 6}
 									onClick={(event) => this.handleListItemClick(event, 6)}>
 									<ListItemIcon>
-										<MediaRight />
+										<img src={ThreeColumnStory} />
 									</ListItemIcon>
-									<ListItemText primary="Media Right" />
+									<ListItemText primary="Three Column" />
 								</ListItem>
 
 								<ListItem
@@ -212,15 +214,23 @@ class ListModules extends React.Component {
 					{this.state.selectedIndex === 3 ? (
 						<GalleryForm
 							editSection={this.props.editSection}
-							location={this.props.location}
+							currentSection={this.state.currentSection}
 							projectID={this.props.projectID}
 							sendModuleToProject={this.sendModuleToProject}
 						/>
 					) : null}
 					{this.state.selectedIndex === 5 ? (
-						<StoriesForm
+						<TwoStoriesForm
 							editSection={this.props.editSection}
-							location={this.props.location}
+							currentSection={this.state.currentSection}
+							projectID={this.props.projectID}
+							sendModuleToProject={this.sendModuleToProject}
+						/>
+					) : null}
+					{this.state.selectedIndex === 6 ? (
+						<ThreeStoriesForm
+							editSection={this.props.editSection}
+							currentSection={this.state.currentSection}
 							projectID={this.props.projectID}
 							sendModuleToProject={this.sendModuleToProject}
 						/>
