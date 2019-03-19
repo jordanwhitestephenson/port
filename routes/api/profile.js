@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 const passport = require("passport");
 const ObjectID = require("mongodb").ObjectID;
 // Load Validation
+var path = require("path");
 const validateProfileInput = require("../../validation/profile");
 const validateExperienceInput = require("../../validation/experience");
 const validateProjectInput = require("../../validation/project");
@@ -16,7 +17,7 @@ const User = require("../../models/User");
 // @desc    Tests profile route
 // @access  Public
 router.get("/test", (req, res) => res.json({ msg: "Profile Works" }));
-
+// router.use("/static", express.static("public"));
 // @route   GET api/profile
 // @desc    Get current users profile
 // @access  Private
@@ -312,6 +313,12 @@ router.post(
 		});
 	}
 );
+var CSS = "<script type"
+router.get("/get-css", function(req, res) {
+	var file = res.sendFile(path.join(__dirname + "../../client/src/components/common/preview_templates/preview_components/templateBuilder.css"));
+	console.log("is this even getting,", file);
+	res.json(file);
+});
 
 router.post(
 	"/project",

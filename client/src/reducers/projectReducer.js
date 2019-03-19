@@ -3,17 +3,24 @@ import {
 	UPDATE_SECTION_ONE,
 	ALL_MODULES,
 	DELETE_PROJECT,
-	ADD_MODULE
+	ADD_MODULE,
+	GET_CSS
 } from "../actions/types";
 
 const initialState = {
 	project: null,
 	loading: true,
+	CSS: null,
 	addedSection: []
 };
 
 export default function (state = initialState, action) {
 	switch (action.type) {	
+		case GET_CSS:
+			return {
+			...state,
+				CSS: action.payload
+			};
 		case GET_PROJECT:		
 			return {
 				...state,

@@ -17,6 +17,7 @@ export const ADD_MODULE = 'ADD_MODULE';
 export const UPDATE_SECTION_ONE = 'UPDATE_SECTION_ONE'
 export const ALL_MODULES = 'ALL_MODULES'
 export const DELETE_PROJECT = "DELETE_PROJECT"
+export const GET_CSS = "GET_CSS"
 
 
 

@@ -29,7 +29,7 @@ class Three_StoriesPreview extends Component {
 			"http://staging-na-crox.demandware.net/on/demandware.static/-/Sites-crocs_us-Library/default/" +
 			Story3.story3_ImgSRC.replace("?$staticlink$", "");
 		return (
-			<div className="">
+			<div style={{width:"100%"}}className="flex_box_default">
 				<div className="story1 col-xs-12 col-md-4  flex_box_column">
 					<a href={Story1.story1_Link}>
 						<img

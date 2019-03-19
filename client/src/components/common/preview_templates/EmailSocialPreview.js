@@ -9,9 +9,9 @@ class EmailSocialPreview extends Component {
 	render() {
 		return (
 			<div
-				className="moduleSocial_mock cs_container-crocs  module_container flex_box_row"
+				className="moduleSocial_mock  module_container flex_box_default"
 				style={{ marginBottom: "40px", marginTop: "30px" }}>
-				<div className="col-xs-12 padding-0 col-lg-12 flex_box_row gray_container">
+				<div className="col-xs-12 padding-0 col-lg-12 flex_box_default gray_container">
 					<div
 						className="social_media_container flex_box_column col-xs-12 col-md-5 padding-0"
 						style={{ backgroundColor: "#e1e1e1" }}>
@@ -66,7 +66,8 @@ class EmailSocialPreview extends Component {
 										<input
 											id="StoriesEmailField"
 											className="email"
-											type="text"
+                                            type="text"
+                                            style = {{height: "35px", width: "80%"}}
 											placeholder="Enter your Email"
 											title="Enter your Email"
 											autocomplete="off"
@@ -74,7 +75,8 @@ class EmailSocialPreview extends Component {
 										/>
 										<div className="feedbackStories" />
 										<button
-											className="submitBtn storiesSubmit cx-brand-font"
+                                            className="submitBtn storiesSubmit cx-brand-font"
+                                            style = {{height: "35px"}}
 											id="storiesSubmit"
 											type="submit">
 											Submit

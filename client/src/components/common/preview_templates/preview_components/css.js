@@ -1,3 +1,7 @@
+const myCSS = `
+
+
+
 .flex_box_default_no_wrap {
     display: flex;
     justify-content: center;
@@ -219,3 +223,6 @@
     display: flex;
     justify-content: center;
 }
+`;
+
+export default myCSS;

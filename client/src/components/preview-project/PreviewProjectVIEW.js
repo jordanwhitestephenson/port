@@ -9,6 +9,7 @@ import Three_StoryPreview from "../common/preview_templates/Three_StoriesPreview
 import StoryHeadlinePreview from "../common/preview_templates/StoryHeadline_Preview";
 import USGPreview from "../common/preview_templates/USGPreview";
 import RetrieveHTML from "../common/RetrieveHTML";
+import EmailSocialPreview from "../common/preview_templates/EmailSocialPreview";
 
 export class PreviewProjectVIEW extends Component {
 	static propTypes = {
@@ -117,7 +118,7 @@ export class PreviewProjectVIEW extends Component {
 						Go Back
 					</a>
 
-					<div className="parentDiv">
+					<div className="parentDiv preview_container" id = "FindCSS">
 						<div className="cs_container-crocs ">
 							<div className="SECTION_1">
 								{Section1.type === "Jumbotron" ? (
@@ -183,6 +184,8 @@ export class PreviewProjectVIEW extends Component {
 									<Three_StoryPreview modulePreview={Section4} />
 								) : Section4.type === "USG" ? (
 									<USGPreview modulePreview={Section4} />
+								) : Section4.type === "Email_Social" ? (
+									<USGPreview modulePreview={Section4} />
 								) : null}
 							</div>
 
@@ -199,6 +202,25 @@ export class PreviewProjectVIEW extends Component {
 									<Three_StoryPreview modulePreview={Section5} />
 								) : Section5.type === "USG" ? (
 									<USGPreview modulePreview={Section5} />
+								) : Section5.type === "Email_Social" ? (
+									<EmailSocialPreview modulePreview={Section5} />
+								) : null}
+							</div>
+							<div className="SECTION_6">
+								{Section6.type === "Jumbotron" ? (
+									<JumboTronPreview modulePreview={Section6} />
+								) : Section6.type === "ProductGrid" ? (
+									<ProductGridPreview modulePreview={Section6} />
+								) : Section6.type === "Gallery" ? (
+									<GalleryPreview modulePreview={Section6} />
+								) : Section6.type === "Two_Stories" ? (
+									<Two_StoryPreview modulePreview={Section6} />
+								) : Section6.type === "Three_Stories" ? (
+									<Three_StoryPreview modulePreview={Section6} />
+								) : Section6.type === "USG" ? (
+									<USGPreview modulePreview={Section6} />
+								) : Section6.type === "Email_Social" ? (
+									<EmailSocialPreview modulePreview={Section6} />
 								) : null}
 							</div>
 						</div>
