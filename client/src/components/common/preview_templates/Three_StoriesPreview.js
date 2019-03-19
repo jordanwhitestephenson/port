@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
 
-
 class Three_StoriesPreview extends Component {
 	static propTypes = {
 		prop: PropTypes
@@ -29,11 +28,11 @@ class Three_StoriesPreview extends Component {
 			"http://staging-na-crox.demandware.net/on/demandware.static/-/Sites-crocs_us-Library/default/" +
 			Story3.story3_ImgSRC.replace("?$staticlink$", "");
 		return (
-			<div style={{width:"100%"}}className="flex_box_default">
+			<div style={{ width: "100%" }}>
 				<div className="story1 col-xs-12 col-md-4  flex_box_column">
 					<a href={Story1.story1_Link}>
 						<img
-							className="img-responsive"
+							className="img-responsive mobile_image_full_screen"
 							alt={Story1.story1_ImgAlt}
 							src={Story1_IMG}
 						/>
@@ -84,7 +83,7 @@ class Three_StoriesPreview extends Component {
 				<div className="story3 col-xs-12 col-md-4  flex_box_column">
 					<a href={Story3.story3_Link}>
 						<img
-							className="img-responsive"
+							className="img-responsive mobile_image_full_screen"
 							alt={Story3.story3_ImgAlt}
 							src={Story3_IMG}
 						/>

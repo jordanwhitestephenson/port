@@ -1,15 +1,17 @@
 import React from "react";
 import PropTypes from "prop-types";
+
 import Radio from "@material-ui/core/Radio";
 import FormGroup from "@material-ui/core/FormGroup";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
-import RadioGroup from "@material-ui/core/RadioGroup";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
 import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import { TwitterPicker } from "react-color";
-
+import Avatar from "@material-ui/core/Avatar";
+import BeachAccessIcon from "@material-ui/icons/TextFields";
+import CTAIcon from "@material-ui/icons/TouchApp";
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import LeftIcon from "../../common/icons/browser-27.png";
@@ -97,6 +99,7 @@ class JumboTronForm extends React.Component {
 			main_image_title: "",
 			updateButton: "ADD MODULE",
 			include_image: false,
+			textBoxBackground: false,
 			submitReady: false,
 			errors_object: {}
 		};
@@ -118,6 +121,7 @@ class JumboTronForm extends React.Component {
 					module.location === this.props.currentSection &&
 					module.type === "Jumbotron"
 			)[0];
+			console.log(editSection.main_image, "editSection.main_imagei");
 			//If main_image is present in the modules array, then show image input fields//
 			// eslint-disable-next-line no-unused-expressions
 			editSection.main_image ? this.setState({ include_image: true }) : null;
@@ -139,6 +143,7 @@ class JumboTronForm extends React.Component {
 				main_image_link: editSection.main_image.link,
 				main_image_alt: editSection.main_image.alt,
 				main_image_title: editSection.main_image.title,
+				textBoxBackground: editSection.textBoxBackground,
 				new: false
 			});
 		}
@@ -166,8 +171,10 @@ class JumboTronForm extends React.Component {
 				link: this.state.main_image_link,
 				alt: this.state.main_image_alt,
 				title: this.state.main_image_title
-			}
+			},
+			textBoxBackground: this.state.textBoxBackground
 		};
+
 		this.props.addModule(moduleData, this.state.projectID);
 		this.setState({
 			updateButton: "UPDATE MODULE",
@@ -211,7 +218,7 @@ class JumboTronForm extends React.Component {
 		this.setState({ textColor: color.hex });
 	};
 	handleRadioChange = (name) => (event) => {
-		this.setState({ button: event.target.checked });
+		this.setState({ [name]: event.target.checked });
 	};
 
 	render() {
@@ -395,6 +402,20 @@ class JumboTronForm extends React.Component {
 								}}
 							/>
 						</div>
+					</div>
+
+					<div className="col-xs-12">
+						<div className="flex_box_default box-shadow-padding ">
+							<Avatar>
+								<BeachAccessIcon />
+							</Avatar>
+							<Typography
+								variant="h6"
+								align="center"
+								style={{ paddingLeft: "10px" }}>
+								Text Box Section
+							</Typography>
+						</div>
 
 						<div>
 							<TextField
@@ -412,9 +433,6 @@ class JumboTronForm extends React.Component {
 								}}
 							/>
 						</div>
-					</div>
-
-					<div className="col-xs-12">
 						<div className="col-xs-12" style={{ marginTop: "1em" }}>
 							<FormLabel component="legend" className="text-left">
 								Text Color
@@ -430,6 +448,21 @@ class JumboTronForm extends React.Component {
 							</div>
 						</div>
 						<div className="col-xs-12">
+							<FormControlLabel
+								style={{ margin: "auto" }}
+								control={
+									<Switch
+										checked={this.state.textBoxBackground}
+										onChange={this.handleRadioChange("textBoxBackground")}
+										value="textBoxBackground"
+									/>
+								}
+								label={
+									this.state.textBoxBackground
+										? "Text Box will have padding and a white background"
+										: "Text Box normal settings without background color"
+								}
+							/>
 							<TextField
 								label="Headline Text:"
 								error={errors_object.headline}
@@ -461,26 +494,18 @@ class JumboTronForm extends React.Component {
 					</div>
 
 					<section className="col-xs-12">
+						<div className="flex_box_default box-shadow-padding ">
+							<Avatar>
+								<CTAIcon />
+							</Avatar>
+							<Typography
+								variant="h6"
+								align="center"
+								style={{ paddingLeft: "10px" }}>
+								CTA Section
+							</Typography>
+						</div>
 						<FormControl component="fieldset" className={classes.formControl}>
-							<FormLabel>CTA</FormLabel>
-							{/* <RadioGroup
-								error={this.state.errros}
-								aria-label="Gender"
-								name="legend"
-								className={classes.group}
-								value={this.state.button}
-								onChange={this.handleButton}>
-								<FormControlLabel
-									value="true"
-									control={<Radio />}
-									label="Add Button"
-								/>
-								<FormControlLabel
-									value="false"
-									control={<Radio />}
-									label="No Button"
-								/>
-							</RadioGroup> */}
 							<FormGroup row>
 								<FormControlLabel
 									style={{ margin: "auto" }}

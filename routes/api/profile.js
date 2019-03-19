@@ -199,7 +199,8 @@ router.post(
 				layout: req.body.layout,
 				backgroundColor: req.body.backgroundColor,
 				textColor: req.body.textColor,
-				projectID: req.params.project_id
+				projectID: req.params.project_id,
+				textBoxBackground: req.body.textBoxBackground
 			};
 		}
 		if (req.body.type === "Gallery") {
@@ -313,9 +314,14 @@ router.post(
 		});
 	}
 );
-var CSS = "<script type"
+var CSS = "<script type";
 router.get("/get-css", function(req, res) {
-	var file = res.sendFile(path.join(__dirname + "../../client/src/components/common/preview_templates/preview_components/templateBuilder.css"));
+	var file = res.sendFile(
+		path.join(
+			__dirname +
+				"../../client/src/components/common/preview_templates/preview_components/templateBuilder.css"
+		)
+	);
 	console.log("is this even getting,", file);
 	res.json(file);
 });
@@ -408,7 +414,8 @@ router.post(
 				},
 				layout: req.body.layout,
 				backgroundColor: req.body.backgroundColor,
-				projectID: req.params.project_id
+				projectID: req.params.project_id,
+				textBoxBackground: req.params.textBoxBackground
 			};
 		}
 

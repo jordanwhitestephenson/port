@@ -13,7 +13,7 @@ class AddModule extends Component {
 			projectID: this.props.location.hash.slice(1),
 			current: false,
 			title: "",
-			project: '',
+			project: "",
 			paragraph: ""
 		};
 	}
@@ -36,13 +36,14 @@ class AddModule extends Component {
 	// 	this.props.addModule(moduleData, this.state.projectID, this.props.history);
 	// };
 
-
-	render() {	
-		
-		if (this.props.location.pathname === "/edit-project" && !this.props.project.loading) {
+	render() {
+		if (
+			this.props.location.pathname === "/edit-project" &&
+			!this.props.project.loading
+		) {
 			return (
 				<div className="edit-module">
-					<div className="container">
+					<div className="cs_container-crocs">
 						<div className="row">
 							<div className="col-md-12 m-auto">
 								<Link to="/dashboard" className="btn btn-light">
@@ -54,7 +55,7 @@ class AddModule extends Component {
 								<small className="d-block pb-3">* = required fields</small>
 								<TabContainer
 									projectID={this.state.projectID}
-									pathname= {this.props.location.pathname}
+									pathname={this.props.location.pathname}
 									editProjectInfo={this.props.project.project}
 								/>
 							</div>
@@ -62,9 +63,11 @@ class AddModule extends Component {
 					</div>
 				</div>
 			);
-		} else if (this.props.location.pathname === "/add-module" && !this.props.project.loading) {
+		} else if (
+			this.props.location.pathname === "/add-module" &&
+			!this.props.project.loading
+		) {
 			return (
-
 				<div className="add-module">
 					<div className="container">
 						<div className="row">
@@ -88,9 +91,8 @@ class AddModule extends Component {
 					</div>
 				</div>
 			);
-		}
-		else {
-			return <div>Loading...</div>
+		} else {
+			return <div>Loading...</div>;
 		}
 	}
 }
@@ -103,10 +105,10 @@ AddModule.propTypes = {
 const mapStateToProps = (state) => ({
 	profile: state.profile,
 	errors_object: state.errors_object,
-	project: state.project,
+	project: state.project
 });
 
 export default connect(
 	mapStateToProps,
-	{getCurrentProject}
+	{ getCurrentProject }
 )(withRouter(AddModule));

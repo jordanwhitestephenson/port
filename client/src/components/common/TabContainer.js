@@ -178,6 +178,8 @@ class FullWidthTabs extends React.Component {
 				return module;
 			});
 
+			console.log("changedType", changedType);
+
 			Section1 = changedType.filter((module) => module.location === "Section1");
 			Section2 = changedType.filter((module) => module.location === "Section2");
 			Section3 = changedType.filter((module) => module.location === "Section3");
@@ -449,4 +451,3 @@ export default withRouter(
 		{ getCurrentProject }
 	)(withStyles(styles, { withTheme: true })(FullWidthTabs))
 );
-

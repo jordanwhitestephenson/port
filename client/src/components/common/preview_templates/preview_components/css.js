@@ -1,7 +1,11 @@
 const myCSS = `
 
 
-
+  .preview_container .paragraph_text {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    line-height: 1.35;
+  }
 .flex_box_default_no_wrap {
     display: flex;
     justify-content: center;
@@ -55,7 +59,7 @@ const myCSS = `
     margin-bottom: 10px;
 }
 
-.module_container .padding-crocs-stories {
+.preview_container .padding-crocs-stories {
     padding: 20px 10px 5px 10px;
     margin-top: 10px;
     margin-bottom: 1.5em;
@@ -77,7 +81,7 @@ const myCSS = `
     margin-bottom: 2em;
 }
 
-.paragraph_text {
+.preview_container .paragraph_text {
     font-size: 15px;
 }
 
@@ -137,10 +141,7 @@ const myCSS = `
     text-decoration: none;
 }
 
-.preview_container .story_text {
-    padding: 25px 20px;
-    margin-right: auto;
-}
+
 
 .preview_container .icon {
     margin-left: 8px;
@@ -164,6 +165,8 @@ const myCSS = `
     width: 80%;
 }
 
+
+
 .preview_container .submitBtn {
     color: #fff;
     background-color: #444;
@@ -173,35 +176,61 @@ const myCSS = `
     .mobile_image_full_screen {
         width: 100%;
     }
+    .preview_container .story_text {
+      padding: 20px 10px 20px 10px;
+    }
+    .preview_container .paragraph_text {
+      font-size: 15px;
+    }
+    .preview_container .cs_container-fluid,
+    .preview_container .background_colored_div.cs_container-crocs,
+    .preview_container .mobile_image_full_screen {
+      padding-left: 0px;
+      padding-right: 0px;
+    }
+    .preview_container .mobile_image_full_screen {
+      width: 100%;
+    }
+    .preview_container .social_media_container {
+      min-height: 130px;
+      margin: 10px 0px 10px 0px;
+    }
 }
+ @media(min-width: 481px) {
+    .preview_container .paragraph_text {
+      font-size: 15px;
+    }
 
-.story_image_box-shadow {
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-    position: relative;
-    height: 270px;
-    padding: 15px;
-    margin-top: 2em;
-    margin-bottom: 2em;
+    .preview_container .background_colored_div {
+      min-height: 375px;
+    }
+    .preview_container .social_media_container {
+      min-height: 150px;
+      margin: 10px 5px 10px 5px;
+    }
+    .preview_container .footer-email-signup button {
+      height: 35px;
+    }
+    .preview_container .story_text {
+    padding: 25px 20px;
+    margin-right: auto;
+  }
+ }
+
+.preview_container .textBoxPadding {
+    background: #fff;
+    padding-left: 15px;
+    padding-right: 15px;
+    padding-top: 7%;
+    padding-bottom: 7%;
 }
-
 .preview_container .social_media_container {
     min-height: 150px;
     margin: 10px 5px 10px 5px;
 }
 
-.jumbo_image_box-shadow {
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-    position: relative;
-    padding: 15px;
-    margin-top: 2em;
-    margin-bottom: 2em;
-}
 
-.box-shadow {
-    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
-}
-
-.story_text {
+.preview_container . story_text {
     margin-top: 10px
 }
 

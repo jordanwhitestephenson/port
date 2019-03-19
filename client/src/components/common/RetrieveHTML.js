@@ -68,7 +68,8 @@ class retrieveHTML extends React.Component {
 		// let para = document.querySelector("p");
 		// let compStyles = window.getComputedStyle(para);
 		console.log(myCSS[0], "compStyles");
-		var styleDiv = "<style>" +  myCSS + "</style>";
+		var HTML = this.state.HTML
+		var styleDiv = "<style>" + myCSS + "</style>" + "<div class = 'preview_container'>" +  HTML  + "</div>";
 		return (
 			<div>
 				<Button onClick={this.handleOpen}>GET HTML</Button>
@@ -86,8 +87,7 @@ class retrieveHTML extends React.Component {
 						<DialogContent>
 							<DialogContentText>
 								<div className="preview_model">
-									{styleDiv}
-									{this.state.HTML}
+							{styleDiv}
 								</div>
 							</DialogContentText>
 						</DialogContent>
