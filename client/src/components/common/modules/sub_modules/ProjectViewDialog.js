@@ -14,6 +14,9 @@ import ProductGridPreview from "../../preview_templates/ProductGridPreview";
 import GalleryPreview from "../../preview_templates/GalleryPreview";
 import Two_StoriesPreview from "../../preview_templates/Two_StoriesPreview";
 import Three_StoriesPreview from "../../preview_templates/Three_StoriesPreview";
+import USGPreview from "../../preview_templates/USGPreview";
+import StoryHeadlinePreview from "../../preview_templates/StoryHeadline_Preview";
+import EmailSocialPreview from '../../preview_templates/EmailSocialPreview'
 
 const styles = {
 	appBar: {
@@ -82,6 +85,11 @@ class ProjectViewDialog extends React.Component {
 							{module.type === "Jumbotron" ? (
 								<JumboTronPreview modulePreview={this.state.modulePreview} />
 							) : null}
+							{module.type === "Story_Headline" ? (
+								<StoryHeadlinePreview
+									modulePreview={this.state.modulePreview}
+								/>
+							) : null}
 							{module.type === "ProductGrid" ? (
 								<ProductGridPreview modulePreview={this.state.modulePreview} />
 							) : null}
@@ -95,6 +103,12 @@ class ProjectViewDialog extends React.Component {
 								<Three_StoriesPreview
 									modulePreview={this.state.modulePreview}
 								/>
+							) : null}
+							{module.type === "USG" ? (
+								<USGPreview modulePreview={this.state.modulePreview} />
+							) : null}
+							{module.type === "Email_Social" ? (
+								<EmailSocialPreview modulePreview={this.state.modulePreview} />
 							) : null}
 						</div>
 					</List>

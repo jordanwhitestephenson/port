@@ -1,13 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Radio from "@material-ui/core/Radio";
+import FormGroup from "@material-ui/core/FormGroup";
+import FormControlLabel from "@material-ui/core/FormControlLabel";
 import RadioGroup from "@material-ui/core/RadioGroup";
 import Typography from "@material-ui/core/Typography";
 import { withStyles } from "@material-ui/core/styles";
-import Grid from "@material-ui/core/Grid";
+import Switch from "@material-ui/core/Switch";
 import TextField from "@material-ui/core/TextField";
 import { TwitterPicker } from "react-color";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
+
 import FormControl from "@material-ui/core/FormControl";
 import FormLabel from "@material-ui/core/FormLabel";
 import LeftIcon from "../../common/icons/browser-27.png";
@@ -20,6 +22,7 @@ import IconButton from "@material-ui/core/IconButton";
 import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import { addModule } from "../../../actions/profileActions";
+import JumboTronExamplePhoto from "../icons/JumboTronExample_03.jpg";
 
 const styles = (theme) => ({
 	container: {
@@ -78,7 +81,7 @@ class JumboTronForm extends React.Component {
 			paragraphText: this.props.paragraphText,
 			location: this.props.currentSection,
 			type: "Jumbotron",
-			button: "",
+			button: false,
 			buttonText: "",
 			buttonLink: this.props.buttonLink,
 			layout: "",
@@ -99,14 +102,15 @@ class JumboTronForm extends React.Component {
 		};
 
 		this.onSubmit = this.onSubmit.bind(this);
+		this.handleRadioChange = this.handleRadioChange.bind(this);
 	}
 
 	componentWillMount() {
-
 		let jumboTron = this.props.project.project.modules.filter(
 			(module) =>
 				module.location === this.props.currentSection &&
-				module.type === "Jumbotron" && module.projectID === this.state.projectID
+				module.type === "Jumbotron" &&
+				module.projectID === this.state.projectID
 		);
 		if (jumboTron.length > 0) {
 			var editSection = this.props.project.project.modules.filter(
@@ -116,9 +120,11 @@ class JumboTronForm extends React.Component {
 			)[0];
 			//If main_image is present in the modules array, then show image input fields//
 			// eslint-disable-next-line no-unused-expressions
-			editSection.main_image ? this.setState({ include_image: true }) : null;		
+			editSection.main_image ? this.setState({ include_image: true }) : null;
 			// eslint-disable-next-line no-unused-expressions
-			editSection.errors_object ? this.setState({ errors_object: this.props.errors_object }) : null;		
+			editSection.errors_object
+				? this.setState({ errors_object: this.props.errors_object })
+				: null;
 			this.setState({
 				editSection: editSection,
 				headline: editSection.headline,
@@ -204,6 +210,9 @@ class JumboTronForm extends React.Component {
 	handleTextColorChange = (color) => {
 		this.setState({ textColor: color.hex });
 	};
+	handleRadioChange = (name) => (event) => {
+		this.setState({ button: event.target.checked });
+	};
 
 	render() {
 		const { classes } = this.props;
@@ -220,8 +229,8 @@ class JumboTronForm extends React.Component {
 				) : null}
 
 				<form className={classes.container} onSubmit={this.onSubmit}>
-					<Grid container direction="row" spacing={2} xs={12}>
-						<Grid item xs={12}>
+					<div className="col-xs-12">
+						<div className="col-xs-12 ">
 							<IconButton
 								role="input"
 								style={{ float: "left" }}
@@ -240,68 +249,60 @@ class JumboTronForm extends React.Component {
 									</div>
 								)}
 							</IconButton>
-
+							<img
+								src={JumboTronExamplePhoto}
+								className="jumbo_image_box-shadow"
+								alt="JumboTron Example"
+							/>
 							<Typography component="h2" variant="display1" gutterBottom>
 								JumboTron
 							</Typography>
-						</Grid>
-						<Grid item xs={12}>
+						</div>
+
+						<div className="col-xs-12 layout_container">
 							<FormLabel>Layout</FormLabel>
 							<p className="error_text">{errors_object.layout}</p>
-						</Grid>
-						<Grid
-							container
-							direction="column"
-							justify="center"
-							alignItems="center"
-							xs={4}>
-							<img src={RightIcon} alt="ya" className={classes.icon} />
-							<FormLabel component="legend">Image To Right</FormLabel>
-							<Radio
-								checked={this.state.layout === "Right"}
-								onChange={this.handleLayout}
-								value="Right"
-								name="radio-Right"
-								aria-label="A"
-							/>
-						</Grid>
-						<Grid
-							container
-							direction="column"
-							justify="center"
-							alignItems="center"
-							xs={4}>
-							<img src={CenterIcon} alt="ya" className={classes.icon} />
-							<FormLabel component="legend">No Image</FormLabel>
-							<Radio
-								checked={this.state.layout === "no_image"}
-								onChange={this.handleLayout}
-								value="no_image"
-								name="radio-no_image"
-								aria-label="A"
-							/>
-						</Grid>
 
-						<Grid
-							container
-							direction="column"
-							justify="center"
-							alignItems="center"
-							xs={4}>
-							<img src={LeftIcon} alt="ya" className={classes.icon} />
-							<FormLabel component="legend">Image To Left</FormLabel>
-							<Radio
-								checked={this.state.layout === "Left"}
-								onChange={this.handleLayout}
-								value="Left"
-								name="radio-left"
-								aria-label="Left"
-								label="Image To left"
-							/>
-						</Grid>
+							<div className="col-xs-12 col-md-4">
+								<img src={RightIcon} alt="ya" className={classes.icon} />
+								<FormLabel component="legend">Image To Right</FormLabel>
+								<Radio
+									checked={this.state.layout === "Right"}
+									onChange={this.handleLayout}
+									value="Right"
+									name="radio-Right"
+									aria-label="A"
+								/>
+							</div>
+							<div className="col-xs-12 col-md-4">
+								<img src={CenterIcon} alt="ya" className={classes.icon} />
+								<FormLabel component="legend">No Image</FormLabel>
+								<Radio
+									checked={this.state.layout === "no_image"}
+									onChange={this.handleLayout}
+									value="no_image"
+									name="radio-no_image"
+									aria-label="A"
+								/>
+							</div>
+
+							<div className="col-xs-12 col-md-4">
+								<img src={LeftIcon} alt="ya" className={classes.icon} />
+								<FormLabel component="legend">Image To Left</FormLabel>
+								<Radio
+									checked={this.state.layout === "Left"}
+									onChange={this.handleLayout}
+									value="Left"
+									name="radio-left"
+									aria-label="Left"
+									label="Image To left"
+								/>
+							</div>
+						</div>
+
 						{this.state.layout}
 						{this.state.include_image ? (
-							<Grid item xs={12}>
+							<div className="col-xs-12">
 								<TextField
 									label="Image SRC"
 									fullWidth
@@ -363,14 +364,18 @@ class JumboTronForm extends React.Component {
 										shrink: true
 									}}
 								/>
-							</Grid>
+							</div>
 						) : null}
-					</Grid>
-					<Grid item xs={12} md={6} className={classes.flexBoxEnd}>
+					</div>
+
+					<div className="col-xs-12">
 						<div>
-							<FormLabel component="legend">Background Color</FormLabel>
+							<FormLabel component="legend" className="text-left">
+								Background Color
+							</FormLabel>
 							<TwitterPicker
-								width="200px"
+								className="col-xs-12 "
+								width="100%"
 								name="backgroundColor"
 								color={this.state.backgroundColor}
 								onChangeComplete={this.handleBackgroundColorChange}
@@ -380,7 +385,7 @@ class JumboTronForm extends React.Component {
 								label="Gradient Background?"
 								className={classes.textField}
 								margin="normal"
-								variant="outlined"
+								fullWidth
 								error={errors_object.backgroundColor}
 								helperText={errors_object.backgroundColor}
 								value={this.state.backgroundColor}
@@ -394,10 +399,10 @@ class JumboTronForm extends React.Component {
 						<div>
 							<TextField
 								id="outlined-uncontrolled"
-								label="Paragraph Text"
+								label="Paragraph Text:"
 								className={classes.textField}
 								margin="normal"
-								variant="outlined"
+								fullWidth
 								error={errors_object.paragraphText}
 								helperText={errors_object.paragraphText}
 								value={this.state.paragraphText}
@@ -407,21 +412,26 @@ class JumboTronForm extends React.Component {
 								}}
 							/>
 						</div>
-					</Grid>
-					<Grid item xs={12} md={6} className={classes.flexBoxColumn}>
-						<div>
-							<FormLabel component="legend">Text Color</FormLabel>
-							<p>{this.state.textColor}</p>
-							<TwitterPicker
-								width="200px"
-								name="textColor"
-								color={this.state.textColor}
-								onChangeComplete={this.handleTextColorChange}
-							/>
+					</div>
+
+					<div className="col-xs-12">
+						<div className="col-xs-12" style={{ marginTop: "1em" }}>
+							<FormLabel component="legend" className="text-left">
+								Text Color
+							</FormLabel>
+							<div style={{ display: "flex", flexDirection: "column-reverse" }}>
+								<p>Chosen text color : {this.state.textColor}</p>
+								<TwitterPicker
+									width="100%"
+									name="textColor"
+									color={this.state.textColor}
+									onChangeComplete={this.handleTextColorChange}
+								/>
+							</div>
 						</div>
-						<div>
+						<div className="col-xs-12">
 							<TextField
-								label="Headline"
+								label="Headline Text:"
 								error={errors_object.headline}
 								helperText={errors_object.headline}
 								className={classes.textField}
@@ -432,7 +442,7 @@ class JumboTronForm extends React.Component {
 								InputLabelProps={{
 									shrink: true
 								}}
-								variant="outlined"
+								fullWidth
 							/>
 							<TextField
 								id="outlined-number"
@@ -445,15 +455,15 @@ class JumboTronForm extends React.Component {
 									shrink: true
 								}}
 								margin="normal"
-								variant="outlined"
+								fullWidth
 							/>
 						</div>
-					</Grid>
+					</div>
 
-					<section className="TEXT_CONTAINER">
+					<section className="col-xs-12">
 						<FormControl component="fieldset" className={classes.formControl}>
 							<FormLabel>CTA</FormLabel>
-							<RadioGroup
+							{/* <RadioGroup
 								error={this.state.errros}
 								aria-label="Gender"
 								name="legend"
@@ -470,9 +480,26 @@ class JumboTronForm extends React.Component {
 									control={<Radio />}
 									label="No Button"
 								/>
-							</RadioGroup>
+							</RadioGroup> */}
+							<FormGroup row>
+								<FormControlLabel
+									style={{ margin: "auto" }}
+									control={
+										<Switch
+											checked={this.state.button}
+											onChange={this.handleRadioChange("button")}
+											value="button"
+										/>
+									}
+									label={
+										this.state.button
+											? "Include button? : True"
+											: "Include button? : False"
+									}
+								/>
+							</FormGroup>
 
-							{this.state.button === "true" ? (
+							{this.state.button ? (
 								<div>
 									<TextField
 										id="outlined-number"

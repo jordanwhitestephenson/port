@@ -6,6 +6,8 @@ import ProductGridPreview from "../common/preview_templates/ProductGridPreview";
 import GalleryPreview from "../common/preview_templates/GalleryPreview";
 import Two_StoryPreview from "../common/preview_templates/Two_StoriesPreview";
 import Three_StoryPreview from "../common/preview_templates/Three_StoriesPreview";
+import StoryHeadlinePreview from "../common/preview_templates/StoryHeadline_Preview";
+import USGPreview from "../common/preview_templates/USGPreview";
 import RetrieveHTML from "../common/RetrieveHTML";
 
 export class PreviewProjectVIEW extends Component {
@@ -20,7 +22,9 @@ export class PreviewProjectVIEW extends Component {
 			Section1: "",
 			Section2: "",
 			Section3: "",
-			Section4: ""
+			Section4: "",
+			Section5: "",
+			Section6: ""
 		};
 	}
 	componentWillReceiveProps(nextProps) {
@@ -73,16 +77,39 @@ export class PreviewProjectVIEW extends Component {
 					)[0]
 				});
 			}
+			if (
+				nextProps.project.project.modules.filter(
+					(section) => section.location === "Section5"
+				).length > 0
+			) {
+				this.setState({
+					Section5: nextProps.project.project.modules.filter(
+						(section) => section.location === "Section5"
+					)[0]
+				});
+			}
+			if (
+				nextProps.project.project.modules.filter(
+					(section) => section.location === "Section6"
+				).length > 0
+			) {
+				this.setState({
+					Section6: nextProps.project.project.modules.filter(
+						(section) => section.location === "Section6"
+					)[0]
+				});
+			}
 		}
 	}
 
 	render() {
-		console.log(this.props.project, "PRPKE");
 		if (this.state.modules.length > 0) {
 			const Section1 = this.state.Section1;
 			const Section2 = this.state.Section2;
 			const Section3 = this.state.Section3;
 			const Section4 = this.state.Section4;
+			const Section5 = this.state.Section5;
+			const Section6 = this.state.Section6;
 
 			return (
 				<section>
@@ -91,10 +118,12 @@ export class PreviewProjectVIEW extends Component {
 					</a>
 
 					<div className="parentDiv">
-						<div className="cs_container-crocs">
+						<div className="cs_container-crocs ">
 							<div className="SECTION_1">
 								{Section1.type === "Jumbotron" ? (
 									<JumboTronPreview modulePreview={Section1} />
+								) : Section1.type === "Story_Headline" ? (
+									<StoryHeadlinePreview modulePreview={Section1} />
 								) : Section1.type === "ProductGrid" ? (
 									<ProductGridPreview modulePreview={Section1} />
 								) : Section1.type === "Gallery" ? (
@@ -103,18 +132,26 @@ export class PreviewProjectVIEW extends Component {
 									<Two_StoryPreview modulePreview={Section1} />
 								) : Section1.type === "Three_Stories" ? (
 									<Three_StoryPreview modulePreview={Section1} />
+								) : Section1.type === "USG" ? (
+									<USGPreview modulePreview={Section1} />
 								) : null}
 							</div>
 
-							<div className="SECTION_2">
+							<div className="SECTION_2 ">
 								{Section2.type === "Jumbotron" ? (
 									<JumboTronPreview modulePreview={Section2} />
 								) : Section2.type === "ProductGrid" ? (
 									<ProductGridPreview modulePreview={Section2} />
+								) : Section2.type === "Story_Headline" ? (
+									<StoryHeadlinePreview modulePreview={Section2} />
 								) : Section2.type === "Gallery" ? (
 									<GalleryPreview modulePreview={Section2} />
 								) : Section2.type === "Two_Stories" ? (
 									<Two_StoryPreview modulePreview={Section2} />
+								) : Section2.type === "Three_Stories" ? (
+									<Three_StoryPreview modulePreview={Section2} />
+								) : Section2.type === "USG" ? (
+									<USGPreview modulePreview={Section2} />
 								) : null}
 							</div>
 							<div className="SECTION_3">
@@ -126,6 +163,42 @@ export class PreviewProjectVIEW extends Component {
 									<GalleryPreview modulePreview={Section3} />
 								) : Section3.type === "Two_Stories" ? (
 									<Two_StoryPreview modulePreview={Section3} />
+								) : Section3.type === "Three_Stories" ? (
+									<Three_StoryPreview modulePreview={Section3} />
+								) : Section3.type === "USG" ? (
+									<USGPreview modulePreview={Section3} />
+								) : null}
+							</div>
+
+							<div className="SECTION_4">
+								{Section4.type === "Jumbotron" ? (
+									<JumboTronPreview modulePreview={Section4} />
+								) : Section4.type === "ProductGrid" ? (
+									<ProductGridPreview modulePreview={Section4} />
+								) : Section4.type === "Gallery" ? (
+									<GalleryPreview modulePreview={Section4} />
+								) : Section4.type === "Two_Stories" ? (
+									<Two_StoryPreview modulePreview={Section4} />
+								) : Section4.type === "Three_Stories" ? (
+									<Three_StoryPreview modulePreview={Section4} />
+								) : Section4.type === "USG" ? (
+									<USGPreview modulePreview={Section4} />
+								) : null}
+							</div>
+
+							<div className="SECTION_5">
+								{Section5.type === "Jumbotron" ? (
+									<JumboTronPreview modulePreview={Section5} />
+								) : Section5.type === "ProductGrid" ? (
+									<ProductGridPreview modulePreview={Section5} />
+								) : Section5.type === "Gallery" ? (
+									<GalleryPreview modulePreview={Section5} />
+								) : Section5.type === "Two_Stories" ? (
+									<Two_StoryPreview modulePreview={Section5} />
+								) : Section5.type === "Three_Stories" ? (
+									<Three_StoryPreview modulePreview={Section5} />
+								) : Section5.type === "USG" ? (
+									<USGPreview modulePreview={Section5} />
 								) : null}
 							</div>
 						</div>

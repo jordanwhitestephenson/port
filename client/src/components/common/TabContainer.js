@@ -17,7 +17,7 @@ import { getCurrentProject } from "../../actions/profileActions";
 
 function TabContainer({ children, dir }) {
 	return (
-		<Typography component="div" dir={dir} style={{ padding: 8 * 3 }}>
+		<Typography component="div" dir={dir}>
 			{children}
 		</Typography>
 	);
@@ -30,14 +30,16 @@ TabContainer.propTypes = {
 
 const styles = (theme) => ({
 	root: {
-		backgroundColor: theme.palette.background.paper
+		backgroundColor: theme.palette.background.paper,
+		flexGrow: 1,
+		width: "100%"
 	}
 });
 
 class FullWidthTabs extends React.Component {
 	constructor(props) {
 		super(props);
-		console.log(this.props, "IN CONS");
+
 		this.state = {
 			value: 0,
 			projectID: this.props.projectID,
@@ -50,10 +52,13 @@ class FullWidthTabs extends React.Component {
 			Section3Type: "",
 			Section4Type: "",
 			Section5Type: "",
+			Section6Type: "",
 			enableSection1: false,
 			enableSection2: false,
 			enableSection3: false,
 			enableSection4: false,
+			enableSection5: false,
+			enableSection6: false,
 			enableSectionModel: false,
 			previewEnabled: false,
 			sectionCheck: "",
@@ -81,6 +86,12 @@ class FullWidthTabs extends React.Component {
 			const enableSection4 = nextProps.project.addedSection.includes(
 				"Section4"
 			);
+			const enableSection5 = nextProps.project.addedSection.includes(
+				"Section5"
+			);
+			const enableSection6 = nextProps.project.addedSection.includes(
+				"Section6"
+			);
 			const enableSectionModel = nextProps.project.addedSection.includes(
 				"Model"
 			);
@@ -93,6 +104,8 @@ class FullWidthTabs extends React.Component {
 					enableSection2: enableSection2,
 					enableSection3: enableSection3,
 					enableSection4: enableSection4,
+					enableSection5: enableSection5,
+					enableSection6: enableSection6,
 					enableSectionModel: enableSectionModel,
 					editProjectInfo: nextProps.editProjectInfo,
 					pathname: nextProps.pathname
@@ -116,16 +129,19 @@ class FullWidthTabs extends React.Component {
 		let Section3Type = "";
 		let Section4Type = "";
 		let Section5Type = "";
+		let Section6Type = "";
 		let Section1 = "";
 		let Section2 = "";
 		let Section3 = "";
 		let Section4 = "";
 		let Section5 = "";
+		let Section6 = "";
 		let sectionOneCheck = "";
 		let sectionTwoCheck = "";
 		let sectionThreeCheck = "";
 		let sectionFourCheck = "";
 		let sectionFiveCheck = "";
+		let sectionSixCheck = "";
 		let project = this.state.editProjectInfo.modules;
 
 		//****IF WERE ON EDIT****//
@@ -140,8 +156,24 @@ class FullWidthTabs extends React.Component {
 				if (module.type === "ProductGrid") {
 					module.selectedIndex = 2;
 				}
+
 				if (module.type === "Gallery") {
 					module.selectedIndex = 3;
+				}
+				if (module.type === "Story_Headline") {
+					module.selectedIndex = 4;
+				}
+				if (module.type === "Two_Stories") {
+					module.selectedIndex = 5;
+				}
+				if (module.type === "Three_Stories") {
+					module.selectedIndex = 6;
+				}
+				if (module.type === "USG") {
+					module.selectedIndex = 7;
+				}
+				if (module.type === "Email_Social") {
+					module.selectedIndex = 8;
 				}
 				return module;
 			});
@@ -151,6 +183,7 @@ class FullWidthTabs extends React.Component {
 			Section3 = changedType.filter((module) => module.location === "Section3");
 			Section4 = changedType.filter((module) => module.location === "Section4");
 			Section5 = changedType.filter((module) => module.location === "Section5");
+			Section6 = changedType.filter((module) => module.location === "Section6");
 
 			var sectionOnePresent = () => {
 				sectionOneCheck = <Done />;
@@ -165,12 +198,16 @@ class FullWidthTabs extends React.Component {
 				Section3Type = Section3[0].selectedIndex;
 			};
 			var sectionFourPresent = () => {
-				sectionFourCheck = "Section 4";
+				sectionFourCheck = <Done />;
 				Section4Type = Section4[0].selectedIndex;
 			};
 			var sectionFivePresent = () => {
-				sectionFiveCheck = "Section 5";
+				sectionFiveCheck = <Done />;
 				Section5Type = Section5[0].selectedIndex;
+			};
+			var sectionSixPresent = () => {
+				sectionSixCheck = <Done />;
+				Section6Type = Section6[0].selectedIndex;
 			};
 
 			Section1.length === 0
@@ -188,10 +225,15 @@ class FullWidthTabs extends React.Component {
 			Section5.length === 0
 				? (sectionFiveCheck = <SyncProblem />)
 				: sectionFivePresent();
+			Section6.length === 0
+				? (sectionSixCheck = <SyncProblem />)
+				: sectionSixPresent();
 			return (
 				<div className={classes.root}>
 					<AppBar position="static" color="default">
 						<Tabs
+							variant="scrollable"
+							scrollButtons="on"
 							value={this.state.value}
 							onChange={this.handleChange}
 							indicatorColor="secondary"
@@ -201,6 +243,7 @@ class FullWidthTabs extends React.Component {
 							<Tab label={"Section 3"} icon={sectionThreeCheck} />
 							<Tab label={"Section 4"} icon={sectionFourCheck} />
 							<Tab label={"Section 5"} icon={sectionFiveCheck} />
+							<Tab label={"Section 6"} icon={sectionSixCheck} />
 							<Tab label={"Preview"} icon={<Visibility />} />
 						</Tabs>
 					</AppBar>
@@ -258,7 +301,16 @@ class FullWidthTabs extends React.Component {
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
-							<PreviewAllModules moduleArray={this.state.project} />
+							<ListModules
+								tabIndex={this.state.value}
+								selectedIndex={Section6Type}
+								projectID={this.state.projectID}
+								currentSection={"Section6"}
+								pathname={this.props.pathname}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
+							<PreviewAllModules moduleArray={project} />
 						</TabContainer>
 					</SwipeableViews>
 				</div>
@@ -273,6 +325,8 @@ class FullWidthTabs extends React.Component {
 				<div className={classes.root}>
 					<AppBar position="static" color="default">
 						<Tabs
+							variant="scrollable"
+							scrollButtons="on"
 							value={this.state.value}
 							onChange={this.handleChange}
 							indicatorColor="primary"
@@ -301,6 +355,11 @@ class FullWidthTabs extends React.Component {
 								<Tab label={"Section 5 - BUILT"} icon={<Done />} />
 							) : (
 								<Tab label={"Section 5"} icon={<SyncProblem />} />
+							)}
+							{location.includes("Section6") ? (
+								<Tab label={"Section 6 - BUILT"} icon={<Done />} />
+							) : (
+								<Tab label={"Section 6"} icon={<SyncProblem />} />
 							)}
 							<Tab label="PREVIEW" icon={<Visibility />} />
 						</Tabs>
@@ -350,6 +409,14 @@ class FullWidthTabs extends React.Component {
 							/>
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
+							<ListModules
+								projectID={this.state.projectID}
+								currentSection={"Section6"}
+								addedModuleInfo={this.props.project.addedModuleInfo}
+								previewEnabled={this.state.enableSection6}
+							/>
+						</TabContainer>
+						<TabContainer dir={theme.direction}>
 							<PreviewAllModules moduleArray={project} />
 						</TabContainer>
 					</SwipeableViews>
@@ -382,8 +449,4 @@ export default withRouter(
 		{ getCurrentProject }
 	)(withStyles(styles, { withTheme: true })(FullWidthTabs))
 );
-// export default withStyles(styles, { withTheme: true })(FullWidthTabs);
-// export default connect(
-// 	mapStateToProps,
-// 	{ getCurrentProfile, getCurrentProject }
-// )(withRouter(PreviewProject));
+

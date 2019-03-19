@@ -3,8 +3,11 @@ import PropTypes from "prop-types";
 import ProductGridPreview from "../preview_templates/ProductGridPreview";
 import JumbotronPreview from "../preview_templates/JumboTronPreview";
 import GalleryPreview from "../preview_templates/GalleryPreview";
-import Two_StoryPreview from "../preview_templates/Two_StoriesPreview";
-import Three_StoryPreview from "../preview_templates/Three_StoriesPreview";
+import TwoStoryPreview from "../preview_templates/Two_StoriesPreview";
+import ThreeStoryPreview from "../preview_templates/Three_StoriesPreview";
+import StoryHeadlinePreview from "../preview_templates/StoryHeadline_Preview";
+import USGPreview from "../preview_templates/USGPreview";
+import EmailSocialPreview from "../preview_templates/EmailSocialPreview";
 
 export class PreviewAllModules extends Component {
 	constructor(props) {
@@ -24,7 +27,7 @@ export class PreviewAllModules extends Component {
 		prop: PropTypes
 	};
 
-	componentDidMount(props) {
+	componentWillMount(props) {
 		this.setState({
 			project: this.props.moduleArray
 		});
@@ -39,12 +42,14 @@ export class PreviewAllModules extends Component {
 	}
 
 	render() {
-		// var project = this.props.moduleArray;
 		var project = this.state.project;
 
 		if (project) {
 			var ProductGridProps = project.filter(
 				(type) => type.type === "ProductGrid"
+			)[0];
+			var StoryHeadlineProps = project.filter(
+				(type) => type.type === "Story_Headline"
 			)[0];
 			var JumboTronProps = project.filter(
 				(type) => type.type === "Jumbotron"
@@ -56,11 +61,15 @@ export class PreviewAllModules extends Component {
 				(type) => type.type === "Three_Stories"
 			)[0];
 			var GalleryProps = project.filter((type) => type.type === "Gallery")[0];
+
 			return (
-				<div>
+				<div className="preview_container">
 					{project.map((module) =>
 						module.location === "Section1" && module.type === "Jumbotron" ? (
 							<JumbotronPreview modulePreview={JumboTronProps} />
+						) : module.location === "Section1" &&
+						  module.type === "Story_Headline" ? (
+							<StoryHeadlinePreview modulePreview={StoryHeadlineProps} />
 						) : module.location === "Section1" &&
 						  module.type === "ProductGrid" ? (
 							<ProductGridPreview modulePreview={ProductGridProps} />
@@ -68,10 +77,15 @@ export class PreviewAllModules extends Component {
 							<GalleryPreview modulePreview={GalleryProps} />
 						) : module.location === "Section1" &&
 						  module.type === "Two_Stories" ? (
-							<Two_StoryPreview modulePreview={TwoStoryProps} />
+							<TwoStoryPreview modulePreview={TwoStoryProps} />
 						) : module.location === "Section1" &&
 						  module.type === "Three_Stories" ? (
-							<Three_StoryPreview modulePreview={ThreeStoryProps} />
+							<ThreeStoryPreview modulePreview={ThreeStoryProps} />
+						) : module.location === "Section1" && module.type === "USG" ? (
+							<USGPreview modulePreview={ThreeStoryProps} />
+						) : module.location === "Section1" &&
+						  module.type === "Email_Social" ? (
+							<EmailSocialPreview />
 						) : null
 					)}
 					{project.map((module) =>
@@ -84,10 +98,99 @@ export class PreviewAllModules extends Component {
 							<GalleryPreview modulePreview={GalleryProps} />
 						) : module.location === "Section2" &&
 						  module.type === "Two_Stories" ? (
-							<Two_StoryPreview modulePreview={TwoStoryProps} />
+							<TwoStoryPreview modulePreview={TwoStoryProps} />
 						) : module.location === "Section2" &&
 						  module.type === "Three_Stories" ? (
-							<Three_StoryPreview modulePreview={TwoStoryProps} />
+							<ThreeStoryPreview modulePreview={ThreeStoryProps} />
+						) : module.location === "Section2" && module.type === "USG" ? (
+							<USGPreview modulePreview={TwoStoryProps} />
+						) : module.location === "Section2" &&
+						  module.type === "Email_Social" ? (
+							<EmailSocialPreview />
+						) : null
+					)}
+					{project.map((module) =>
+						module.location === "Section3" && module.type === "Jumbotron" ? (
+							<JumbotronPreview modulePreview={JumboTronProps} />
+						) : module.location === "Section3" &&
+						  module.type === "ProductGrid" ? (
+							<ProductGridPreview modulePreview={ProductGridProps} />
+						) : module.type === "Gallery" && module.location === "Section3" ? (
+							<GalleryPreview modulePreview={GalleryProps} />
+						) : module.location === "Section3" &&
+						  module.type === "Two_Stories" ? (
+							<TwoStoryPreview modulePreview={TwoStoryProps} />
+						) : module.location === "Section3" &&
+						  module.type === "Three_Stories" ? (
+							<ThreeStoryPreview modulePreview={ThreeStoryProps} />
+						) : module.location === "Section3" && module.type === "USG" ? (
+							<USGPreview modulePreview={TwoStoryProps} />
+						) : module.location === "Section3" &&
+						  module.type === "Email_Social" ? (
+							<EmailSocialPreview />
+						) : null
+					)}
+					{project.map((module) =>
+						module.location === "Section4" && module.type === "Jumbotron" ? (
+							<JumbotronPreview modulePreview={JumboTronProps} />
+						) : module.location === "Section4" &&
+						  module.type === "ProductGrid" ? (
+							<ProductGridPreview modulePreview={ProductGridProps} />
+						) : module.type === "Gallery" && module.location === "Section4" ? (
+							<GalleryPreview modulePreview={GalleryProps} />
+						) : module.location === "Section4" &&
+						  module.type === "Two_Stories" ? (
+							<TwoStoryPreview modulePreview={TwoStoryProps} />
+						) : module.location === "Section4" &&
+						  module.type === "Three_Stories" ? (
+							<ThreeStoryPreview modulePreview={ThreeStoryProps} />
+						) : module.location === "Section4" && module.type === "USG" ? (
+							<USGPreview modulePreview={TwoStoryProps} />
+						) : module.location === "Section4" &&
+						  module.type === "Email_Social" ? (
+							<EmailSocialPreview />
+						) : null
+					)}
+					{project.map((module) =>
+						module.location === "Section5" && module.type === "Jumbotron" ? (
+							<JumbotronPreview modulePreview={JumboTronProps} />
+						) : module.location === "Section5" &&
+						  module.type === "ProductGrid" ? (
+							<ProductGridPreview modulePreview={ProductGridProps} />
+						) : module.type === "Gallery" && module.location === "Section5" ? (
+							<GalleryPreview modulePreview={GalleryProps} />
+						) : module.location === "Section5" &&
+						  module.type === "Two_Stories" ? (
+							<TwoStoryPreview modulePreview={TwoStoryProps} />
+						) : module.location === "Section5" &&
+						  module.type === "Three_Stories" ? (
+							<ThreeStoryPreview modulePreview={ThreeStoryProps} />
+						) : module.location === "Section5" && module.type === "USG" ? (
+							<USGPreview modulePreview={TwoStoryProps} />
+						) : module.location === "Section5" &&
+						  module.type === "Email_Social" ? (
+							<EmailSocialPreview />
+						) : null
+					)}
+					{project.map((module) =>
+						module.location === "Section6" && module.type === "Jumbotron" ? (
+							<JumbotronPreview modulePreview={JumboTronProps} />
+						) : module.location === "Section6" &&
+						  module.type === "ProductGrid" ? (
+							<ProductGridPreview modulePreview={ProductGridProps} />
+						) : module.type === "Gallery" && module.location === "Section6" ? (
+							<GalleryPreview modulePreview={GalleryProps} />
+						) : module.location === "Section6" &&
+						  module.type === "Two_Stories" ? (
+							<TwoStoryPreview modulePreview={TwoStoryProps} />
+						) : module.location === "Section6" &&
+						  module.type === "Three_Stories" ? (
+							<ThreeStoryPreview modulePreview={ThreeStoryProps} />
+						) : module.location === "Section6" && module.type === "USG" ? (
+							<USGPreview modulePreview={TwoStoryProps} />
+						) : module.location === "Section6" &&
+						  module.type === "Email_Social" ? (
+							<EmailSocialPreview />
 						) : null
 					)}
 				</div>

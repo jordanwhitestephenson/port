@@ -14,7 +14,7 @@ class JumboTronPreview extends Component {
 		const module = this.state.modulePreview;
 
 		return (
-			<div className="jumboTron" style={{ maxWidth: '980px', margin: 'auto' }}>		
+			<div className="jumboTron" className= "cs_container-crocss" style={{  margin: 'auto' }}>		
 				{module.layout === 'Left' ? (
 					<Grid
 						container

@@ -6,6 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Visibility from "@material-ui/icons/Visibility";
 
 export default class TwoStoryDialog extends React.Component {
 	constructor(props) {
@@ -178,10 +179,9 @@ export default class TwoStoryDialog extends React.Component {
 		return (
 			<div>
 				<Button
-					variant="outlined"
-					color="primary"
+					color="secondary"
 					onClick={this.handleClickOpen}>
-					Open form dialog
+					<Visibility/>
 				</Button>
 				<Dialog
 					open={this.state.open}
@@ -376,7 +376,7 @@ export default class TwoStoryDialog extends React.Component {
 								storyType === "Story_1"
 									? this.state.story1_Paragraph_Text
 									: storyType === "Story_2"
-                                        ? this.state.story2_Paragraph_Text
+									? this.state.story2_Paragraph_Text
 									: null
 							}
 							fullWidth

@@ -24,8 +24,14 @@ import { connect } from "react-redux";
 import { withRouter } from "react-router-dom";
 import TwoStoriesForm from "./modules/TwoStoriesForm";
 import ThreeStoriesForm from "./modules/ThreeStoriesForm";
+import StoryHeadlineForm from "./modules/StoryHeadlineForm";
+import EmailSocialForm from "./modules/EmailSocialForm";
+import USGForm from "./modules/USGForm";
 import TwoColumnStory from "./icons/twoColumn.png";
 import ThreeColumnStory from "./icons/ThreeColumn.png";
+import USG from "./icons/USGExample.png";
+import Headliner from "./icons/HeadlineExample.png";
+import EmailSignup from "./icons/SocialIcon.png";
 
 const styles = (theme) => ({
 	root: {
@@ -34,7 +40,7 @@ const styles = (theme) => ({
 		backgroundColor: theme.palette.background.paper,
 		position: "relative",
 		overflow: "auto",
-		maxHeight: 300
+		maxHeight: 800
 	}
 });
 
@@ -51,8 +57,6 @@ class ListModules extends React.Component {
 		this.onUndo = this.onUndo.bind(this);
 	}
 	static getDerivedStateFromProps(props, state) {
-		console.log(props.project, "DFFF");
-
 		// eslint-disable-next-line no-unused-expressions
 
 		if (
@@ -63,13 +67,6 @@ class ListModules extends React.Component {
 				previewEnabled: props.project.preview_enabled
 			};
 		}
-
-		// if (props.project !== state.project) {
-		// 	return {
-		// 		project: props.project
-		// 	}
-		// }
-
 		return props.tabIndex === 1
 			? { currentSection: "Section1" }
 			: props.tabIndex === 2
@@ -90,7 +87,7 @@ class ListModules extends React.Component {
 
 	render() {
 		const { classes } = this.props;
-		console.log(this.props, "LIST MODULES PROPS");
+
 		return (
 			<div>
 				<div style={{ display: "flex" }}>
@@ -138,9 +135,9 @@ class ListModules extends React.Component {
 									selected={this.state.selectedIndex === 4}
 									onClick={(event) => this.handleListItemClick(event, 4)}>
 									<ListItemIcon>
-										<CallToAction />
+										<img src={Headliner} />
 									</ListItemIcon>
-									<ListItemText primary="Footer" />
+									<ListItemText primary="Stories Headline" />
 								</ListItem>
 
 								<ListItem
@@ -168,9 +165,19 @@ class ListModules extends React.Component {
 									selected={this.state.selectedIndex === 7}
 									onClick={(event) => this.handleListItemClick(event, 7)}>
 									<ListItemIcon>
-										<ProductGridThree />
+										<img src={USG} />
 									</ListItemIcon>
-									<ListItemText primary="Product Gallery 3" />
+									<ListItemText primary="USG" />
+								</ListItem>
+
+								<ListItem
+									button
+									selected={this.state.selectedIndex === 8}
+									onClick={(event) => this.handleListItemClick(event, 8)}>
+									<ListItemIcon>
+										<img src={EmailSignup} alt="email" />
+									</ListItemIcon>
+									<ListItemText primary="Email-Signup/Social-Links" />
 								</ListItem>
 							</List>
 
@@ -219,6 +226,14 @@ class ListModules extends React.Component {
 							sendModuleToProject={this.sendModuleToProject}
 						/>
 					) : null}
+					{this.state.selectedIndex === 4 ? (
+						<StoryHeadlineForm
+							editSection={this.props.editSection}
+							currentSection={this.state.currentSection}
+							projectID={this.props.projectID}
+							sendModuleToProject={this.sendModuleToProject}
+						/>
+					) : null}
 					{this.state.selectedIndex === 5 ? (
 						<TwoStoriesForm
 							editSection={this.props.editSection}
@@ -229,6 +244,22 @@ class ListModules extends React.Component {
 					) : null}
 					{this.state.selectedIndex === 6 ? (
 						<ThreeStoriesForm
+							editSection={this.props.editSection}
+							currentSection={this.state.currentSection}
+							projectID={this.props.projectID}
+							sendModuleToProject={this.sendModuleToProject}
+						/>
+					) : null}
+					{this.state.selectedIndex === 7 ? (
+						<USGForm
+							editSection={this.props.editSection}
+							currentSection={this.state.currentSection}
+							projectID={this.props.projectID}
+							sendModuleToProject={this.sendModuleToProject}
+						/>
+					) : null}
+					{this.state.selectedIndex === 8 ? (
+						<EmailSocialForm
 							editSection={this.props.editSection}
 							currentSection={this.state.currentSection}
 							projectID={this.props.projectID}

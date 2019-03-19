@@ -225,6 +225,28 @@ router.post(
 				projectID: req.params.project_id
 			};
 		}
+		if (req.body.type === "USG") {
+			ModuleData = {
+				type: req.body.type,
+				location: req.body.location,
+				projectID: req.params.project_id
+			};
+		}
+		if (req.body.type === "Story_Headline") {
+			ModuleData = {
+				storyInfo: req.body.storyInfo,
+				type: req.body.type,
+				location: req.body.location,
+				projectID: req.params.project_id
+			};
+		}
+		if (req.body.type === "Email_Social") {
+			ModuleData = {
+				type: req.body.type,
+				location: req.body.location,
+				projectID: req.params.project_id
+			};
+		}
 
 		Profile.findOne({ user: req.user.id }).then((profile) => {
 			const projectID = req.params.project_id;

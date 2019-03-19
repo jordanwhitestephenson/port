@@ -6,6 +6,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import Visibility from "@material-ui/icons/Visibility";
 
 export default class ThreeStoryDialog extends React.Component {
 	constructor(props) {
@@ -25,13 +26,13 @@ export default class ThreeStoryDialog extends React.Component {
 			story2_Link: "",
 			story2_CTA: "",
 			story2_Headline_Text: "",
-            story2_Paragraph_Text: "",   
-            story3_ImgSRC: "",
-            story3_ImgAlt: "",
-            story3_Link: "",
-            story3_CTA: "",
-            story3_Headline_Text: "",
-            story3_Paragraph_Text: ""
+			story2_Paragraph_Text: "",
+			story3_ImgSRC: "",
+			story3_ImgAlt: "",
+			story3_Link: "",
+			story3_CTA: "",
+			story3_Headline_Text: "",
+			story3_Paragraph_Text: ""
 		};
 		this.ErrorCheck = this.ErrorCheck.bind(this);
 		this.sendStoryInfo = this.sendStoryInfo.bind(this);
@@ -61,14 +62,13 @@ export default class ThreeStoryDialog extends React.Component {
 				story2_Link: story2.story2_Link,
 				story2_CTA: story2.story2_CTA,
 				story2_Headline_Text: story2.story2_Headline_Text,
-                story2_Paragraph_Text: story2.story2_Paragraph_Text,
-                story3_ImgSRC: story3.story3_ImgSRC,
-                story3_ImgAlt: story3.story3_ImgAlt,
-                story3_Link: story3.story3_Link,
-                story3_CTA: story3.story3_CTA,
-                story3_Headline_Text: story3.story3_Headline_Text,
-                story3_Paragraph_Text: story3.story3_Paragraph_Text
-                
+				story2_Paragraph_Text: story2.story2_Paragraph_Text,
+				story3_ImgSRC: story3.story3_ImgSRC,
+				story3_ImgAlt: story3.story3_ImgAlt,
+				story3_Link: story3.story3_Link,
+				story3_CTA: story3.story3_CTA,
+				story3_Headline_Text: story3.story3_Headline_Text,
+				story3_Paragraph_Text: story3.story3_Paragraph_Text
 			});
 		}
 	}
@@ -142,39 +142,39 @@ export default class ThreeStoryDialog extends React.Component {
 				});
 				this.sendStoryInfo();
 			}
-        }
-        if (this.props.storyType === "Story_3") {
-            if (!this.state.story3_ImgSRC) {
-                this.setState({
-                    error: "Story3's Img SRC is required*"
-                });
-            } else if (!this.state.story3_ImgAlt) {
-                this.setState({
-                    error: "Story3's Img Alt Tag Text is required*"
-                });
-            } else if (!this.state.story3_Link) {
-                this.setState({
-                    error: "Story3's Link is required*"
-                });
-            } else if (!this.state.story3_CTA) {
-                this.setState({
-                    error: "Story3's CTA is required*"
-                });
-            } else if (!this.state.story3_Headline_Text) {
-                this.setState({
-                    error: "Story3's Headline is required*"
-                });
-            } else if (!this.state.story3_Paragraph_Text) {
-                this.setState({
-                    error: "Story3's Paragraph is required*"
-                });
-            } else {
-                this.setState({
-                    error: ""
-                });
-                this.sendStoryInfo();
-            }
-        }
+		}
+		if (this.props.storyType === "Story_3") {
+			if (!this.state.story3_ImgSRC) {
+				this.setState({
+					error: "Story3's Img SRC is required*"
+				});
+			} else if (!this.state.story3_ImgAlt) {
+				this.setState({
+					error: "Story3's Img Alt Tag Text is required*"
+				});
+			} else if (!this.state.story3_Link) {
+				this.setState({
+					error: "Story3's Link is required*"
+				});
+			} else if (!this.state.story3_CTA) {
+				this.setState({
+					error: "Story3's CTA is required*"
+				});
+			} else if (!this.state.story3_Headline_Text) {
+				this.setState({
+					error: "Story3's Headline is required*"
+				});
+			} else if (!this.state.story3_Paragraph_Text) {
+				this.setState({
+					error: "Story3's Paragraph is required*"
+				});
+			} else {
+				this.setState({
+					error: ""
+				});
+				this.sendStoryInfo();
+			}
+		}
 	};
 	handleClose = () => {
 		this.ErrorCheck();
@@ -236,15 +236,13 @@ export default class ThreeStoryDialog extends React.Component {
 
 	render() {
 		let storyType = this.props.storyType;
-		console.log(storyType, "STORY TYPE");
 
 		return (
 			<div>
 				<Button
-					variant="outlined"
-					color="primary"
+					color="secondary"
 					onClick={this.handleClickOpen}>
-					Open form dialog
+					<Visibility/>
 				</Button>
 				<Dialog
 					open={this.state.open}

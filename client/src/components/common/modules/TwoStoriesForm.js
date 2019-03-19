@@ -16,29 +16,10 @@ const styles = (theme) => ({
 	root: {
 		display: "flex",
 		flexWrap: "wrap",
-		minWidth: 300,
+		minWidth: 400,
 		width: "100%"
 	},
-	image: {
-		position: "relative",
-		height: 200,
-		[theme.breakpoints.down("xs")]: {
-			width: "100% !important", // Overrides inline-style
-			height: 100
-		},
-		"&:hover, &$focusVisible": {
-			zIndex: 1,
-			"& $imageBackdrop": {
-				opacity: 0.15
-			},
-			"& $imageMarked": {
-				opacity: 0
-			},
-			"& $imageTitle": {
-				border: "4px solid currentColor"
-			}
-		}
-	},
+
 	focusVisible: {},
 	imageButton: {
 		position: "absolute",
@@ -57,8 +38,9 @@ const styles = (theme) => ({
 		right: 0,
 		top: 0,
 		bottom: 0,
-		backgroundSize: "cover",
-		backgroundPosition: "center 40%"
+		backgroundSize: "contain",
+		backgroundRepeat: "no-repeat",
+		backgroundPosition: "center center"
 	},
 	imageBackdrop: {
 		position: "absolute",
@@ -71,9 +53,9 @@ const styles = (theme) => ({
 		transition: theme.transitions.create("opacity")
 	},
 	imageTitle: {
-		position: "relative",
-		padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 4}px ${theme
-			.spacing.unit + 6}px`
+		position: "relative"
+		// padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 4}px ${theme
+		// 	.spacing.unit + 6}px`
 	},
 	imageMarked: {
 		height: 3,
@@ -123,11 +105,9 @@ class TwoStoriesForm extends Component {
 		);
 		//Checking to see if Two_Stories is already in project
 		if (originalStory.length > 0) {
-
 			this.setState({
 				originalStory: originalStory[0].stories
 			});
-	
 		}
 	}
 
@@ -178,14 +158,14 @@ class TwoStoriesForm extends Component {
 	render() {
 		const { classes } = this.props;
 		return (
-			<div style={{ width: "100%" }}>
-				<div className="flex_box_default_no_wrap">
+			<div style={{ width: "100%" }} className="flex_box_column">
+				<div className="flex_box_default" style={{ width: "100%" }}>
 					{images.map((image, index) => (
-						<div className="col-xs-12 col-md-6">
+						<div className="col-xs-12 col-md-6 ">
 							<ButtonBase
 								focusRipple
 								key={image.title}
-								className={classes.image}
+								className="story_image_box-shadow"
 								focusVisibleClassName={classes.focusVisible}
 								style={{
 									width: image.width
