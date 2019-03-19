@@ -178,8 +178,6 @@ class FullWidthTabs extends React.Component {
 				return module;
 			});
 
-			console.log("changedType", changedType);
-
 			Section1 = changedType.filter((module) => module.location === "Section1");
 			Section2 = changedType.filter((module) => module.location === "Section2");
 			Section3 = changedType.filter((module) => module.location === "Section3");
@@ -323,6 +321,54 @@ class FullWidthTabs extends React.Component {
 				(module) => module.location
 			);
 
+			var changedType = this.props.editProjectInfo.modules.map((module) => {
+				if (module.type === "Jumbotron") {
+					module.selectedIndex = 1;
+				}
+				if (module.type === "ProductGrid") {
+					module.selectedIndex = 2;
+				}
+
+				if (module.type === "Gallery") {
+					module.selectedIndex = 3;
+				}
+				if (module.type === "Story_Headline") {
+					module.selectedIndex = 4;
+				}
+				if (module.type === "Two_Stories") {
+					module.selectedIndex = 5;
+				}
+				if (module.type === "Three_Stories") {
+					module.selectedIndex = 6;
+				}
+				if (module.type === "USG") {
+					module.selectedIndex = 7;
+				}
+				if (module.type === "Email_Social") {
+					module.selectedIndex = 8;
+				}
+				return module;
+			});
+
+			Section1 = changedType.filter(
+				(module) => module.location === "Section1"
+			)[0];
+			Section2 = changedType.filter(
+				(module) => module.location === "Section2"
+			)[0];
+			Section3 = changedType.filter(
+				(module) => module.location === "Section3"
+			)[0];
+			Section4 = changedType.filter(
+				(module) => module.location === "Section4"
+			)[0];
+			Section5 = changedType.filter(
+				(module) => module.location === "Section5"
+			)[0];
+			Section6 = changedType.filter(
+				(module) => module.location === "Section6"
+			)[0];
+			console.log(changedType, "includ");
 			return (
 				<div className={classes.root}>
 					<AppBar position="static" color="default">
@@ -372,6 +418,11 @@ class FullWidthTabs extends React.Component {
 						onChangeIndex={this.handleChangeIndex}>
 						<TabContainer dir={theme.direction}>
 							<ListModules
+								selectedIndex={
+									Section1 && "selectedIndex" in Section1
+										? Section1.selectedIndex
+										: null
+								}
 								projectID={this.state.projectID}
 								addedModuleInfo={this.props.project.addedModuleInfo}
 								currentSection={"Section1"}
@@ -380,6 +431,11 @@ class FullWidthTabs extends React.Component {
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
+								selectedIndex={
+									Section2 && "selectedIndex" in Section2
+										? Section2.selectedIndex
+										: null
+								}
 								projectID={this.state.projectID}
 								addedModuleInfo={this.props.project.addedModuleInfo}
 								currentSection={"Section2"}
@@ -388,6 +444,11 @@ class FullWidthTabs extends React.Component {
 						</TabContainer>
 						<TabContainer dir={theme.direction}>
 							<ListModules
+								selectedIndex={
+									Section3 && "selectedIndex" in Section3
+										? Section3.selectedIndex
+										: null
+								}
 								projectID={this.state.projectID}
 								addedModuleInfo={this.props.project.addedModuleInfo}
 								currentSection={"Section3"}
@@ -399,6 +460,11 @@ class FullWidthTabs extends React.Component {
 								projectID={this.state.projectID}
 								addedModuleInfo={this.props.project.addedModuleInfo}
 								currentSection={"Section4"}
+								selectedIndex={
+									Section4 && "selectedIndex" in Section4
+										? Section4.selectedIndex
+										: null
+								}
 								previewEnabled={this.state.enableSection4}
 							/>
 						</TabContainer>
@@ -406,6 +472,11 @@ class FullWidthTabs extends React.Component {
 							<ListModules
 								projectID={this.state.projectID}
 								currentSection={"Section5"}
+								selectedIndex={
+									Section5 && "selectedIndex" in Section5
+										? Section5.selectedIndex
+										: null
+								}
 								addedModuleInfo={this.props.project.addedModuleInfo}
 								previewEnabled={this.state.enableSection5}
 							/>
@@ -414,6 +485,11 @@ class FullWidthTabs extends React.Component {
 							<ListModules
 								projectID={this.state.projectID}
 								currentSection={"Section6"}
+								selectedIndex={
+									Section6 && "selectedIndex" in Section6
+										? Section6.selectedIndex
+										: null
+								}
 								addedModuleInfo={this.props.project.addedModuleInfo}
 								previewEnabled={this.state.enableSection6}
 							/>

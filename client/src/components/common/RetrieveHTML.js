@@ -35,13 +35,6 @@ class retrieveHTML extends React.Component {
 	}
 
 	handleOpen = (e) => {
-		// var style = css($("#elementToGetAllCSS"));
-		// $("#elementToPutStyleInto").css(style);
-		// let para = document.getElementById("FindCSS");
-		// let compStyles = window.getComputedStyle(para);
-		// // FindCSS
-
-		// console.log(compStyles, "compStyles ");
 
 		let HTML = $(e.target)
 			.parentsUntil(".parentDiv")
@@ -53,8 +46,7 @@ class retrieveHTML extends React.Component {
 			open: true,
 			scroll: "paper"
 		});
-		// this.props.getCSS();
-		// this.props.addHTML(this.state.HTML, this.props.projectID);
+
 	};
 
 	handleClose = () => {

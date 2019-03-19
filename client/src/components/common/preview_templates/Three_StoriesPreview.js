@@ -1,12 +1,8 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
+
+
 
 class Three_StoriesPreview extends Component {
-	static propTypes = {
-		prop: PropTypes
-	};
-
 	render() {
 		console.log(this.props, "NO PROPS>");
 		let Story1 = this.props.modulePreview.stories.filter(
@@ -28,9 +24,9 @@ class Three_StoriesPreview extends Component {
 			"http://staging-na-crox.demandware.net/on/demandware.static/-/Sites-crocs_us-Library/default/" +
 			Story3.story3_ImgSRC.replace("?$staticlink$", "");
 		return (
-			<div style={{ width: "100%" }}>
+			<div style={{ width: "100%" }} className= "flex_box_row">
 				<div className="story1 col-xs-12 col-md-4  flex_box_column">
-					<a href={Story1.story1_Link}>
+					<a href={Story1.story1_Link} className="full-width">
 						<img
 							className="img-responsive mobile_image_full_screen"
 							alt={Story1.story1_ImgAlt}
@@ -56,20 +52,20 @@ class Three_StoriesPreview extends Component {
 					</div>
 				</div>
 				<div className="story2 col-xs-12 col-md-4  flex_box_column">
-					<a href={Story2.story2_Link}>
+					<a href={Story2.story2_Link} className= "full-width">
 						<img
 							className="img-responsive"
 							alt={Story2.story2_ImgAlt}
 							src={Story2_IMG}
 						/>
 					</a>
-					<div class="story_text">
+					<div className="story_text">
 						<h3
 							className="cx-heavy-brand-font text-left"
 							style={{ fontSize: "20px" }}>
 							{Story2.story2_Headline_Text}
 						</h3>
-						<p class="cx-brand-font text-left paragraph_text">
+						<p className="cx-brand-font text-left paragraph_text">
 							{Story2.story2_Paragraph_Text}
 						</p>
 						<div className="text-left">
@@ -81,7 +77,7 @@ class Three_StoriesPreview extends Component {
 				</div>
 
 				<div className="story3 col-xs-12 col-md-4  flex_box_column">
-					<a href={Story3.story3_Link}>
+					<a href={Story3.story3_Link} className="full-width">
 						<img
 							className="img-responsive mobile_image_full_screen"
 							alt={Story3.story3_ImgAlt}
@@ -109,11 +105,6 @@ class Three_StoriesPreview extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({});
 
-const mapDispatchToProps = {};
 
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Three_StoriesPreview);
+export default Three_StoriesPreview

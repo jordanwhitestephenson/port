@@ -1,10 +1,7 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
+
 
 class EmailSocialPreview extends Component {
-	static propTypes = {
-		prop: PropTypes
-	};
 
 	render() {
 		return (
@@ -60,7 +57,7 @@ class EmailSocialPreview extends Component {
 									className="footer-email-signup"
 									style={{ marginBottom: "0px", marginTop: "0px" }}>
 									<form id="storiesEmail" className="email-signup-form flex_box_default">
-										<label for="StoriesEmailField" className="sr-only">
+										<label htmlFor="StoriesEmailField" className="sr-only">
 											Enter your email address
 										</label>
 										<input
@@ -70,7 +67,7 @@ class EmailSocialPreview extends Component {
                                             style = {{height: "35px", width: "80%"}}
 											placeholder="Enter your Email"
 											title="Enter your Email"
-											autocomplete="off"
+											autoComplete="off"
 											aria-labelledby="newsletterFooterEmailLabel"
 										/>
 										<div className="feedbackStories" />

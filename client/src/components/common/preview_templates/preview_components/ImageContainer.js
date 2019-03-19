@@ -1,23 +1,23 @@
 import React, { Component } from 'react';
-import PropTypes from 'prop-types';
 import Grid from '@material-ui/core/Grid';
 
 export class ImageContainer extends Component {
-	static propTypes = {
-		prop: PropTypes
-	};
+
 	constructor(props) {
 		super(props);
 		this.state = {
-			modulePreview: this.props.modulePreview
+			modulePreview: ""
 
 		}
 	}
-
+	componentWillMount() {
+		this.setState({
+			modulePreview : this.props.modulePreview
+		})
+	}
+ 
 	render() {
 		const module = this.state.modulePreview;
-		console.log('*****IMAGE CONTAINER STATE', module)
-		//****STOPPED AT THIS PROBLEM ::: logged this and it was undefined! */ this.props.modulePreview.main_image
 		var main_image_replaced = this.state.modulePreview.main_image.SRC;
 		
 		if (module.main_image.SRC.includes('?$staticlink$')) {
@@ -34,7 +34,7 @@ export class ImageContainer extends Component {
 			
 			<Grid item xs={12} className="IMAGE_CONTAINER">
 				<a href={this.state.modulePreview.main_image.link}>
-					<img src={main_image_replaced} class="img-responsive" title={this.state.modulePreview.main_image.title} alt={this.state.modulePreview.main_image.alt}/>
+					<img src={main_image_replaced} className="img-responsive" title={this.state.modulePreview.main_image.title} alt={this.state.modulePreview.main_image.alt}/>
 				</a>
 			</Grid>
 		

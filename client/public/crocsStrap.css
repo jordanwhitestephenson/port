@@ -32,7 +32,9 @@
 	align-items: center;
 	justify-content: center
 }
-
+.preview_container .full-width {
+    width: 100%
+}
 .product_description {
 	color: #444;
 }

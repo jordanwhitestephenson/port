@@ -121,10 +121,10 @@ class JumboTronForm extends React.Component {
 					module.location === this.props.currentSection &&
 					module.type === "Jumbotron"
 			)[0];
-			console.log(editSection.main_image, "editSection.main_imagei");
-			//If main_image is present in the modules array, then show image input fields//
+	
+
 			// eslint-disable-next-line no-unused-expressions
-			editSection.main_image ? this.setState({ include_image: true }) : null;
+			editSection.layout === "no_image" ? this.setState({ include_image: false }) : this.setState({ include_image: true});
 			// eslint-disable-next-line no-unused-expressions
 			editSection.errors_object
 				? this.setState({ errors_object: this.props.errors_object })

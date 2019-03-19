@@ -75,8 +75,12 @@ const myCSS = `
     line-height: 1.0;
     width: 100%;
 }
+.preview_container .full-width {
+    width: 100%
+}
 
-.module_margin {
+
+.preview_container .module_margin {
     margin-top: 2em;
     margin-bottom: 2em;
 }
@@ -124,7 +128,7 @@ const myCSS = `
     display: flex;
     justify-content: center;
     flex-direction: row;
-    align-items: center;
+    align-items: baseline;
     align-content: center;
     flex-wrap: wrap;
 }
@@ -176,6 +180,9 @@ const myCSS = `
     .mobile_image_full_screen {
         width: 100%;
     }
+    .preview_container .jumboTron {
+        padding: 15px
+    } 
     .preview_container .story_text {
       padding: 20px 10px 20px 10px;
     }

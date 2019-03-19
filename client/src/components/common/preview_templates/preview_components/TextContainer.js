@@ -1,17 +1,14 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import Grid from "@material-ui/core/Grid";
+
 
 export class TextContainer extends Component {
-	static propTypes = {
-		prop: PropTypes
-	};
+
 	state = {
 		modulePreview: ""
 	};
 	componentWillMount() {
 		this.setState({
-			modulePreview: this.props.modulePreview,
+			modulePreview: this.props.modulePreview
 		});
 	}
 	render() {
@@ -19,16 +16,10 @@ export class TextContainer extends Component {
 		var textBoxBackground = this.props.textBoxBackground;
 
 		return (
-			<Grid
-				item
-				direction="column"
-				justify="center"
-				alignItems="center"
-				xs={12}
-				className={
+			<div className={
 					textBoxBackground
-						? "TEXT_CONTAINER cs_container-crocs textBoxPadding"
-						: "TEXT_CONTAINER cs_container-crocs "
+						? "TEXT_CONTAINER cs_container-crocs textBoxPadding flex_box_column col-xs-12"
+						: "TEXT_CONTAINER cs_container-crocs flex_box_column col-xs-12 "
 				}>
 				<h2
 					style={{
@@ -59,7 +50,7 @@ export class TextContainer extends Component {
 						</a>
 					</div>
 				) : null}
-			</Grid>
+			</div>
 		);
 	}
 }

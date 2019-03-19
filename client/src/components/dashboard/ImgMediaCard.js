@@ -129,7 +129,7 @@ class ImgMediaCard extends Component {
 				<Link
 					to={{
 						pathname: '/preview-project',
-						hash: `${this.props.id}`
+						hash: this.props.id
 					}}
 				>
 					<PreviewIcon />
@@ -156,10 +156,6 @@ const mapStateToProps = state => ({
 	errors: state.errors
 });
 
-// export default connect(
-// 	mapStateToProps,
-// 	{ addProject }
-// )(withRouter(AddProject));
 
 export default withRouter(connect(mapStateToProps, {deleteProject})(withStyles(styles)(ImgMediaCard)))
 

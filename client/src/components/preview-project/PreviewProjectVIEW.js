@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import { connect } from "react-redux";
 import JumboTronPreview from "../common/preview_templates/JumboTronPreview";
 import ProductGridPreview from "../common/preview_templates/ProductGridPreview";
@@ -12,9 +11,7 @@ import RetrieveHTML from "../common/RetrieveHTML";
 import EmailSocialPreview from "../common/preview_templates/EmailSocialPreview";
 
 export class PreviewProjectVIEW extends Component {
-	static propTypes = {
-		prop: PropTypes
-	};
+
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -118,113 +115,138 @@ export class PreviewProjectVIEW extends Component {
 						Go Back
 					</a>
 
-					<div className="parentDiv preview_container" id = "FindCSS">
-						<div className="cs_container-crocs ">
-							<div className="SECTION_1">
-								{Section1.type === "Jumbotron" ? (
-									<JumboTronPreview modulePreview={Section1} />
-								) : Section1.type === "Story_Headline" ? (
-									<StoryHeadlinePreview modulePreview={Section1} />
-								) : Section1.type === "ProductGrid" ? (
-									<ProductGridPreview modulePreview={Section1} />
-								) : Section1.type === "Gallery" ? (
-									<GalleryPreview modulePreview={Section1} />
-								) : Section1.type === "Two_Stories" ? (
-									<Two_StoryPreview modulePreview={Section1} />
-								) : Section1.type === "Three_Stories" ? (
-									<Three_StoryPreview modulePreview={Section1} />
-								) : Section1.type === "USG" ? (
-									<USGPreview modulePreview={Section1} />
-								) : null}
-							</div>
+					<div className="parentDiv preview_container" id="FindCSS">
+						<div
+							className={
+								Section1.type === "Jumbotron"
+									? "SECTION_1 full-width"
+									: "SECTION_1 cs_container-crocs"
+							}>
+							{Section1.type === "Jumbotron" ? (
+								<JumboTronPreview modulePreview={Section1} />
+							) : Section1.type === "Story_Headline" ? (
+								<StoryHeadlinePreview modulePreview={Section1} />
+							) : Section1.type === "ProductGrid" ? (
+								<ProductGridPreview modulePreview={Section1} />
+							) : Section1.type === "Gallery" ? (
+								<GalleryPreview modulePreview={Section1} />
+							) : Section1.type === "Two_Stories" ? (
+								<Two_StoryPreview modulePreview={Section1} />
+							) : Section1.type === "Three_Stories" ? (
+								<Three_StoryPreview modulePreview={Section1} />
+							) : Section1.type === "USG" ? (
+								<USGPreview modulePreview={Section1} />
+							) : null}
+						</div>
 
-							<div className="SECTION_2 ">
-								{Section2.type === "Jumbotron" ? (
-									<JumboTronPreview modulePreview={Section2} />
-								) : Section2.type === "ProductGrid" ? (
-									<ProductGridPreview modulePreview={Section2} />
-								) : Section2.type === "Story_Headline" ? (
-									<StoryHeadlinePreview modulePreview={Section2} />
-								) : Section2.type === "Gallery" ? (
-									<GalleryPreview modulePreview={Section2} />
-								) : Section2.type === "Two_Stories" ? (
-									<Two_StoryPreview modulePreview={Section2} />
-								) : Section2.type === "Three_Stories" ? (
-									<Three_StoryPreview modulePreview={Section2} />
-								) : Section2.type === "USG" ? (
-									<USGPreview modulePreview={Section2} />
-								) : null}
-							</div>
-							<div className="SECTION_3">
-								{Section3.type === "Jumbotron" ? (
-									<JumboTronPreview modulePreview={Section3} />
-								) : Section3.type === "ProductGrid" ? (
-									<ProductGridPreview modulePreview={Section3} />
-								) : Section3.type === "Gallery" ? (
-									<GalleryPreview modulePreview={Section3} />
-								) : Section3.type === "Two_Stories" ? (
-									<Two_StoryPreview modulePreview={Section3} />
-								) : Section3.type === "Three_Stories" ? (
-									<Three_StoryPreview modulePreview={Section3} />
-								) : Section3.type === "USG" ? (
-									<USGPreview modulePreview={Section3} />
-								) : null}
-							</div>
+						<div
+							className={
+								Section2.type === "Jumbotron"
+									? "SECTION_2 full-width"
+									: "SECTION_2 cs_container-crocs"
+							}>
+							{Section2.type === "Jumbotron" ? (
+								<JumboTronPreview modulePreview={Section2} />
+							) : Section2.type === "ProductGrid" ? (
+								<ProductGridPreview modulePreview={Section2} />
+							) : Section2.type === "Story_Headline" ? (
+								<StoryHeadlinePreview modulePreview={Section2} />
+							) : Section2.type === "Gallery" ? (
+								<GalleryPreview modulePreview={Section2} />
+							) : Section2.type === "Two_Stories" ? (
+								<Two_StoryPreview modulePreview={Section2} />
+							) : Section2.type === "Three_Stories" ? (
+								<Three_StoryPreview modulePreview={Section2} />
+							) : Section2.type === "USG" ? (
+								<USGPreview modulePreview={Section2} />
+							) : null}
+						</div>
+						<div className={
+							Section3.type === "Jumbotron"
+								? "SECTION_3 full-width"
+								: "SECTION_3 cs_container-crocs"
+						}>
+							{Section3.type === "Jumbotron" ? (
+								<JumboTronPreview modulePreview={Section3} />
+							) : Section3.type === "ProductGrid" ? (
+								<ProductGridPreview modulePreview={Section3} />
+							) : Section3.type === "Gallery" ? (
+								<GalleryPreview modulePreview={Section3} />
+							) : Section3.type === "Two_Stories" ? (
+								<Two_StoryPreview modulePreview={Section3} />
+							) : Section3.type === "Three_Stories" ? (
+								<Three_StoryPreview modulePreview={Section3} />
+							) : Section3.type === "USG" ? (
+								<USGPreview modulePreview={Section3} />
+							) : null}
+						</div>
 
-							<div className="SECTION_4">
-								{Section4.type === "Jumbotron" ? (
-									<JumboTronPreview modulePreview={Section4} />
-								) : Section4.type === "ProductGrid" ? (
-									<ProductGridPreview modulePreview={Section4} />
-								) : Section4.type === "Gallery" ? (
-									<GalleryPreview modulePreview={Section4} />
-								) : Section4.type === "Two_Stories" ? (
-									<Two_StoryPreview modulePreview={Section4} />
-								) : Section4.type === "Three_Stories" ? (
-									<Three_StoryPreview modulePreview={Section4} />
-								) : Section4.type === "USG" ? (
-									<USGPreview modulePreview={Section4} />
-								) : Section4.type === "Email_Social" ? (
-									<USGPreview modulePreview={Section4} />
-								) : null}
-							</div>
+						<div className={
+							Section4.type === "Jumbotron"
+								? "SECTION_4 full-width"
+								: "SECTION_4 cs_container-crocs"
+						}>
+							{Section4.type === "Jumbotron" ? (
+								<JumboTronPreview modulePreview={Section4} />
+							) : Section4.type === "ProductGrid" ? (
+								<ProductGridPreview modulePreview={Section4} />
+							) : Section4.type === "Gallery" ? (
+								<GalleryPreview modulePreview={Section4} />
+							) : Section4.type === "Two_Stories" ? (
+								<Two_StoryPreview modulePreview={Section4} />
+							) : Section4.type === "Three_Stories" ? (
+								<Three_StoryPreview modulePreview={Section4} />
+							) : Section4.type === "USG" ? (
+								<USGPreview modulePreview={Section4} />
+							) : Section4.type === "Email_Social" ? (
+								<USGPreview modulePreview={Section4} />
+							) : null}
+						</div>
 
-							<div className="SECTION_5">
-								{Section5.type === "Jumbotron" ? (
-									<JumboTronPreview modulePreview={Section5} />
-								) : Section5.type === "ProductGrid" ? (
-									<ProductGridPreview modulePreview={Section5} />
-								) : Section5.type === "Gallery" ? (
-									<GalleryPreview modulePreview={Section5} />
-								) : Section5.type === "Two_Stories" ? (
-									<Two_StoryPreview modulePreview={Section5} />
-								) : Section5.type === "Three_Stories" ? (
-									<Three_StoryPreview modulePreview={Section5} />
-								) : Section5.type === "USG" ? (
-									<USGPreview modulePreview={Section5} />
-								) : Section5.type === "Email_Social" ? (
-									<EmailSocialPreview modulePreview={Section5} />
-								) : null}
-							</div>
-							<div className="SECTION_6">
-								{Section6.type === "Jumbotron" ? (
-									<JumboTronPreview modulePreview={Section6} />
-								) : Section6.type === "ProductGrid" ? (
-									<ProductGridPreview modulePreview={Section6} />
-								) : Section6.type === "Gallery" ? (
-									<GalleryPreview modulePreview={Section6} />
-								) : Section6.type === "Two_Stories" ? (
-									<Two_StoryPreview modulePreview={Section6} />
-								) : Section6.type === "Three_Stories" ? (
-									<Three_StoryPreview modulePreview={Section6} />
-								) : Section6.type === "USG" ? (
-									<USGPreview modulePreview={Section6} />
-								) : Section6.type === "Email_Social" ? (
-									<EmailSocialPreview modulePreview={Section6} />
-								) : null}
-							</div>
+						<div className={
+							Section5.type === "Jumbotron"
+								? "SECTION_5 full-width"
+								: "SECTION_5 cs_container-crocs"
+						}>
+							{Section5.type === "Jumbotron" ? (
+								<JumboTronPreview modulePreview={Section5} />
+							) : Section5.type === "ProductGrid" ? (
+								<ProductGridPreview modulePreview={Section5} />
+							) : Section5.type === "Gallery" ? (
+								<GalleryPreview modulePreview={Section5} />
+							) : Section5.type === "Two_Stories" ? (
+								<Two_StoryPreview modulePreview={Section5} />
+							) : Section5.type === "Three_Stories" ? (
+								<Three_StoryPreview modulePreview={Section5} />
+							) : Section5.type === "USG" ? (
+								<USGPreview modulePreview={Section5} />
+							) : Section5.type === "Email_Social" ? (
+								<EmailSocialPreview modulePreview={Section5} />
+							) : null}
+						</div>
+						<div className={
+							Section6.type === "Jumbotron"
+								? "SECTION_6 full-width"
+								: "SECTION_6 cs_container-crocs"
+						}>
+							{Section6.type === "Jumbotron" ? (
+								<JumboTronPreview modulePreview={Section6} />
+							) : Section6.type === "ProductGrid" ? (
+								<ProductGridPreview modulePreview={Section6} />
+							) : Section6.type === "Gallery" ? (
+								<GalleryPreview modulePreview={Section6} />
+							) : Section6.type === "Two_Stories" ? (
+								<Two_StoryPreview modulePreview={Section6} />
+							) : Section6.type === "Three_Stories" ? (
+								<Three_StoryPreview modulePreview={Section6} />
+							) : Section6.type === "USG" ? (
+								<USGPreview modulePreview={Section6} />
+							) : Section6.type === "Email_Social" ? (
+								<EmailSocialPreview modulePreview={Section6} />
+							) : null}
 						</div>
 					</div>
+
 					<RetrieveHTML projectID={this.props.project.project._id} />
 				</section>
 			);

@@ -26,6 +26,7 @@ class Project extends Component {
 
 		const project = this.state.project.map((project) => (
 			<ImageMediaCard
+				key = {project._id}
 				id={project._id}
 				onDeleteClick={this.updateProject}
 				title={project.title}

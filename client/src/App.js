@@ -26,7 +26,7 @@ import Profile from './components/profile/Profile';
 import Posts from './components/posts/Posts';
 import Post from './components/post/Post';
 import NotFound from './components/not-found/NotFound';
-import EditProject from './components/edit-project/EditProject'
+
 import PreviewProject from './components/preview-project/PreviewProject'
 import './App.css';
 

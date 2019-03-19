@@ -105,7 +105,6 @@ class Register extends Component {
 Register.propTypes = {
 	registerUser: PropTypes.func.isRequired,
 	auth: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired
 };
 
 //If we want to retrieve any of the Auth state into our component, we'll create a function called Mapstate

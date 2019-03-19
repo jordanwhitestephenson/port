@@ -1,12 +1,6 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { connect } from "react-redux";
 
 class Two_StoriesPreview extends Component {
-	static propTypes = {
-		prop: PropTypes
-	};
-
 	render() {
 		let Story1 = this.props.modulePreview.stories.filter(
 			(story) => Object.keys(story)[0] === "Story_1"
@@ -30,13 +24,13 @@ class Two_StoriesPreview extends Component {
 							src={Story1_IMG}
 						/>
 					</a>
-					<div class="story_text">
+					<div className="story_text">
 						<h3
-							class="cx-heavy-brand-font text-left"
+							className="cx-heavy-brand-font text-left"
 							style={{ fontSize: "20px" }}>
 							{Story1.story1_Headline_Text}
 						</h3>
-						<p class="cx-brand-font text-left paragraph_text">
+						<p className="cx-brand-font text-left paragraph_text">
 							{Story1.story1_Paragraph_Text}
 						</p>
 						<div className="text-left">
@@ -54,13 +48,13 @@ class Two_StoriesPreview extends Component {
 							src={Story2_IMG}
 						/>
 					</a>
-					<div class="story_text">
+					<div className="story_text">
 						<h3
-							class="cx-heavy-brand-font text-left"
+							className="cx-heavy-brand-font text-left"
 							style={{ fontSize: "20px" }}>
 							{Story2.story2_Headline_Text}
 						</h3>
-						<p class="cx-brand-font text-left paragraph_text">
+						<p className="cx-brand-font text-left paragraph_text">
 							{Story2.story2_Paragraph_Text}
 						</p>
 						<div className="text-left">
@@ -75,11 +69,4 @@ class Two_StoriesPreview extends Component {
 	}
 }
 
-const mapStateToProps = (state) => ({});
-
-const mapDispatchToProps = {};
-
-export default connect(
-	mapStateToProps,
-	mapDispatchToProps
-)(Two_StoriesPreview);
+export default Two_StoriesPreview

@@ -121,7 +121,6 @@ class AddProject extends Component {
 
 AddProject.propTypes = {
 	profile: PropTypes.object.isRequired,
-	errors: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
