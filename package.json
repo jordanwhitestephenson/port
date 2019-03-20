@@ -5,7 +5,7 @@
   "main": "server.js",
   "repository": {
     "type": "git",
-    "url": "https://git.heroku.com/secure-coast-78839.git"
+    "url": "https://git.heroku.com/gtm-react.git"
   },
   "scripts": {
     "client-install": "npm install --prefix client",
